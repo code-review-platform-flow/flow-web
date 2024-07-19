@@ -54,7 +54,7 @@ jobs:
 
       - name: Update manifest
         run: |
-          sed -i "s|image: .*|image: asia-northeast3-docker.pkg.dev/code-review-platform-flow/flow-dev:${{ github.sha }}|" manifests/deployment.yaml
+          sed -i "s|image: .*|image: asia-northeast3-docker.pkg.dev/code-review-platform-flow/flow-dev:${{ github.sha }}|" manifests/manifests/deployment.yaml
 
       - name: Commit and push changes
         run: |
