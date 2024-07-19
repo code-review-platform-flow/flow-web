@@ -38,20 +38,14 @@ jobs:
       - name: Push Docker image
         run: docker push gcr.io/${{ env.GCLOUD_PROJECT }}/flow-nextjs-dev:$GITHUB_SHA
 
-      - name: Install Google Cloud SDK and GKE Auth Plugin
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y apt-transport-https ca-certificates gnupg
-          echo "deb [signed-by=/usr/share/keyrings/cloud.google.gpg] http://packages.cloud.google.com/apt cloud-sdk main" | sudo tee -a /etc/apt/sources.list.d/google-cloud-sdk.list
-          curl https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo apt-key --keyring /usr/share/keyrings/cloud.google.gpg add -
-          sudo apt-get update
-          sudo apt-get install -y google-cloud-sdk google-cloud-sdk-gke-gcloud-auth-plugin
+      - name: Get GKE credentials
+        uses: google-github-actions/get-gke-credentials@v2
+        with:
+          cluster_name: primary
+          location: asia-northeast3-a
+          credentials_json: ${{ secrets.GCP_SA_KEY }}
 
       - name: Deploy to GKE using kubectl
-        env:
-          KUBECONFIG: ${{ secrets.KUBECONFIG }}
         run: |
-          echo "${{ secrets.KUBECONFIG }}" > kubeconfig
-          export KUBECONFIG=$(pwd)/kubeconfig
           kubectl set image deployment/flow-nextjs-dev-deployment flow-nextjs-dev-container=gcr.io/${{ env.GCLOUD_PROJECT }}/flow-nextjs-dev:$GITHUB_SHA
           kubectl rollout status deployment/flow-nextjs-dev-deployment
