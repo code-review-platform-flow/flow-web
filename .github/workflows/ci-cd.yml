@@ -57,6 +57,7 @@ jobs:
           sed -i "s|image: .*|image: asia-northeast3-docker.pkg.dev/code-review-platform-flow/flow-dev:${{ github.sha }}|" manifests/manifests/deployment.yaml
 
       - name: Commit and push changes
+        working-directory: manifests
         run: |
           git config --global user.name 'github-actions'
           git config --global user.email 'github-actions@github.com'
