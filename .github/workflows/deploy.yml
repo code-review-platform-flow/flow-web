@@ -1,0 +1,46 @@
+name: Deploy to GCP
+
+on:
+  push:
+    branches:
+      - dev
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: "20"
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build project
+        run: npm run build
+
+      - name: Log in to Google Cloud
+        uses: google-github-actions/auth@v0.4.0
+        with:
+          credentials_json: ${{ secrets.GCP_SA_KEY }}
+
+      - name: Configure Docker for gcloud
+        run: gcloud auth configure-docker
+
+      - name: Build Docker image
+        run: docker build -t gcr.io/${{ secrets.GCP_PROJECT_ID }}/flow-nextjs-dev:$GITHUB_SHA .
+
+      - name: Push Docker image
+        run: docker push gcr.io/${{ secrets.GCP_PROJECT_ID }}/flow-nextjs-dev:$GITHUB_SHA
+
+      - name: Deploy to GKE using kubectl
+        env:
+          KUBECONFIG: ${{ secrets.KUBECONFIG }}
+        run: |
+          kubectl set image deployment/flow-nextjs-dev-deployment flow-nextjs-dev-container=gcr.io/${{ secrets.GCP_PROJECT_ID }}/flow-nextjs-dev:$GITHUB_SHA
+          kubectl rollout status deployment/flow-nextjs-dev-deployment
