@@ -33,14 +33,16 @@ jobs:
         run: gcloud auth configure-docker
 
       - name: Build Docker image
-        run: docker build -t gcr.io/${{ secrets.GCP_PROJECT_ID }}/flow-nextjs-dev:$GITHUB_SHA .
+        run: docker build -t gcr.io/${{ secrets.GCLOUD_PROJECT }}/flow-nextjs-dev:$GITHUB_SHA .
 
       - name: Push Docker image
-        run: docker push gcr.io/${{ secrets.GCP_PROJECT_ID }}/flow-nextjs-dev:$GITHUB_SHA
+        run: docker push gcr.io/${{ secrets.GCLOUD_PROJECT }}/flow-nextjs-dev:$GITHUB_SHA
 
       - name: Deploy to GKE using kubectl
         env:
           KUBECONFIG: ${{ secrets.KUBECONFIG }}
         run: |
-          kubectl set image deployment/flow-nextjs-dev-deployment flow-nextjs-dev-container=gcr.io/${{ secrets.GCP_PROJECT_ID }}/flow-nextjs-dev:$GITHUB_SHA
+          echo "${{ secrets.KUBECONFIG }}" > kubeconfig
+          export KUBECONFIG=$(pwd)/kubeconfig
+          kubectl set image deployment/flow-nextjs-dev-deployment flow-nextjs-dev-container=gcr.io/${{ secrets.GCLOUD_PROJECT }}/flow-nextjs-dev:$GITHUB_SHA
           kubectl rollout status deployment/flow-nextjs-dev-deployment
