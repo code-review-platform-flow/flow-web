@@ -47,15 +47,16 @@ jobs:
         with:
           repository: code-review-platform-flow/flow-manifest
           path: manifests
+          token: ${{ secrets.FLOW_DEPLOY_KEY }}
 
       - name: Update manifest
         run: |
-          sed -i "s|image: .*|image: asia-northeast3-docker.pkg.dev/code-review-platform-flow/flow-dev/flow-nextjs-dev:${{ github.sha }}|" manifests/deployment.yaml
+          sed -i "s|image: .*|image: asia-northeast3-docker.pkg.dev/code-review-platform-flow/flow-dev:${{ github.sha }}|" manifests/deployment.yaml
 
       - name: Commit and push changes
         run: |
           git config --global user.name 'github-actions'
           git config --global user.email 'github-actions@github.com'
           git add .
-          git commit -m "Update image to asia-northeast3-docker.pkg.dev/code-review-platform-flow/flow-dev/flow-nextjs-dev:${{ github.sha }}"
+          git commit -m "Update image to asia-northeast3-docker.pkg.dev/code-review-platform-flow/flow-dev:${{ github.sha }}"
           git push
