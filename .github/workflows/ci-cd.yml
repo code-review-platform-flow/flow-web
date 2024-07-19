@@ -49,6 +49,9 @@ jobs:
           path: manifests
           token: ${{ secrets.FLOW_DEPLOY_KEY }}
 
+      - name: List files for debugging
+        run: ls -R
+
       - name: Update manifest
         run: |
           sed -i "s|image: .*|image: asia-northeast3-docker.pkg.dev/code-review-platform-flow/flow-dev:${{ github.sha }}|" manifests/deployment.yaml
