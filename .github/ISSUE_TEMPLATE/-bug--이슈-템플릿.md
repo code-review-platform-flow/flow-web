@@ -1,5 +1,5 @@
 ---
-name: "[BUG] 이슈 템플릿"
+name: "Bug 이슈 템플릿"
 about: '버그 이슈 템플릿 '
 title: "[BUG]"
 labels: bug
