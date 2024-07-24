@@ -2,7 +2,7 @@
 name: Feature 이슈 템플릿
 about: "[FEAT] ~~ 로그인 기능 추가"
 title: "[Feat] "
-labels: feature
+labels: bug, feature
 assignees: ''
 
 ---
