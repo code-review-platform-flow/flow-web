@@ -9,6 +9,10 @@ FROM base AS deps
 COPY package.json package-lock.json ./
 RUN npm ci
 
+# Storybook CLI 설치
+RUN npm install -g @storybook/cli
+
+
 # 소스 코드 빌드를 위한 레이어
 FROM base AS builder
 COPY . .
