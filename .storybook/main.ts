@@ -12,8 +12,12 @@ const config: StorybookConfig = {
     "@storybook/addon-themes"
   ],
   framework: {
-    name: "@storybook/nextjs",
-    options: {},
+    name: '@storybook/nextjs',
+    options: {
+      builder: {
+        useSWC: true,
+      },
+    },
   },
   staticDirs: [
     {
@@ -23,7 +27,7 @@ const config: StorybookConfig = {
     {
       from: '../public/images',
       to: '/images',
-    },
+    }
   ],
 
 };
