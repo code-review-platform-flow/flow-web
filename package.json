@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "next build && build-storybook",
+    "build": "next build && sb build public",
     "start": "next start",
     "lint": "next lint",
     "storybook": "sb dev -p 6006 ./public",
