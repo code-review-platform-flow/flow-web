@@ -9,6 +9,9 @@ import Footer from '@/widgets/footer/Footer'
 export const metadata: Metadata = {
   title: 'FLOW',
   description: 'University CodeReview,Coffechat Community',
+  icons: {
+		icon: 'icons/appIcon.png',
+	},
 }
 
 

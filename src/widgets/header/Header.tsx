@@ -4,6 +4,10 @@ import styled from 'styled-components';
 import { Button } from '../button/Button';
 import FlowLogo from '../../../public/logos/flowHeaderLogo.svg';
 import searchIcon from '../../../public/icons/searchIcon.svg';
+import pencilIcon from '../../../public/icons/pencilIcon.svg';
+import bellIcon from '../../../public/icons/bellIcon.svg'
+import boxIcon from '../../../public/icons/boxIcon.svg'
+import profileExampleImage from '../../../public/images/profileImageExample.png'
 import Image from 'next/image';
 
 type User = {
@@ -33,13 +37,20 @@ const Header = ({ user, onLogin, onLogout, onCreateAccount }: HeaderProps) => (
       </Row>
       <ButtonContainer>
         {user ? (
-          <>
-            <WelcomeText>
-              환영합니다, <b>{user.name}</b>!
-            </WelcomeText>
-            <Button size="medium" onClick={onLogout} label="로그아웃" />
-          </>
+          // 로그인시
+          <Row2>
+            <Icon src={boxIcon} alt='벨 아이콘'/>
+            <Icon src={bellIcon} alt='박스 아이콘'/>
+            <ButtonWrapper>
+              <StyledButton tertiary size="medium" onClick={onCreateAccount} label="새 포스트" />
+              <PencilIconWrapper>
+                <Image src={pencilIcon} alt='쓰기 아이콘'/>
+              </PencilIconWrapper>
+            <ProfileImage src={profileExampleImage} alt='프로필 이미지'/>
+            </ButtonWrapper>
+          </Row2>
         ) : (
+          // 로그아웃시
           <>
             <Button size="medium" onClick={onLogin} label="로그인" />
             <Button primary size="medium" onClick={onCreateAccount} label="회원가입" />
@@ -73,11 +84,6 @@ const LogoContainer = styled.div`
   align-items: center;
 `;
 
-const WelcomeText = styled.span`
-  color: #333;
-  font-size: 14px;
-  margin-right: 10px;
-`;
 
 const ButtonContainer = styled.div`
   display: flex;
@@ -94,10 +100,15 @@ const Margin = styled.div`
 `;
 
 const Row = styled.div`
+  width : 50%;
   display: flex;
   align-items: center;
 `;
 
+const Row2 = styled.div`
+  display : flex;
+  align-items : center;
+`
 const SearchInput = styled.input`
   box-sizing : border-box;
   width: 100%;
@@ -105,6 +116,7 @@ const SearchInput = styled.input`
   border: 0;
   border-radius: 0.625em;
   padding: 0.625em 0.625em 0.625em 2.5em;  
+  margin-left :0.8750em;
   &:focus {
     outline: none;
   }
@@ -119,8 +131,34 @@ const SearchContainer = styled.div`
 
 const SearchIconWrapper = styled.div`
   position: absolute;
-  left: 1em;
+  left: 1.5em;
   top: 60%;
   transform: translateY(-60%);
   pointer-events: none;
 `;
+
+const ButtonWrapper = styled.div`
+  position : relative;
+  display : flex;
+`;
+
+const PencilIconWrapper = styled.div`
+  position : absolute;
+  left: 0.5em;
+  top: 70%;
+  transform: translateY(-70%);
+`
+const StyledButton = styled(Button)`
+  padding: 0.625em 0.625em 0.625em 2.5em;  
+`
+
+const Icon = styled(Image)`
+  margin-right : 1em;
+`;
+
+const ProfileImage = styled(Image)`
+  margin-left : 0.5em;
+  width : 35px;
+  height : 35px;
+  border-radius : 100%;
+`
