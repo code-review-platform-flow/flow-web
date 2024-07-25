@@ -1,20 +1,3 @@
-import { config } from 'dotenv';
-import { resolve } from 'path';
-
-const envFilePathMap = {
-    development: 'config/development.env',
-    production: 'config/production.env',
-};
-
-const currentEnv = process.env.APP_ENV || 'development';
-const envFilePath = envFilePathMap[currentEnv];
-
-if (!envFilePath) {
-    throw new Error(`No environment file found for APP_ENV=${currentEnv}`);
-}
-
-config({ path: resolve(process.cwd(), envFilePath) });
-
 /** @type {import('next').NextConfig} */
 const nextConfig = {
     swcMinify: true,
@@ -36,7 +19,9 @@ const nextConfig = {
             },
         ];
     },
-    env: {},
+    env: {
+        // 해당 부분에 k8s에서 추가한 환경 변수를 설정
+    },
 };
 
 export default nextConfig;
