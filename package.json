@@ -4,11 +4,13 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
+    "prebuild": "sb build public",
     "build": "next build && build-storybook",
     "start": "next start",
     "lint": "next lint",
     "storybook": "sb dev -p 6006 ./public",
     "build-storybook": "sb build public"
+    
   },
   "engines": {
     "node": "20.15.1"
