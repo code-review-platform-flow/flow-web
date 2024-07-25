@@ -13,6 +13,10 @@ RUN npm ci
 FROM base AS builder
 COPY . .
 COPY --from=deps /app/node_modules ./node_modules
+
+# 환경 변수 파일 복사 및 빌드 설정
+ARG APP_ENV
+RUN if [ "$APP_ENV" = "development" ]; then cp config/development.env .env; else cp config/production.env .env; fi
 RUN npm run build
 
 # 프로덕션 이미지 설정
@@ -30,6 +34,10 @@ COPY --from=builder /app/package.json ./package.json
 
 # 애플리케이션이 실행될 포트 노출
 EXPOSE 3000
+
+# 환경 변수 설정
+ENV NODE_ENV=production
+ENV APP_ENV=${APP_ENV}
 
 # Next.js 애플리케이션 시작 명령어
 CMD ["npm", "start"]
