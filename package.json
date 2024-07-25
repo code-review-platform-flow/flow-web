@@ -5,7 +5,7 @@
   "scripts": {
     "dev": "next dev",
     "prebuild": "sb build public",
-    "build": "next build && build-storybook",
+    "build": "next build",
     "start": "next start",
     "lint": "next lint",
     "storybook": "sb dev -p 6006 ./public",
