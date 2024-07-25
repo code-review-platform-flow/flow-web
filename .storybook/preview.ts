@@ -1,5 +1,20 @@
 import type { Preview } from "@storybook/react";
-import '../src/app/styles/globals.css'
+import { withThemeFromJSXProvider } from '@storybook/addon-styling';
+import { createGlobalStyle, css } from "styled-components";
+import { Pretendard } from '../public/fonts/font';
+
+const GlobalStyles = createGlobalStyle`${css`
+        * {
+          box-sizing: border-box;
+          margin: 0;
+          padding: 0;
+
+          font-family: ${Pretendard.style.fontFamily};
+        }
+	`}
+`;
+
+
 
 const preview: Preview = {
   parameters: {
@@ -13,3 +28,9 @@ const preview: Preview = {
 };
 
 export default preview;
+
+export const decorators = [
+  withThemeFromJSXProvider({
+    GlobalStyles,
+  }),
+];

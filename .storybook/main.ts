@@ -5,11 +5,26 @@ const config: StorybookConfig = {
   addons: [
     "@storybook/addon-onboarding",
     "@storybook/addon-links",
-    "@storybook/addon-essentials",
     "@chromatic-com/storybook",
     "@storybook/addon-interactions",
+    '@storybook/addon-essentials',
+    '@storybook/addon-styling',
+    "@storybook/addon-themes"
   ],
-  framework: '@storybook/nextjs', 
-  staticDirs: ["../public"],
+  framework: {
+    name: "@storybook/nextjs",
+    options: {},
+  },
+  staticDirs: [
+    {
+      from: '../public/fonts',
+      to: 'public/fonts',
+    },
+    {
+      from: '../public/images',
+      to: '/images',
+    },
+  ],
+
 };
 export default config;
