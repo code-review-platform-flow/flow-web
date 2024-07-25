@@ -5,7 +5,7 @@ FROM node:20-alpine AS base
 WORKDIR /app
 
 # 의존성 설치를 위한 레이어
-FROM base as deps
+FROM base AS deps
 COPY package.json package-lock.json ./
 RUN npm ci
 RUN npm install -g @storybook/cli
@@ -15,7 +15,7 @@ RUN npm install -g @storybook/cli
 
 
 # 소스 코드 빌드를 위한 레이어
-FROM base as builder
+FROM base AS builder
 COPY . .
 COPY --from=deps /app/node_modules ./node_modules
 RUN npm run build
