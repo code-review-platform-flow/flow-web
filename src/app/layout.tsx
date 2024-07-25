@@ -1,15 +1,16 @@
 import type { Metadata } from 'next'
-import { Inter } from 'next/font/google'
 import './styles/globals.css'
 import RecoilRootProvider from './state/RecoilRootProvider'
 import StyledComponentsRegistry from './styles/registry'
-
-const inter = Inter({ subsets: ['latin'] })
+import { Pretendard } from '../../public/fonts/font'
+import Header from '@/widgets/header/Header'
+import Footer from '@/widgets/footer/Footer'
 
 export const metadata: Metadata = {
   title: 'FLOW',
   description: 'University CodeReview,Coffechat Community',
 }
+
 
 export default function RootLayout({
   children,
@@ -18,10 +19,13 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={inter.className}>
+      <body 
+      className={Pretendard.className}>
         <RecoilRootProvider>
           <StyledComponentsRegistry>
+            <Header/>
             {children}
+            <Footer/>
           </StyledComponentsRegistry>
         </RecoilRootProvider>
       </body>
