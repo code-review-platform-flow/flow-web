@@ -8,6 +8,7 @@ WORKDIR /app
 FROM base AS deps
 COPY package.json package-lock.json ./
 RUN npm ci
+RUN npm install -g @storybook/cli
 
 # Storybook CLI 설치
 RUN npm install -g @storybook/cli
