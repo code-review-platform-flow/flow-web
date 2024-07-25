@@ -21,9 +21,6 @@ FROM node:20-alpine AS runner
 # 작업 디렉토리 설정
 WORKDIR /app
 
-# 환경 변수를 프로덕션 모드로 설정
-ENV NODE_ENV production
-
 # 빌드된 파일들과 필요한 파일들만 복사
 COPY --from=builder /app/next.config.mjs ./
 COPY --from=builder /app/public ./public
