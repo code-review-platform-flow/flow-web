@@ -6,11 +6,11 @@ const envFilePathMap = {
     production: 'config/production.env',
 };
 
-const currentEnv = process.env.NODE_ENV || 'development';
+const currentEnv = process.env.APP_ENV || 'development';
 const envFilePath = envFilePathMap[currentEnv];
 
 if (!envFilePath) {
-    throw new Error(`No environment file found for NODE_ENV=${currentEnv}`);
+    throw new Error(`No environment file found for APP_ENV=${currentEnv}`);
 }
 
 config({ path: resolve(process.cwd(), envFilePath) });
