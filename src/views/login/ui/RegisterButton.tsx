@@ -1,17 +1,19 @@
 import React from 'react';
 import styled from 'styled-components';
 
-const FindPw = () => {
+const RegisterButton = () => {
     return (
         <Styled>
-            비밀번호 찾기
+            회원가입
         </Styled>
     );
 };
 
-export default FindPw;
+export default RegisterButton;
 
 const Styled = styled.div`
+    align-self : center;
     color  : #737373;
     font-size : 0.8125em;
+    text-decoration : underline;
 `

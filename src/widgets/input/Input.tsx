@@ -43,6 +43,7 @@ const Icon = styled(Image)`
 const StyledInput = styled.input<{ border?: boolean; size: 'medium' | 'large'; primary?: boolean; backgroundColor?: string;  }>`
     border: ${({ border }) => (border ? 'solid 1px #EDEDED' : 'none')};
     border-radius: 12px;
+    box-sizing : border-box;
     background-color: ${({ backgroundColor }) => backgroundColor || '#F9F9F9'};
     color: #000000;
     padding: 0.55em 2.55em 0.55em 0.55em; // 왼쪽 패딩 조정

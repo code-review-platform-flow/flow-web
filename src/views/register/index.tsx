@@ -11,15 +11,20 @@ import styled from "styled-components";
 
 
 const RegisterPage: React.FC = () => {
-    const [register, setRegister] = useState(2);
+    const [register, setRegister] = useState(0);
 
+    //임시구현
+    const handleRegister = () => {
+        setRegister((prev) => (prev + 1) % 3);
+    }
+    
     return (
         <FillWrapper>
             <RegisterContainer>
                 {register === 0 && <SearchSchoolContainer/>}
                 {register === 1 && <SelectDepartmentContainer />}
                 {register === 2 && <UserInfoContainer />}
-                <StyledButton primary size='large' label={register === 2 ? '회원가입 완료' : '다음'}/>
+                <StyledButton onClick={()=>handleRegister()} primary size='large' label={register === 2 ? '회원가입 완료' : '다음'}/>
             </RegisterContainer>
         </FillWrapper>
     );
