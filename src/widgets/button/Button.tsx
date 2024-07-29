@@ -35,7 +35,7 @@ export const Button = ({
 const StyledButton = styled.button<{ primary: boolean, backgroundColor?: string, size: 'small' | 'medium' | 'large', tertiary: boolean }>`
   font-weight: 400;
   border: ${({ primary, tertiary }) => primary || tertiary ? '0' : 'solid 1px #EAEAEC'};
-  border-radius: ${({ tertiary }) => tertiary ? '8px' : '3em'};
+  border-radius: ${({ tertiary,size }) => tertiary ? '8px' : '3em' || size === 'large' ? '0.75em' : '8px'};
   cursor: pointer;
   display: inline-block;
   line-height: 1;
