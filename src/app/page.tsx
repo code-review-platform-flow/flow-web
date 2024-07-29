@@ -1,7 +1,12 @@
-import React from "react";
+import HomePage from '@/views/home';
+import './styles/globals.css'
 
 const page = () => {
-    return <div>home 폰트 적용</div>;
-}
+    return (
+        <>
+            <HomePage/>
+        </>
+    );
+};
 
 export default page;
