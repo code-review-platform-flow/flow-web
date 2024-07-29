@@ -2,6 +2,8 @@ import type { Preview } from "@storybook/react";
 import { withThemeFromJSXProvider } from '@storybook/addon-styling';
 import { createGlobalStyle, css } from "styled-components";
 import { Pretendard } from '../public/fonts/font';
+import * as NextImage from "next/image";
+
 
 const GlobalStyles = createGlobalStyle`${css`
         * {
@@ -13,8 +15,6 @@ const GlobalStyles = createGlobalStyle`${css`
         }
 	`}
 `;
-
-
 
 const preview: Preview = {
   parameters: {
@@ -32,5 +32,6 @@ export default preview;
 export const decorators = [
   withThemeFromJSXProvider({
     GlobalStyles,
+    
   }),
 ];
