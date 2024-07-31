@@ -8,19 +8,20 @@ import Image from 'next/image';
 import ProfileImage2 from '../../../../public/images/profileImageExample2.png';
 import { RowWrapper } from '@/widgets/wrapper/RowWrapper';
 
-// 명예의 전당 데이터
+//커피챗 데이터
 const coffechatData = [
     { rank: 1, profileImage: ProfileImage2, username: '사용자1' },
     { rank: 2, profileImage: ProfileImage2, username: '사용자2' },
     { rank: 3, profileImage: ProfileImage2, username: '사용자3' },
     { rank: 4, profileImage: ProfileImage2, username: '사용자4' },
+    { rank: 5, profileImage: ProfileImage2, username: '사용자5' },
 ];
 
 const CoffeChatList = () => {
     return (
         <ColumnWrapper gap='0.75em'>
             <Medium>☕️ 커피챗 신청하기</Medium>
-            <Container size='small' width='100%'>
+            <Container size='small' width='100%' height='100%'>
             <ColumnWrapper gap='0.75em'>
                 {coffechatData.map((item, index) => (
                 
@@ -35,7 +36,6 @@ const CoffeChatList = () => {
                 
                 ))}
             </ColumnWrapper>
-                <Button tertiary label='더보기' size='wide' />
             </Container>
         </ColumnWrapper>
     );
@@ -49,9 +49,6 @@ const UserInfo = styled.div`
     justify-content : space-between;
     margin-bottom: 0.5em;
 
-    &:last-child {
-        margin-bottom: 1.5em; 
-    }
 `;
 
 const Rank = styled.div`

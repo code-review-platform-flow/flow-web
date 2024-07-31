@@ -19,7 +19,7 @@ const HallofFameList = () => {
     return (
         <ColumnWrapper gap='0.75em'>
             <Medium>🏆 명예의 전당</Medium>
-            <Container size='small' width='100%'>
+            <Container size='small' width='100%' height='100%'>
             <ColumnWrapper gap='0.75em'>
                 {hallOfFameData.map((item, index) => (
                 

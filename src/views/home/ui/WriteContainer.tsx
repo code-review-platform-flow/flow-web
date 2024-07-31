@@ -6,7 +6,7 @@ import Image from 'next/image';
 
 const WriteContainer = () => {
     return (
-        <StyledContainer size='wide'>
+        <StyledContainer size='wide' round>
             <Image src={WriteIcon} alt='쓰기 아이콘'/>
             어떤 이야기를 나누고 싶나요?
         </StyledContainer>

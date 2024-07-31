@@ -13,14 +13,14 @@ const StyledWrapper = styled.div<{ padding?: string }>`
     justify-content: center;
     width : 100%
     height : 100%;
-    gap : 1em;
+    gap : 1.5em;
     padding-left: ${(props) => props.padding || '15%'}; 
     padding-right: ${(props) => props.padding || '15%'}; 
-    
     @media (max-width: 768px) {   
         padding-left: 1em;
         padding-right: 1em;
     }
+    padding-bottom : 1.5em;
 `;
 
 export const PageWrapper: React.FC<PageWrapperProps> = ({ children, padding }) => {

@@ -12,6 +12,7 @@ export interface ContainerProps {
     children?: React.ReactNode;
     zIndex?: number;
     padding?: string; 
+    round?: boolean;
 }
 
 export const Container = ({
@@ -22,10 +23,12 @@ export const Container = ({
     padding = '1em', 
     children,
     zIndex = 1,
+    round  = false,
     ...props
 }: ContainerProps) => {
     return (
         <StyledContainer
+            round={round}
             border={border}
             size={size}
             zIndex={zIndex}
@@ -49,21 +52,24 @@ const StyledContainer = styled.div<{
     tertiary?: boolean;
     zIndex: number;
     padding: string; 
+    round : boolean;
 }>`
     border: ${({ border }) => (border ? 'solid 1px #EDEDED' : '0')};
-    border-radius: 14px;
+    border-radius: ${({round}) => (round ? '1.5em' : '0.875em')};
     background-color: ${({ backgroundColor }) => backgroundColor || '#FFFFFF'};
     color: #000000;
     padding: ${({ padding }) => padding}; // padding 스타일 적용
     z-index: ${({ zIndex }) => zIndex};
     
-    width: ${({ width }) => width}; // width 스타일 적용
-    height: ${({ height }) => height}; // height 스타일 적용
+    width: ${({ width }) => width}; 
+    height: ${({ height }) => height};
 
     @media (max-width: 768px) {
         width: 100%;
         max-width: 100%;
     }
+
+    
 `;
 
 export default Container;

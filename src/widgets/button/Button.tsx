@@ -33,12 +33,9 @@ export const Button = ({
 
 
 const StyledButton = styled.button<{ primary: boolean, backgroundColor?: string, size: 'small' | 'medium' | 'large' | 'wide', tertiary: boolean }>`
-  font-weight: 400;
   border: ${({ primary, tertiary }) => primary || tertiary ? '0' : 'solid 1px #EAEAEC'};
   border-radius: ${({ tertiary,size }) => tertiary ? '8px' : '3em' || size === 'large' ? '0.75em' : '8px'};
   cursor: pointer;
-  display: inline-block;
-  line-height: 1;
   background-color: ${({ primary, backgroundColor, tertiary }) => 
     primary ? '#004E96' : 
     tertiary ? '#E3F0FC' : 
