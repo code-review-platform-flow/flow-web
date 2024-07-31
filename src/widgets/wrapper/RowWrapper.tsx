@@ -1,11 +1,11 @@
 import styled from 'styled-components';
 
-interface ColumnWrapperProps {
+interface RowWrapperProps {
     gap?: string;
 }
 
-export const ColumnWrapper = styled.div<ColumnWrapperProps>`
+export const RowWrapper = styled.div<RowWrapperProps>`
     display: flex;
-    flex-direction: column;
+    align-items : center;
     gap: ${(props) => props.gap || '0'};  // gap을 props로 받아서 설정, 기본값은 '0'
 `;

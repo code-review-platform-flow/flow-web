@@ -6,31 +6,27 @@ import Container from '@/widgets/container/Container';
 import Button from '@/widgets/button/Button';
 import Image from 'next/image';
 import ProfileImage2 from '../../../../public/images/profileImageExample2.png';
-import { RowWrapper } from '@/widgets/wrapper/RowWrapper';
 
 // 명예의 전당 데이터
-const coffechatData = [
+const hallOfFameData = [
     { rank: 1, profileImage: ProfileImage2, username: '사용자1' },
     { rank: 2, profileImage: ProfileImage2, username: '사용자2' },
     { rank: 3, profileImage: ProfileImage2, username: '사용자3' },
     { rank: 4, profileImage: ProfileImage2, username: '사용자4' },
 ];
 
-const CoffeChatList = () => {
+const HallofFameList = () => {
     return (
         <ColumnWrapper gap='0.75em'>
-            <Medium>☕️ 커피챗 신청하기</Medium>
+            <Medium>🏆 명예의 전당</Medium>
             <Container size='small' width='100%'>
             <ColumnWrapper gap='0.75em'>
-                {coffechatData.map((item, index) => (
+                {hallOfFameData.map((item, index) => (
                 
                     <UserInfo key={index}>
-                        <RowWrapper>
-                            <Rank>{item.rank}</Rank>
-                            <ProfileImage src={item.profileImage} alt={`Profile image of ${item.username}`} width={50} height={50} />
-                            <Username>{item.username}</Username>
-                        </RowWrapper>
-                        <Button tertiary size='small' label='신청'/>
+                        <Rank>{item.rank}</Rank>
+                        <ProfileImage src={item.profileImage} alt={`Profile image of ${item.username}`} width={50} height={50} />
+                        <Username>{item.username}</Username>
                     </UserInfo>
                 
                 ))}
@@ -41,12 +37,11 @@ const CoffeChatList = () => {
     );
 };
 
-export default CoffeChatList;
+export default HallofFameList;
 
 const UserInfo = styled.div`
-    display : flex;
-    align-items : center;
-    justify-content : space-between;
+    display: flex;
+    align-items: center;
     margin-bottom: 0.5em;
 
     &:last-child {

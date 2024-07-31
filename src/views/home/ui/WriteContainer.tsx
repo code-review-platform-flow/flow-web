@@ -21,7 +21,5 @@ const StyledContainer = styled(Container)`
     font-size : 0.8125em;
     color : #8E8E8E;
     justify-content : start;
-    padding-top : 1em;
-    padding-bottom : 1em;
     gap : 1em;
 `

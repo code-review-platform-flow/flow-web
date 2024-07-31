@@ -3,7 +3,7 @@
 import { PageWrapper } from "@/widgets/wrapper/PageWrapper";
 import CarrerInfo from "./ui/CarrerInfo";
 import CoffeeChatList from "./ui/CoffeeChatList";
-import HallofFrameList from "./ui/HallofFrameList";
+import HallofFameList from "./ui/HallofFameList";
 import RecentPost from "./ui/RecentPost";
 import Swiper from "./ui/Swiper";
 import TrendingPostList from "./ui/TrendingPostList";
@@ -16,7 +16,7 @@ export default function HomePage() {
             <WriteContainer/>
             <RecentPost/>
             <Swiper>
-                <HallofFrameList/>
+                <HallofFameList/>
                 <CoffeeChatList/>
                 <TrendingPostList/>
             </Swiper>

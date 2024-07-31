@@ -44,7 +44,7 @@ const StyledButton = styled.button<{ primary: boolean, backgroundColor?: string,
     tertiary ? '#E3F0FC' : 
     (backgroundColor ? backgroundColor : 'transparent')};
   color: ${({ primary, tertiary }) => primary ? 'white' : tertiary ? '#004E96' : '#000000'};
-  font-size: ${({ size }) => size === 'small' ? '12px' : size === 'medium' ? '14px' : '16px'};
+  font-size: ${({ size }) => size === 'small' ? '0.75em' : size === 'medium' ? '0.875em' : '0.75em'};
   padding: ${({ size }) => size === 'small' ? '0.625em 1em' : size === 'medium' ? '0.6875em 1.25em' : '0.75em 1.5em'};
   width : ${( {size} ) => size === 'wide' ? '100%' : 'auto'};
 `;

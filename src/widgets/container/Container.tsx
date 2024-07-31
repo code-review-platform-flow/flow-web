@@ -5,19 +5,21 @@ export interface ContainerProps {
     border?: boolean;
     size?: 'small' | 'medium' | 'large' | 'wide';
     height?: string;
+    width?: string; // width 속성 추가
     onClick?: () => void;
     backgroundColor?: string;
     tertiary?: boolean;
     children?: React.ReactNode;
     zIndex?: number;
-    width?: string; // width 속성 추가
+    padding?: string; 
 }
 
 export const Container = ({
     border = false,
     size = 'medium',
     height = 'auto',
-    width = '100%', // width 기본값 추가
+    width = '100%', 
+    padding = '1em', 
     children,
     zIndex = 1,
     ...props
@@ -28,7 +30,8 @@ export const Container = ({
             size={size}
             zIndex={zIndex}
             height={height}
-            width={width} // width 전달
+            width={width} 
+            padding={padding} 
             {...props}
         >
             {children}
@@ -40,17 +43,18 @@ const StyledContainer = styled.div<{
     border: boolean;
     size: 'small' | 'medium' | 'large' | 'wide';
     height?: string;
-    width?: string; // width 추가
+    width?: string; 
     primary?: boolean;
     backgroundColor?: string;
     tertiary?: boolean;
     zIndex: number;
+    padding: string; 
 }>`
     border: ${({ border }) => (border ? 'solid 1px #EDEDED' : '0')};
     border-radius: 14px;
-    background-color: ${({ backgroundColor }) => backgroundColor || '#FFFFFF'}; 
+    background-color: ${({ backgroundColor }) => backgroundColor || '#FFFFFF'};
     color: #000000;
-    padding: 2em 2em;
+    padding: ${({ padding }) => padding}; // padding 스타일 적용
     z-index: ${({ zIndex }) => zIndex};
     
     width: ${({ width }) => width}; // width 스타일 적용
