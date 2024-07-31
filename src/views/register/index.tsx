@@ -1,7 +1,7 @@
 'use client'
 
 import React, { useState } from "react";
-import { FillWrapper } from '@/widgets/wrapper/FillWrpper';
+import { FillWrapper } from '@/widgets/wrapper/FillWrapper';
 import SearchSchoolContainer from "./ui/SearchSchoolContainer";
 import SelectDepartmentContainer from "./ui/SelectDepartmentContainer";
 import UserInfoContainer from "./ui/UserInfoContainer";

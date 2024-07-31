@@ -1,7 +1,7 @@
 'use client'
 
 import React from "react";
-import { FillWrapper } from '@/widgets/wrapper/FillWrpper';
+import { FillWrapper } from '@/widgets/wrapper/FillWrapper';
 import LoginContainer from "./ui/LoginContainer";
 import Input from "@/widgets/input/Input";
 import Button from "@/widgets/button/Button";

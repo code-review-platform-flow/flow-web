@@ -4,7 +4,7 @@ import styled from 'styled-components';
 export interface ButtonProps {
   primary?: boolean;
   backgroundColor?: string;
-  size?: 'small' | 'medium' | 'large';
+  size?: 'small' | 'medium' | 'large' | 'wide' ;
   label: string;
   onClick?: () => void;
   tertiary?: boolean;
@@ -32,7 +32,7 @@ export const Button = ({
 };
 
 
-const StyledButton = styled.button<{ primary: boolean, backgroundColor?: string, size: 'small' | 'medium' | 'large', tertiary: boolean }>`
+const StyledButton = styled.button<{ primary: boolean, backgroundColor?: string, size: 'small' | 'medium' | 'large' | 'wide', tertiary: boolean }>`
   font-weight: 400;
   border: ${({ primary, tertiary }) => primary || tertiary ? '0' : 'solid 1px #EAEAEC'};
   border-radius: ${({ tertiary,size }) => tertiary ? '8px' : '3em' || size === 'large' ? '0.75em' : '8px'};
@@ -45,7 +45,8 @@ const StyledButton = styled.button<{ primary: boolean, backgroundColor?: string,
     (backgroundColor ? backgroundColor : 'transparent')};
   color: ${({ primary, tertiary }) => primary ? 'white' : tertiary ? '#004E96' : '#000000'};
   font-size: ${({ size }) => size === 'small' ? '12px' : size === 'medium' ? '14px' : '16px'};
-  padding: ${({ size }) => size === 'small' ? '10px 16px' : size === 'medium' ? '11px 20px' : '12px 24px'};
+  padding: ${({ size }) => size === 'small' ? '0.625em 1em' : size === 'medium' ? '0.6875em 1.25em' : '0.75em 1.5em'};
+  width : ${( {size} ) => size === 'wide' ? '100%' : 'auto'};
 `;
 
 export default Button;

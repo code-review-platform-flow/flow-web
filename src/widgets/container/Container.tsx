@@ -4,25 +4,31 @@ import styled from 'styled-components';
 export interface ContainerProps {
     border?: boolean;
     size?: 'small' | 'medium' | 'large' | 'wide';
+    height?: string;
     onClick?: () => void;
     backgroundColor?: string;
     tertiary?: boolean;
     children?: React.ReactNode;
-    zIndex?: number; // z-index 추가
+    zIndex?: number;
+    width?: string; // width 속성 추가
 }
 
 export const Container = ({
     border = false,
     size = 'medium',
+    height = 'auto',
+    width = '100%', // width 기본값 추가
     children,
-    zIndex = 1, // 기본 z-index 설정
+    zIndex = 1,
     ...props
 }: ContainerProps) => {
     return (
         <StyledContainer
             border={border}
             size={size}
-            zIndex={zIndex} // z-index 전달
+            zIndex={zIndex}
+            height={height}
+            width={width} // width 전달
             {...props}
         >
             {children}
@@ -30,44 +36,25 @@ export const Container = ({
     );
 };
 
-const StyledContainer = styled.div<{ border: boolean; size: 'small' | 'medium' | 'large' | 'wide'; primary?: boolean; backgroundColor?: string; tertiary?: boolean; zIndex: number }>`
+const StyledContainer = styled.div<{
+    border: boolean;
+    size: 'small' | 'medium' | 'large' | 'wide';
+    height?: string;
+    width?: string; // width 추가
+    primary?: boolean;
+    backgroundColor?: string;
+    tertiary?: boolean;
+    zIndex: number;
+}>`
     border: ${({ border }) => (border ? 'solid 1px #EDEDED' : '0')};
     border-radius: 14px;
     background-color: ${({ backgroundColor }) => backgroundColor || '#FFFFFF'}; 
     color: #000000;
     padding: 2em 2em;
-    z-index: ${({ zIndex }) => zIndex}; // z-index 스타일 추가
-    min-height: ${({ size }) => {
-        switch (size) {
-            case 'small':
-                return '268px';
-            case 'medium':
-                return '200px';
-            case 'large':
-                return 'auto';
-            case 'wide':
-                return 'auto';
-            default:
-                return '268px';
-        }
-    }};
-
-    width: ${({ size }) => (size === 'wide' ? '50%' : 'auto')};
-
-    max-width: ${({ size }) => {
-        switch (size) {
-            case 'small':
-                return '268px';
-            case 'medium':
-                return '200px';
-            case 'large':
-                return 'auto';
-            case 'wide':
-                return '100%';
-            default:
-                return '268px';
-        }
-    }};
+    z-index: ${({ zIndex }) => zIndex};
+    
+    width: ${({ width }) => width}; // width 스타일 적용
+    height: ${({ height }) => height}; // height 스타일 적용
 
     @media (max-width: 768px) {
         width: 100%;

@@ -5,10 +5,11 @@ import { Button } from '../button/Button';
 import FlowLogo from '../../../public/logos/flowHeaderLogo.svg';
 import searchIcon from '../../../public/icons/searchIcon.svg';
 import pencilIcon from '../../../public/icons/pencilIcon.svg';
-import bellIcon from '../../../public/icons/bellIcon.svg'
-import boxIcon from '../../../public/icons/boxIcon.svg'
-import profileExampleImage from '../../../public/images/profileImageExample.png'
+import bellIcon from '../../../public/icons/bellIcon.svg';
+import boxIcon from '../../../public/icons/boxIcon.svg';
+import profileExampleImage from '../../../public/images/profileImageExample.png';
 import Image from 'next/image';
+import Link from 'next/link'
 
 type User = {
   name: string;
@@ -21,54 +22,62 @@ export interface HeaderProps {
   onCreateAccount?: () => void;
 }
 
-const Header = ({ user, onLogin, onLogout, onCreateAccount }: HeaderProps) => (
-  <>
-    <HeaderContainer>
-      <Row>
-        <LogoContainer>
-          <StyledLogo src={FlowLogo} alt="Flow Logo" />
-        </LogoContainer>
-        <SearchContainer>
-          <SearchIconWrapper>
-            <Image src={searchIcon} alt='검색 아이콘' />
-          </SearchIconWrapper>
-          <SearchInput placeholder='플로우 검색하기' />
-        </SearchContainer>
-      </Row>
-      <ButtonContainer>
-        {user ? (
-          // 로그인시
-          <Row2>
-            <Icon src={boxIcon} alt='박스 아이콘'/>
-            <Icon src={bellIcon} alt='벨 아이콘'/>
-            <ButtonWrapper>
-              <StyledButton tertiary size="medium" onClick={onCreateAccount} label="새 포스트" />
-              <PencilIconWrapper>
-                <Image src={pencilIcon} alt='쓰기 아이콘'/>
-              </PencilIconWrapper>
-              <ProfileImage src={profileExampleImage} alt='프로필 이미지'/>
-            </ButtonWrapper>
-          </Row2>
-        ) : (
-          // 로그아웃시
-          <>
-            <Button size="medium" onClick={onLogin} label="로그인" />
-            <Button primary size="medium" onClick={onCreateAccount} label="회원가입" />
-          </>
-        )}
-      </ButtonContainer>
-    </HeaderContainer>
-    <Margin />
-  </>
-);
+const Header = ({ user, onLogin, onLogout, onCreateAccount }: HeaderProps) => {
+
+  return (
+    <>
+      <HeaderContainer>
+        <Row>
+          <LogoContainer>
+            <StyledLogo src={FlowLogo} alt="Flow Logo" />
+          </LogoContainer>
+          <SearchContainer>
+            <SearchIconWrapper>
+              <Image src={searchIcon} alt='검색 아이콘' />
+            </SearchIconWrapper>
+            <SearchInput placeholder='플로우 검색하기' />
+          </SearchContainer>
+        </Row>
+        <ButtonContainer>
+          {user ? (
+            // 로그인시
+            <Row2>
+              <Icon src={boxIcon} alt='박스 아이콘'/>
+              <Icon src={bellIcon} alt='벨 아이콘'/>
+              <ButtonWrapper>
+                <StyledButton tertiary size="medium" onClick={onCreateAccount} label="새 포스트" />
+                <PencilIconWrapper>
+                  <Image src={pencilIcon} alt='쓰기 아이콘'/>
+                </PencilIconWrapper>
+                <ProfileImage src={profileExampleImage} alt='프로필 이미지'/>
+              </ButtonWrapper>
+            </Row2>
+          ) : (
+            // 로그아웃시
+            <>
+              <Link href="/login"><Button size="medium" onClick={onLogin} label="로그인"/></Link>
+              <SizedBox/>
+              <Link href="/register"><Button primary size="medium" onClick={onCreateAccount} label="회원가입" /></Link>
+            </>
+          )}
+        </ButtonContainer>
+      </HeaderContainer>
+      <Margin />
+    </>
+  );
+};
 
 export default Header;
+
 const StyledLogo = styled(Image)`
   @media (max-width: 768px) {
     width : 7em;
   }
-
 `;
+
+const SizedBox = styled.div`
+  width : 0.5em;
+`
 
 const HeaderContainer = styled.header`
   position: fixed;
@@ -86,13 +95,11 @@ const HeaderContainer = styled.header`
   @media (max-width: 768px) {
     padding: 0.5em 0.725em;
   }
-
 `;
 
 const LogoContainer = styled.div`
   display: flex;
   align-items: center;
-
 `;
 
 const ButtonContainer = styled.div`
@@ -102,8 +109,6 @@ const ButtonContainer = styled.div`
   button + button {
     margin-left: 10px;
   }
-
-
 `;
 
 const Margin = styled.div`
@@ -117,7 +122,6 @@ const Row = styled.div`
   align-items: center;
 
   @media (max-width: 768px) {
-
   }
 `;
 
