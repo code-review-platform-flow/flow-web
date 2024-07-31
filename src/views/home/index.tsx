@@ -1,27 +1,28 @@
 'use client'
-import { useEffect, useState } from 'react';
-import Home from './ui/content';
-
+import { PageWrapper } from "@/widgets/wrapper/PageWrapper";
+import CoffeeChatList from "./ui/CoffeeChatList";
+import HallofFameList from "./ui/HallofFameList";
+import RecentPost from "./ui/RecentPost";
+import Swiper from "./ui/Swiper";
+import TrendingPostList from "./ui/TrendingPostList";
+import WriteContainer from "./ui/WriteContainer";
+import CareerInfo from "./ui/CareerInfo";
 export default function HomePage() {
-    const [message, setMessage] = useState<string>('');
-
-    useEffect(() => {
-        const fetchData = async () => {
-        try {
-            const res = await fetch('http://34.47.65.226/test');
-            console.log(res);
-        } catch (error) {
-            console.error('Error fetching data:', error);
-        }
-        };
-
-        fetchData();
-    }, []);
 
     return (
-        <div>
-        <Home/>
-        <p>{message}</p>
-        </div>
+        <PageWrapper padding="15%">
+            <>
+                <WriteContainer/>
+                <RecentPost/>
+            </>
+            <Swiper>
+                <HallofFameList/>
+                <CoffeeChatList/>
+                <TrendingPostList/>
+            </Swiper>  
+            <>
+            <CareerInfo/>
+            </>          
+        </PageWrapper>
     );
     }

@@ -19,4 +19,9 @@ const FooterLogo = styled(Image)`
     position : absolute;
     bottom : 1.5em;
     left : 1.5em; 
+    z-index : 10;
+
+    @media (max-width: 768px) {
+        display : none;
+    }
 `;

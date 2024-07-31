@@ -9,7 +9,7 @@ interface LoginContainerProps {
 
 const LoginContainer: React.FC<LoginContainerProps> = ({ children }) => {
     return (
-        <StyledContainer border={true} size="wide" zIndex={10}>
+        <StyledContainer border={true} size="wide" width='50%' zIndex={10}>
             <LoginTitle><Logo/></LoginTitle>
             {children}
         </StyledContainer>
