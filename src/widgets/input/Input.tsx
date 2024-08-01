@@ -9,6 +9,7 @@ export interface InputProps {
     backgroundColor?: string;
     placeholder?: string;
     icon?: string;
+    lowround?: boolean;
 }
 
 export const Input = ({
@@ -40,9 +41,9 @@ const Icon = styled(Image)`
     right: 10px;
 `;
 
-const StyledInput = styled.input<{ border?: boolean; size: 'medium' | 'large'; primary?: boolean; backgroundColor?: string;  }>`
+const StyledInput = styled.input<{ border?: boolean; size: 'medium' | 'large'; primary?: boolean; backgroundColor?: string; lowround?: boolean; }>`
     border: ${({ border }) => (border ? 'solid 1px #EDEDED' : 'none')};
-    border-radius: 12px;
+    border-radius: ${({ lowround }) => (lowround ? '0.5em' : '12px')};
     box-sizing : border-box;
     background-color: ${({ backgroundColor }) => backgroundColor || '#F9F9F9'};
     color: #000000;
