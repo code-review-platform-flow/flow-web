@@ -33,7 +33,6 @@ const UserPostContainer: React.FC<UserPostContainerProps> = ({
         postDate:'7.3',
         userName : '박경열',
         uploadTime : 7,
-        postTitle : '',
         department : '컴퓨터공학과',
         enterYear : '16',
         postTitle : '다시 한번 useState를 파헤쳐보자',
