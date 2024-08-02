@@ -62,6 +62,14 @@ const StyledInput = styled.input<{ border?: boolean; size: 'medium' | 'large'; p
                 return '200px';
         }
     }};
+    &::placeholder {
+        color: #A6A6A6;
+    }
+    @media (max-width: 768px) {
+        font-size: ${({ size }) =>  size === 'medium' ? '0.7em': '0.75em'};
+
+    }
+    
 `;
 
 export default Input;

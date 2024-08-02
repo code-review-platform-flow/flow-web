@@ -5,6 +5,7 @@ import PostCategoryContainer from "./ui/PostCategoryContainer";
 import PostTitleContainer from "./ui/PostTitleContainer";
 import PostTagContainer from "./ui/PostTagContainer";
 import MarkDownContainer from "./ui/MarkDownContainer";
+import SubmitButton from "./ui/SubmitButton";
 
 const PostWritePage: React.FC = () => {
     
@@ -14,6 +15,7 @@ const PostWritePage: React.FC = () => {
             <PostTagContainer/>
             <PostTitleContainer/>
             <MarkDownContainer/>
+            <SubmitButton/>
         </PageWrapper>
     );
 }

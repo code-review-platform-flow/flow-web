@@ -95,6 +95,7 @@ const HeaderContainer = styled.header`
   @media (max-width: 768px) {
     padding: 0.5em 0.725em;
   }
+    
 `;
 
 const LogoContainer = styled.div`
@@ -141,10 +142,13 @@ const SearchInput = styled.input`
   &:focus {
     outline: none;
   }
-
   @media (max-width: 768px) {
     margin-left: 0;
     padding-left: 2.5em;
+    width: 100%;
+    &::placeholder {
+      color: transparent;
+    }
   }
 `;
 

@@ -65,7 +65,7 @@ const StyledContainer = styled.div<{
     height: ${({ height }) => height};
 
     @media (max-width: 768px) {
-        width: 100%;
+        width: ${({ width }) => width || '100%'};
         max-width: 100%;
     }
 
