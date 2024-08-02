@@ -44,6 +44,10 @@ const StyledButton = styled.button<{ primary: boolean, backgroundColor?: string,
   font-size: ${({ size }) => size === 'small' ? '0.75em' : size === 'medium' ? '0.875em' : '0.75em'};
   padding: ${({ size }) => size === 'small' ? '0.625em 1em' : size === 'medium' ? '0.6875em 1.25em' : '0.75em 1.5em'};
   width : ${( {size} ) => size === 'wide' ? '100%' : 'auto'};
+  @media (max-width: 768px) {
+        font-size: ${({ size }) => size ==='small' ? '0.35em' : size === 'medium' ? '0.5em': '0.75em'};
+
+    }
 `;
 
 export default Button;

@@ -21,7 +21,6 @@ const RecentPost = () => {
     return (
         <StyledContainer size='wide'>
             <ColumnWrapper gap='1em'>
-                
                 <ColumnWrapper gap='0.5em'>
                     <RowWrapper gap='0.5em'>
                         <Image width={32} src={ProfileImage} alt='예시프로필'/>

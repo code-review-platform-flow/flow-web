@@ -1,4 +1,5 @@
 /** @type {import('next').NextConfig} */
+
 const nextConfig = {
     swcMinify: true,
     compiler: {
@@ -24,4 +25,6 @@ const nextConfig = {
     },
 };
 
+
 export default nextConfig;
+
