@@ -4,9 +4,8 @@ import { RowWrapper } from '@/widgets/wrapper/RowWrapper';
 import React from 'react';
 import styled from 'styled-components';
 import ProfileImage from '../../../../public/images/profileImageExample.png'
-import CommentIcon from '../../../../public/icons/cometCountIcon.svg'
-import TumbIcon from '../../../../public/icons/tumbCountIcon.svg'
 import Image from 'next/image';
+import PostInfo from '@/widgets/post/PostInfo';
 
 const RecentPost = () => {
     const name = '지민성'
@@ -46,10 +45,7 @@ const RecentPost = () => {
                 <PostTitle>{title}</PostTitle>
                 <PostContent>{content}</PostContent>
             </ColumnWrapper>
-            <PostInfo>
-                <RowWrapper><Image src={CommentIcon} alt='댓글수'/> {commentCount}</RowWrapper>
-                <RowWrapper><Image src={TumbIcon} alt='좋아요수'/> {tumbCount}</RowWrapper>
-            </PostInfo>
+            <PostInfo commentCount={commentCount} tumbCount={tumbCount} />
         </StyledContainer>
     );
 };
@@ -66,16 +62,6 @@ const PostContent = styled.div`
     color : #707070;
 `;
 
-const PostInfo = styled.div`
-    display : flex;
-    gap : 0.75em;
-    align-items : center;
-    position: absolute;
-    bottom: 1.25em;
-    right: 1.25em;
-    font-size : 0.875em;
-    color : #ACACAC;
-`;
 
 const StyledContainer = styled(Container)`
     position: relative;

@@ -13,6 +13,7 @@ export interface ContainerProps {
     zIndex?: number;
     padding?: string; 
     round?: boolean;
+
 }
 
 export const Container = ({
@@ -60,7 +61,6 @@ const StyledContainer = styled.div<{
     color: #000000;
     padding: ${({ padding }) => padding}; // padding 스타일 적용
     z-index: ${({ zIndex }) => zIndex};
-    
     width: ${({ width }) => width}; 
     height: ${({ height }) => height};
 
