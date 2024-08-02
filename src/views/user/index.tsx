@@ -7,6 +7,7 @@ import UserSchoolContainer from "./ui/UserSchoolContainer";
 import UserCareerContainer from "./ui/UserCareerContainer";
 import UserPostContainer from "./ui/UserPostContainer";
 import { PageWrapper } from "@/widgets/wrapper/PageWrapper";
+import { SizedBox } from "@/widgets/wrapper/SizedBox";
 
 
 
@@ -16,7 +17,8 @@ const UserPage: React.FC = () => {
         <PageWrapper padding="5%">
             <FlexWrapper>
                 <UserSummaryContainer/>
-                <ColumnWrapper>
+                <SizedBox width="70%"/>
+                <ColumnWrapper gap="1em">
                     <UserSchoolContainer/>
                     <UserCareerContainer/>
                     <UserPostContainer/>

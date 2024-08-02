@@ -8,6 +8,7 @@ import ProfileExample from '../../../../public/images/profileImageExample.png'
 import styled from 'styled-components';
 import SendIcon from  '../../../../public/icons/sendIcon.svg';
 import PlusIcon from  '../../../../public/icons/plusIcon.svg';
+import { UserDepartmentEnterYear } from './Font';
 
 interface UserSummaryContainerProps {
 }
@@ -21,8 +22,7 @@ const UserSummaryContainer: React.FC<UserSummaryContainerProps> = ({  }) => {
     };
 
     return (
-
-        <Container round width='35%'>
+        <UserSummaryContainerWrapper round width='30%'>
             <ColumnWrapper gap='0.75em'>
                 <RowWrapper gap='1em'>
                     <Image width={80} src={ProfileExample} alt='프로플 이미지'/>
@@ -47,22 +47,26 @@ const UserSummaryContainer: React.FC<UserSummaryContainerProps> = ({  }) => {
                     </IntroduceText>
                 </ColumnWrapper>
             </ColumnWrapper>
-        </Container>
+        </UserSummaryContainerWrapper>
     );
 };
 
 export default UserSummaryContainer;
 
+const UserSummaryContainerWrapper = styled(Container)`
+    position : fixed;
+
+    @media(max-width : 768px){
+        position :static;
+    }
+`
 const UserName = styled.div`
     font-weight : 500;
     color : #333333;
     font-size : 0.9375em;
 `
 
-const UserDepartmentEnterYear = styled.div`
-    color : #999999;
-    font-size : 0.8125em;
-`
+
 
 const IntroduceTitle = styled.div`
     font-weight : 600;
