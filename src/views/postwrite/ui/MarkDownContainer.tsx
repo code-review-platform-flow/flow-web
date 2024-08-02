@@ -89,7 +89,7 @@ const MarkDownContainer: React.FC<MarkDownContainerProps> = () => {
                     <ToolButton><Image src={QuestionIcon} alt="ToolQuestion" /></ToolButton>
                 </MarkDownToolBar>
                 {headerModal && 
-                    <HeaderModal width='auto' height='auto' border size='small' padding='1em'>
+                    <HeaderModal>
                         <Header1>Heading 1</Header1>
                         <Header2>Headeing 2</Header2>
                         <Header3>Headeing 2</Header3>
@@ -107,7 +107,11 @@ const MarkDownContainer: React.FC<MarkDownContainerProps> = () => {
 
 export default MarkDownContainer;
 
-const HeaderModal = styled(Container)`
+const HeaderModal = styled.div`
+    border-radius: 0.875em;
+    background-color : #FFFFFF;
+    border : solid 1px #EDEDED;
+    padding : 1em;
     display : flex;
     flex-direction : column;
     gap : 15px;
