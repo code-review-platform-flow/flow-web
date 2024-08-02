@@ -144,6 +144,9 @@ const MarkDownToolBar = styled.div`
     gap: 1em;
     margin-bottom: 10px;
     border-bottom : solid 1px #EDEDED;
+        @media (max-width: 768px) {
+            gap : 0.5em;
+        }
 `;
 
 const MarkDownContent = styled.textarea`
@@ -179,4 +182,21 @@ const ToolButton = styled.button`
     &:focus {
         outline: none;
     }
+
+    &:nth-of-type(1) img {
+        width: 2.5em;
+        height: 1.125em;
+
+        @media (max-width: 768px) {
+            width: 1.55em;
+        }
+    }
+        
+    img {
+        width: 1.125em;
+        height: 1.125em;
+
+        @media (max-width: 768px) {
+            width: 0.8125em;
+        }
 `;
