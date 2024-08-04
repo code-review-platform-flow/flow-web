@@ -10,13 +10,16 @@ interface HallOfFameFrameProps {
 const HallOfFameFrame: React.FC<HallOfFameFrameProps> = ({ children }) => {
     return (
         <Frame>
+            <StyledImageWrapper>
             <Image
                 src={hallOfFameFrame}
                 alt='명예의전당배경'
                 layout='fill'
                 objectFit='cover'
             />
+            </StyledImageWrapper>
             <Children>
+                <BackDrop/>
                 {children}
             </Children>
         </Frame>
@@ -26,16 +29,38 @@ const HallOfFameFrame: React.FC<HallOfFameFrameProps> = ({ children }) => {
 export default HallOfFameFrame;
 
 const Frame = styled.div`
-    position: relative;
+    position : relative;
     width: 100%;
     height: 100vh;
+    
 `
+
+const StyledImageWrapper = styled.div`
+    position: absolute;
+    width: 100%;
+    height: 100%;
+
+    @media(max-width : 768px){
+        display: none;
+    }
+`;
+
 const Children = styled.div`
     position: absolute;
     top : 0;
     left : 0;
     width: 100%;
     height: 100%;
-    padding : 0em 5.5em;
+    padding : 0em 8.5em;
 
+    @media(max-width : 768px){
+        padding : 1em 1em;
+    }
+
+`
+
+const BackDrop = styled.div`
+    position : absolute;
+    background-color : #F5F5F7;
+    height : 100%;
 `

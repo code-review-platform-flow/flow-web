@@ -7,7 +7,7 @@ import HallOfFameFrame from "./ui/HallOfFameFrame";
 export default function HallOfFamePage() {
 
     return (
-        <PageWrapper padding="20%">
+        <PageWrapper padding="15%">
             <HallOfFameFrame>
                 <BackButton label="🏆 명예의 전당!" />
                 <HallOfFameUserContainer/>

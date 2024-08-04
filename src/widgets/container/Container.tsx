@@ -13,7 +13,7 @@ export interface ContainerProps {
     zIndex?: number;
     padding?: string; 
     round?: boolean;
-
+    square?: boolean;
 }
 
 export const Container = ({
@@ -25,6 +25,7 @@ export const Container = ({
     children,
     zIndex = 1,
     round  = false,
+    square = false,
     ...props
 }: ContainerProps) => {
     return (
@@ -36,6 +37,7 @@ export const Container = ({
             height={height}
             width={width} 
             padding={padding} 
+            square={square} 
             {...props}
         >
             {children}
@@ -54,6 +56,7 @@ const StyledContainer = styled.div<{
     zIndex: number;
     padding: string; 
     round : boolean;
+    square?: boolean;
 }>`
     border: ${({ border }) => (border ? 'solid 1px #EDEDED' : '0')};
     border-radius: ${({round}) => (round ? '1.5em' : '0.875em')};
@@ -62,11 +65,13 @@ const StyledContainer = styled.div<{
     padding: ${({ padding }) => padding}; // padding 스타일 적용
     z-index: ${({ zIndex }) => zIndex};
     width: ${({ width }) => width}; 
-    height: ${({ height }) => height};
+    width: ${({ width, square }) => (square ? 'auto' : width)};
+    height: ${({ height, square, width }) => (square ? width : height)};
 
     @media (max-width: 768px) {
-        width: 100%;
+        width: 100%; 
         max-width: 100%;
+        height: ${({ square,width }) => (square ? width : 'auto')};
     }
 
     
