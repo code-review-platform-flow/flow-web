@@ -26,11 +26,11 @@ const CoffeChatList = () => {
                 {coffechatData.map((item, index) => (
                 
                     <UserInfo key={index}>
-                        <RowWrapper>
+                        <StyledRowWrapper>
                             <Rank>{item.rank}</Rank>
                             <ProfileImage src={item.profileImage} alt={`Profile image of ${item.username}`} width={50} height={50} />
                             <Username>{item.username}</Username>
-                        </RowWrapper>
+                        </StyledRowWrapper>
                         <Button tertiary size='small' label='신청'/>
                     </UserInfo>
                 
@@ -43,12 +43,16 @@ const CoffeChatList = () => {
 
 export default CoffeChatList;
 
+const StyledRowWrapper = styled(RowWrapper)`
+    width : auto;
+`
+
 const UserInfo = styled.div`
     display : flex;
     align-items : center;
     justify-content : space-between;
     margin-bottom: 0.5em;
-
+    width : 100%;
 `;
 
 const Rank = styled.div`
