@@ -2,7 +2,7 @@ import { ColumnWrapper } from '@/widgets/wrapper/ColumnWrapper';
 import { RowWrapper } from '@/widgets/wrapper/RowWrapper';
 import Image from 'next/image';
 import React from 'react';
-import { SemiTitle, UserDepartmentEnterYear, YearDescription } from './Font';
+import { UserDepartmentEnterYear} from './Font';
 import PostInfo from '@/widgets/post/PostInfo';
 import styled from 'styled-components';
 import ProfileImg from '../../../../public/images/profileImageExample.png';
@@ -127,4 +127,4 @@ const PostContent = styled.div`
     color: #707070;
     margin-bottom: 2em;
     line-height: 2;
-`;
+`
