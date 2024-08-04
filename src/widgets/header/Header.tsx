@@ -62,7 +62,6 @@ const Header = ({ user, onLogin, onLogout, onCreateAccount }: HeaderProps) => {
           )}
         </ButtonContainer>
       </HeaderContainer>
-      <Margin />
     </>
   );
 };
@@ -110,11 +109,6 @@ const ButtonContainer = styled.div`
   button + button {
     margin-left: 10px;
   }
-`;
-
-const Margin = styled.div`
-  width: 100%;
-  height: 80px;
 `;
 
 const Row = styled.div`
