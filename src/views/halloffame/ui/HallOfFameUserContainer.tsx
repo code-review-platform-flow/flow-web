@@ -88,6 +88,10 @@ const UserContainer = styled(Container)`
     display : flex;
     align-items : center;
     justify-cotent : center;
+    
+    @media(max-width : 768px){
+        width : 100%;
+    }
 `;
 
 const UserInfo = styled.div`

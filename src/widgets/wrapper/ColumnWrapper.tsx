@@ -12,5 +12,5 @@ export const ColumnWrapper = styled.div<ColumnWrapperProps>`
     flex-direction: column;
     align-items: ${(props) => props.alignItmes || 'start'};
     gap: ${(props) => props.gap || '0'};
-    justify-content : ${(props) => props.justifyContent || ''}
+    justify-content : ${(props) => props.justifyContent || 'start'}
 `;

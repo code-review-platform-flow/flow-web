@@ -52,6 +52,9 @@ const Children = styled.div`
     width: 100%;
     height: 100%;
     padding : 0em 8.5em;
+    display : flex;
+    flex-direction : column;
+    align-items : center;
 
     @media(max-width : 768px){
         padding : 1em 1em;
