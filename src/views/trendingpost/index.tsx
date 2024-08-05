@@ -10,7 +10,7 @@ interface indexProps {
 
 const index: React.FC<indexProps> = ({  }) => {
     return (
-        <PageWrapper>
+        <PageWrapper padding='20%'>
             <BackButton label='️🔥 트렌딩 포스트'/>
             <GridWrapper>
                 <TrendingPostContainer/>
