@@ -6,6 +6,7 @@ import styled from 'styled-components';
 import ProfileImage from '../../../../public/images/profileImageExample.png'
 import Image from 'next/image';
 import PostInfo from '@/widgets/post/PostInfo';
+import PostTag from '@/widgets/post/PostTag';
 
 const RecentPost = () => {
     const name = '지민성'
@@ -33,12 +34,12 @@ const RecentPost = () => {
                         </ColumnWrapper>
                     </RowWrapper>
                     <RowWrapper gap='0.75em'>   
-                        <TagContainer>
+                        <PostTag>
                             React
-                        </TagContainer>
-                        <TagContainer>
+                        </PostTag>
+                        <PostTag>
                             Front
-                        </TagContainer>
+                        </PostTag>
                     </RowWrapper>
                 </ColumnWrapper>
 
@@ -67,14 +68,6 @@ const StyledContainer = styled(Container)`
     position: relative;
 `;
 
-
-const TagContainer =styled.div`
-    color : #8E8E8E;
-    background-color : #F5F5F5;
-    padding : 0.45em 0.75em;
-    font-size : 0.6875em;
-    border-radius : 0.5em;
-`
 
 const PostDescreption = styled.div`
     font-size : 0.875em;

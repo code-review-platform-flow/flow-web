@@ -14,6 +14,7 @@ export interface ContainerProps {
     padding?: string; 
     round?: boolean;
     square?: boolean;
+    animation?: boolean;
 }
 
 export const Container = ({
@@ -26,6 +27,7 @@ export const Container = ({
     zIndex = 1,
     round  = false,
     square = false,
+    animation = false,
     ...props
 }: ContainerProps) => {
     return (
@@ -38,6 +40,7 @@ export const Container = ({
             width={width} 
             padding={padding} 
             square={square} 
+            animation={animation}
             {...props}
         >
             {children}
@@ -57,6 +60,7 @@ const StyledContainer = styled.div<{
     padding: string; 
     round : boolean;
     square?: boolean;
+    animation?: boolean;
 }>`
     border: ${({ border }) => (border ? 'solid 1px #EDEDED' : '0')};
     border-radius: ${({round}) => (round ? '1.5em' : '0.875em')};
@@ -73,6 +77,13 @@ const StyledContainer = styled.div<{
         max-width: 100%;
         height: ${({ square,width }) => (square ? width : 'auto')};
     }
+
+    &:hover{
+        filter: ${({animation}) => (animation ? 'drop-shadow(0px 16px 20px rgba(0, 0, 0, 0.05))' : '')};
+        transform: ${({animation}) => (animation ? 'translateY(-5px)' : '')}; 
+        transition-duration: 0.5s
+    }
+    
 
     
 `;
