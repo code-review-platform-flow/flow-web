@@ -56,7 +56,7 @@ const UserPostContainer: React.FC<UserPostContainerProps> = ({
 
     return (
         <>
-            <RowWrapper gap='0.35em' alignItmes='start'>
+            <RowWrapper gap='0.35em' alignItems='start'>
                 <PostDate>{user.postDate}</PostDate>
                 <SizedBox height='100%' width='1em'/>
                 <Line />
