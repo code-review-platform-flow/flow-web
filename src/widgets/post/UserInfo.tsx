@@ -3,18 +3,21 @@ import styled from 'styled-components';
 import { RowWrapper } from '../wrapper/RowWrapper';
 import { ColumnWrapper } from '../wrapper/ColumnWrapper';
 import Image from 'next/image';
+import type { StaticImageData } from 'next/image';
 
 interface UserInfoProps {
     name: string;
-    imgUrl: string;
-    department : string;
-    enterYear : number;
+    imgUrl: string | StaticImageData;
+    department: string;
+    enterYear: number;
 }
 
 const UserInfo: React.FC<UserInfoProps> = ({ name, imgUrl, department, enterYear }) => {
+    const imageUrl = typeof imgUrl === 'string' ? imgUrl : imgUrl.src;
+
     return (
         <RowWrapper gap='0.5em'>
-            <ProfileImage src={imgUrl} alt='프로필'/>
+            <ProfileImage src={imageUrl} alt='프로필' />
             <ColumnWrapper>
                 <UserName>{name}</UserName>
                 <UserDetailInfo>{department} {enterYear}학번</UserDetailInfo>
