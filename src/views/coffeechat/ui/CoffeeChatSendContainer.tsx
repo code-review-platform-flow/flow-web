@@ -37,7 +37,7 @@ const CoffeeChatSendContainer: React.FC<CoffeeChatSendContainerProps> = ({}) => 
         <>
             {coffeeChatData.map((chat, index) => (
                 <Container key={index} width="800px" height="600px" round>
-                    <CoffeeChatWrapper alignItmes='center'>
+                    <CoffeeChatWrapper alignItems='center'>
                         <CoffeeChatTitle>{coffeeChatSuccess ? '커피챗을 요청 했어요!': `${chat.senderName}님에게 커피챗 요청하기`}</CoffeeChatTitle>
                         {coffeeChatSuccess ? (
                             <CoffeeChatStatus>
