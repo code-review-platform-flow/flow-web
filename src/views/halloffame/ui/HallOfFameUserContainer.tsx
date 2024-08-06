@@ -47,11 +47,11 @@ const HallOfFameUserContainer: React.FC = () => {
             {hallOfFameList.map(user => (
                 <UserContainer   width='200px' height='200px' key={user.studentId} >
                     {user.rank <= 3 && <RankIcon rank={user.rank} />}
-                    <ColumnWrapper alignItmes='center' gap='1em' >
+                    <ColumnWrapper alignItems='center' gap='1em' >
                         <Image   
                             width={44}
                             height={44}
-                            sizes="50vw" src={UserProfileImaeg} alt='프로필이미지'/>
+                            sizes="50vw" src={UserProfileImaeg} alt='프로필'/>
                         {user.name} 
                         <RowWrapper justifyContent='center'>
                             <UserInfo>{user.department} {user.studentId}</UserInfo>
