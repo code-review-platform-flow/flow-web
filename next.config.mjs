@@ -21,7 +21,8 @@ const nextConfig = {
         ];
     },
     env: {
-        // 해당 부분에 k8s에서 추가한 환경 변수를 설정
+        VITE_TOSS_CLIENT_KEY: 'test_ck_0RnYX2w5327goRzl1J1RVNeyqApQ',
+        VITE_TOSS_SECERET_KEY: 'test_sk_yL0qZ4G1VOdD0aBmoE0kroWb2MQY'
     },
 };
 
