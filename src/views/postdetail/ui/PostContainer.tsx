@@ -7,6 +7,8 @@ import { ColumnWrapper } from '@/widgets/wrapper/ColumnWrapper';
 import PostInfo from '@/widgets/post/PostInfo';
 import PostTag from '@/widgets/post/PostTag';
 import ProfileExample from '../../../../public/images/profileImageExample.png';
+import Image from 'next/image';
+import ShareTumbContainer from './ShareTumbContainer';
 
 interface PostContainerProps {}
 
@@ -31,20 +33,20 @@ const PostContainer: React.FC<PostContainerProps> = () => {
     };
 
     return (
-        <Container width='90%'
-            padding='1.5em' key={postData.id}>
+        <Container width='90%' padding='1.5em' key={postData.id}>
             <ColumnWrapper>
                 <PostTitle>{postData.title}</PostTitle>
                 <PostUser justifyContent='space-between'>
-                    <UserInfo imgUrl={ProfileExample} department={postData.department} name={postData.name} enterYear={postData.enterYear}/>
+                    <UserInfo imgUrl={ProfileExample} department={postData.department} name={postData.name} enterYear={postData.enterYear} />
                     <RowWrapper justifyContent='flex-end' alignItems='flex-end'>
                         <Tags gap='0.2625em' justifyContent='flex-end'>
                             {postData.tags.map((tag, index) => (
                                 <PostTag key={index}>{tag}</PostTag>
                             ))}
                         </Tags>
-                        <ColumnWrapper  width='auto' alignItems='flex-end' gap='0.5em'>
-                            <PostInfo isStatic tumbCount={postData.tumb} commentCount={postData.comments}/>
+                        <ShareTumbContainer mobile/>
+                        <ColumnWrapper width='auto' alignItems='flex-end' gap='0.5em'>
+                            <PostInfo isStatic tumbCount={postData.tumb} commentCount={postData.comments} />
                             <UploadTime>약 {postData.time}시간 전</UploadTime>
                         </ColumnWrapper>
                     </RowWrapper>
@@ -60,25 +62,27 @@ const PostContainer: React.FC<PostContainerProps> = () => {
 export default PostContainer;
 
 const PostUser = styled(RowWrapper)`
+    width : 100%;
     @media (max-width: 768px) {
-        flex-direction : column;
-    }
-`
-const Tags = styled(RowWrapper)`
-    margin-right : 1em;
-    height : 100%;
-    align-items : flex-end;
-    @media (max-width: 768px) {
-        justify-content : flex-start;
+        flex-direction: column;
     }
 `;
+
+const Tags = styled(RowWrapper)`
+    margin-right: 1em;
+    height: 100%;
+    align-items: flex-end;
+    @media (max-width: 768px) {
+        justify-content: flex-start;
+    }
+`;
+
 
 const PostTitle = styled.div`
     font-size: 2.5em;
     font-weight: 600;
-    margin-bottom : 1em;
+    margin-bottom: 1em;
     white-space: pre-wrap;
-
     @media (max-width: 768px) {
         font-size: 2em;
     }
@@ -90,7 +94,6 @@ const PostTitle = styled.div`
 const UploadTime = styled.div`
     color: #8E8E8E;
     font-size: 0.75em;
-
     @media (max-width: 768px) {
         font-size: 0.7em;
     }
@@ -100,7 +103,7 @@ const UploadTime = styled.div`
 `;
 
 const PostContentContainer = styled.div`
-    margin-top : 1em;
+    margin-top: 1em;
     line-height: 1.5;
     white-space: pre-wrap;
 `;
