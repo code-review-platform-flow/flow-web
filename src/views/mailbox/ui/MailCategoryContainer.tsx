@@ -9,31 +9,38 @@ import Image from 'next/image';
 import { ColumnWrapper } from '@/widgets/wrapper/ColumnWrapper';
 
 const MailCategoryContainer: React.FC = () => {
-    const [selectedButton, setSelectedButton] = useState<'inbox' | 'outbox'>('inbox');
+    const [selectedButton, setSelectedButton] = useState<'receiveBox' | 'sendBox'>('receiveBox');
 
     return (
-        <Container width='232px' height='auto'>
+        <StyledContainer width='15%' height='auto'>
             <ColumnWrapper gap='0.25em'>
                 <Title>요청들</Title>
                 <ReceiveSendButton
-                    selected={selectedButton === 'inbox'}
-                    onClick={() => setSelectedButton('inbox')}
+                    selected={selectedButton === 'receiveBox'}
+                    onClick={() => setSelectedButton('receiveBox')}
                 > 
-                    <StyledIcon src={selectedButton === 'inbox' ? BoxIcon2 : BoxIcon} alt='수신함' selected={selectedButton === 'inbox'} /> 수신함
+                    <StyledIcon src={selectedButton === 'receiveBox' ? BoxIcon2 : BoxIcon} alt='수신함' selected={selectedButton === 'receiveBox'} /> 수신함
                 </ReceiveSendButton>
                 <ReceiveSendButton
-                    selected={selectedButton === 'outbox'}
-                    onClick={() => setSelectedButton('outbox')}
+                    selected={selectedButton === 'sendBox'}
+                    onClick={() => setSelectedButton('sendBox')}
                 >
-                    <StyledIcon src={selectedButton === 'outbox'? SendIcon2 : SendIcon} alt='발신함' selected={selectedButton === 'outbox'} /> 발신함
+                    <StyledIcon src={selectedButton === 'sendBox'? SendIcon2 : SendIcon} alt='발신함' selected={selectedButton === 'sendBox'} /> 발신함
                 </ReceiveSendButton>
             </ColumnWrapper>
-        </Container>
+        </StyledContainer>
     );
 };
 
 export default MailCategoryContainer;
 
+const StyledContainer = styled(Container)`
+    position : fixed;
+
+    @media(max-width : 768px){
+        position :static;
+    }
+`
 const Title = styled.div`
     font-size: 0.875em;
     font-weight: 500;
