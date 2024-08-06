@@ -11,6 +11,12 @@ const UserInfoContainer = () => {
         <>
             <Title>사용자 정보 입력</Title>   
 
+
+            <Column>
+            <SemiTitle>이름</SemiTitle>
+            <Input size='large' placeholder='이름을 입력해주세요'/>
+            </Column>
+
             <Column>
             <SemiTitle>이메일</SemiTitle>
             <Input size='large' placeholder='example1234@gachon.ac.kr'/>
