@@ -51,7 +51,7 @@ const HallOfFameUserContainer: React.FC = () => {
                         <Image   
                             width={44}
                             height={44}
-                            sizes="50vw" src={UserProfileImaeg} alt='프로필이미지'/>
+                            sizes="50vw" src={UserProfileImaeg} alt='프로필'/>
                         {user.name} 
                         <RowWrapper justifyContent='center'>
                             <UserInfo>{user.department} {user.studentId}</UserInfo>
