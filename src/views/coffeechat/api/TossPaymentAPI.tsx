@@ -19,7 +19,10 @@ const TossPaymentAPI: React.FC<TossPaymentAPIProps> = ({onClick}) => {
     const clientKey = process.env.NEXT_PUBLIC_TOSS_CLIENT_KEY;
     const [payment, setPayment] = useState<any>(null);
     const [selectedPaymentMethod, setSelectedPaymentMethod] = useState<string | null>(null);
-
+    
+    function generateRandomString() {
+        return window.btoa(Math.random().toString()).slice(0, 20);
+    }
 
     useEffect(() => {
 
@@ -109,9 +112,7 @@ export default dynamic(() => Promise.resolve(TossPaymentAPI), {
     ssr: false
 })
 
-function generateRandomString() {
-    return window.btoa(Math.random().toString()).slice(0, 20);
-}
+
 
 const TossCheckOutButton = styled.button`
     display : flex;
