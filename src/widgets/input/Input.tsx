@@ -5,11 +5,12 @@ import styled from 'styled-components';
 export interface InputProps {
     border?: boolean;
     size?: 'medium' | 'large';
-    onChange?: () => void;
+    onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
     backgroundColor?: string;
     placeholder?: string;
     icon?: string;
     lowround?: boolean;
+    value?: string;
 }
 
 export const Input = ({
