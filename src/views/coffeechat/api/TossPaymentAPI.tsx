@@ -65,8 +65,8 @@ const TossPaymentAPI: React.FC<TossPaymentAPIProps> = ({onClick}) => {
             },
             orderId: generateRandomString(), // 고유 주문번호
             orderName: "토스 티셔츠 외 2건",
-            successUrl: window.location.origin + "/payment/success", // 결제 요청이 성공하면 리다이렉트되는 URL
-            failUrl: window.location.origin + "/fail", // 결제 요청이 실패하면 리다이렉트되는 URL
+            successUrl: process.env.NEXT_PUBLIC_SERVER_URL + "/payment/success", // 결제 요청이 성공하면 리다이렉트되는 URL
+            failUrl: process.env.NEXT_PUBLIC_SERVER_URL + "/fail", // 결제 요청이 실패하면 리다이렉트되는 URL
             customerEmail: "customer123@gmail.com",
             customerName: "김토스",
             customerMobilePhone: "01012341234",
