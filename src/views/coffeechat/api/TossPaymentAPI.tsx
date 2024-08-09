@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { loadTossPayments, ANONYMOUS } from "@tosspayments/tosspayments-sdk";
 import '../ui/payment.css';
 import styled from 'styled-components';
+import dynamic from 'next/dynamic'
 
 interface TossPaymentAPIProps {
     onClick?: ()=> void;
@@ -18,12 +19,9 @@ const TossPaymentAPI: React.FC<TossPaymentAPIProps> = ({onClick}) => {
     const clientKey = process.env.NEXT_PUBLIC_TOSS_CLIENT_KEY;
     const [payment, setPayment] = useState<any>(null);
     const [selectedPaymentMethod, setSelectedPaymentMethod] = useState<string | null>(null);
-    const [isClient, setIsClient] = useState(false);
 
 
     useEffect(() => {
-        setIsClient(true);
-        const clientKey = process.env.NEXT_PUBLIC_TOSS_CLIENT_KEY;
 
             if (!clientKey) {
                 console.error("NEXT_PUBLIC_TOSS_CLIENT_KEY is not defined");
@@ -107,7 +105,9 @@ const TossPaymentAPI: React.FC<TossPaymentAPIProps> = ({onClick}) => {
     );
 };
 
-export default TossPaymentAPI;
+export default dynamic(() => Promise.resolve(TossPaymentAPI), {
+    ssr: false
+})
 
 function generateRandomString() {
     return window.btoa(Math.random().toString()).slice(0, 20);
