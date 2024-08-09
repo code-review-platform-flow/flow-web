@@ -7,6 +7,7 @@ import Button from '@/widgets/button/Button';
 import Image from 'next/image';
 import ProfileImage2 from '../../../../public/images/profileImageExample2.png';
 import { RowWrapper } from '@/widgets/wrapper/RowWrapper';
+import Link from 'next/link';
 
 
 // 명예의 전당 데이터
@@ -37,7 +38,9 @@ const HallofFameList = () => {
                 
                 ))}
             </ColumnWrapper>
-                <Button tertiary label='더보기' size='wide' />
+                <Link href={'/trendingpost'}>
+                    <Button tertiary label='더보기' size='wide' />
+                </Link>
             </Container>
         </ColumnWrapper>
     );
