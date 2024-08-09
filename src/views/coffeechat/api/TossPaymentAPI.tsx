@@ -18,31 +18,36 @@ const TossPaymentAPI: React.FC<TossPaymentAPIProps> = ({onClick}) => {
     const clientKey = process.env.NEXT_PUBLIC_TOSS_CLIENT_KEY;
     const [payment, setPayment] = useState<any>(null);
     const [selectedPaymentMethod, setSelectedPaymentMethod] = useState<string | null>(null);
+    const [isClient, setIsClient] = useState(false);
+
 
     useEffect(() => {
-        if (!clientKey) {
-            console.error("NEXT_PUBLIC_TOSS_CLIENT_KEY is not defined");
-            return;
-        }
-
-        const customerKey = generateRandomString();
-
-        async function fetchPayment() {
-            try {
-                const tossPayments = await loadTossPayments(clientKey as string);
-
-                // 회원 결제
-                const payment = tossPayments.payment({
-                    customerKey,
-                });
-
-                setPayment(payment);
-            } catch (error) {
-                console.error("Error fetching payment:", error);
+        setIsClient(true);
+            if (!clientKey) {
+                console.error("NEXT_PUBLIC_TOSS_CLIENT_KEY is not defined");
+                return;
             }
-        }
 
-        fetchPayment();
+            const customerKey = generateRandomString();
+
+            async function fetchPayment() {
+                try {
+                    const tossPayments = await loadTossPayments(clientKey as string);
+
+                    // 회원 결제
+                    const payment = tossPayments.payment({
+                        customerKey,
+                    });
+
+                    setPayment(payment);
+                } catch (error) {
+                    console.error("Error fetching payment:", error);
+                }
+            }
+
+            fetchPayment();
+
+
     }, [clientKey]);
 
     // ------ '결제하기' 버튼 누르면 결제창 띄우기 ------
