@@ -17,7 +17,7 @@ const UserInfo: React.FC<UserInfoProps> = ({ name, imgUrl, department, enterYear
 
     return (
         <RowWrapper gap='0.5em'>
-            <ProfileImage src={imageUrl} alt='프로필' />
+            <ProfileImage width={32} height={32} src={imageUrl} alt='프로필' />
             <ColumnWrapper>
                 <UserName>{name}</UserName>
                 <UserDetailInfo>{department} {enterYear}학번</UserDetailInfo>
@@ -29,8 +29,7 @@ const UserInfo: React.FC<UserInfoProps> = ({ name, imgUrl, department, enterYear
 export default UserInfo;
 
 const ProfileImage = styled(Image)`
-    width: 32px;
-    height: 32px;
+
 `;
 
 const UserName = styled.div`

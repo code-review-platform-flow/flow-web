@@ -20,6 +20,7 @@ const RecentPost = () => {
     const tumbCount = 125
     const commentCount = 6
     return (
+        <StyledLink href={'/postdetail'}>
         <StyledContainer size='wide'>
             <ColumnWrapper gap='1em'>
                 <ColumnWrapper gap='0.5em'>
@@ -49,10 +50,15 @@ const RecentPost = () => {
             </ColumnWrapper>
             <PostInfo commentCount={commentCount} tumbCount={tumbCount} />
         </StyledContainer>
+        </StyledLink>
     );
 };
 
 export default RecentPost;
+
+const StyledLink = styled(Link)`
+    width : 100%;   
+`;
 
 const PostTitle = styled.div`
     font-size: 1.125em;
