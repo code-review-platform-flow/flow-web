@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { loadTossPayments, ANONYMOUS } from "@tosspayments/tosspayments-sdk";
-import './payment.css';
+import '../ui/payment.css';
 import styled from 'styled-components';
 
-interface TossPaymentAPIProps {}
+interface TossPaymentAPIProps {
+    onClick?: ()=> void;
+}
 
-const TossPaymentAPI: React.FC<TossPaymentAPIProps> = ({}) => {
+const TossPaymentAPI: React.FC<TossPaymentAPIProps> = ({onClick}) => {
 
     const clientKey = process.env.NEXT_PUBLIC_TOSS_CLIENT_KEY;
     const [payment, setPayment] = useState<any>(null);
@@ -21,7 +23,7 @@ const TossPaymentAPI: React.FC<TossPaymentAPIProps> = ({}) => {
 
         async function fetchPayment() {
             try {
-                const tossPayments = await loadTossPayments(clientKey);
+                const tossPayments = await loadTossPayments(clientKey as string);
 
                 // 회원 결제
                 const payment = tossPayments.payment({
@@ -49,12 +51,12 @@ const TossPaymentAPI: React.FC<TossPaymentAPIProps> = ({}) => {
             method,
             amount: {
                 currency: "KRW",
-                value: 50000,
+                value: 100,
             },
             orderId: generateRandomString(),
             orderName: "토스 티셔츠 외 2건",
-            successUrl: window.location.origin + "/payment/success",
-            failUrl: window.location.origin + "/fail",
+            successUrl: process.env.NEXT_PUBLIC_LOCAL_URL + "/payment/success",
+            failUrl: process.env.NEXT_PUBLIC_LOCAL_URL + "/payment/fail",
             customerEmail: "customer123@gmail.com",
             customerName: "김토스",
             customerMobilePhone: "01012341234",
@@ -64,7 +66,14 @@ const TossPaymentAPI: React.FC<TossPaymentAPIProps> = ({}) => {
                 useCardPoint: false,
                 useAppCardOnly: false,
             }
+
+            
         });
+
+        // onClick 함수가 존재하면 호출
+        if (onClick) {
+            onClick();
+        }
     }
 
     // clientKey가 없는 경우 null을 렌더링
@@ -93,7 +102,8 @@ const TossCheckOutButton = styled.button`
     border-radius: 8px;
     cursor: pointer;
     background-color: #004E96;
-    color: #000000;
+    border : none;
+    color: #FFFFFF;
     font-size: 0.875em;
     padding: 0.6875em;
     width : 100%;
