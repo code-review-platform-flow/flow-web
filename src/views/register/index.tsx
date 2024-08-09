@@ -24,7 +24,9 @@ const RegisterPage: React.FC = () => {
                 {register === 0 && <SearchSchoolContainer/>}
                 {register === 1 && <SelectDepartmentContainer />}
                 {register === 2 && <UserInfoContainer />}
-                <StyledButton onClick={()=>handleRegister()} primary size='large' label={register === 2 ? '회원가입 완료' : '다음'}/>
+                <ButtonWrapper>
+                    <Button $primary  onClick={()=>handleRegister()}  size='wide' label={register === 2 ? '회원가입 완료' : '다음'}/>
+                </ButtonWrapper>
             </RegisterContainer>
         </FillWrapper>
     );
@@ -32,6 +34,6 @@ const RegisterPage: React.FC = () => {
 
 export default RegisterPage;
 
-const StyledButton = styled(Button)`
+const ButtonWrapper = styled.div`
     margin-top : 2em;
 `;

@@ -55,7 +55,7 @@ const CoffeeChatSendContainer: React.FC<CoffeeChatSendContainerProps> = ({}) => 
                                 </StyledColumnWrapper>
                             </>
                         )}
-                        {coffeeChatSuccess ? <StyledButton primary label='메인으로' size='wide' onClick={submitCoffeeChat}/> : 
+                        {coffeeChatSuccess ? <StyledButton $primary label='메인으로' size='wide' onClick={submitCoffeeChat}/> : 
                             <TossPaymentAPIs onClick={submitCoffeeChat}/>
                         }  
                     </CoffeeChatWrapper>

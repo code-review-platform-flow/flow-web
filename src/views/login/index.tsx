@@ -17,7 +17,7 @@ const LoginPage: React.FC = () => {
             <LoginContainer>
                 <Input size="large" placeholder="아이디"/>
                 <Input size="large" placeholder="비밀번호"/>
-                <Button primary size="large" label="로그인"/>
+                <Button $primary size="large" label="로그인"/>
                 <Row>
                     <LoginSessionCheck/>
                     <FindPw/>
