@@ -40,7 +40,7 @@ const TossPaymentAPI: React.FC<TossPaymentAPIProps> = ({onClick}) => {
 
                 setPayment(payment);
             } catch (error) {
-                console.error("Error fetching payment:", error.message);
+                console.error("Error fetching payment:", error);
             }
         }
 
