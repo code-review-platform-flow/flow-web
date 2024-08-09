@@ -26,11 +26,6 @@ const TossPaymentAPI: React.FC<TossPaymentAPIProps> = ({onClick}) => {
 
     useEffect(() => {
 
-            if (!clientKey) {
-                console.error("NEXT_PUBLIC_TOSS_CLIENT_KEY is not defined");
-                return;
-            }
-
             const customerKey = generateRandomString();
 
             async function fetchPayment() {
