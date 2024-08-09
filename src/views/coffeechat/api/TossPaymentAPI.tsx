@@ -17,6 +17,8 @@ const TossPaymentAPI: React.FC<TossPaymentAPIProps> = ({ onClick }) => {
   >(null);
 
   useEffect(() => {
+    console.log(`clientKey : ${clientKey}`);
+
     if (!clientKey) {
       console.error("Error: clientKey is not defined.");
       return;
