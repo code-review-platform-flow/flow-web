@@ -22,7 +22,7 @@ const nextConfig = {
     },
     env: {
         NEXT_PUBLIC_TOSS_CLIENT_KEY: process.env.NEXT_PUBLIC_TOSS_CLIENT_KEY,
-        NEXT_PUBLIC_TOSS_SECERET_KEY: process.env.NEXT_PUBLIC_TOSS_SECERET_KEY
+        NEXT_PUBLIC_TOSS_SECRET_KEY: process.env.NEXT_PUBLIC_TOSS_SECRET_KEY
     },
     // webpack(config) {
     //     config.module.rules.push({
