@@ -7,6 +7,7 @@ import Button from '@/widgets/button/Button';
 import Image from 'next/image';
 import ProfileImage2 from '../../../../public/images/profileImageExample2.png';
 import { RowWrapper } from '@/widgets/wrapper/RowWrapper';
+import Link from 'next/link';
 
 //커피챗 데이터
 const coffechatData = [
@@ -31,7 +32,7 @@ const CoffeChatList = () => {
                             <ProfileImage src={item.profileImage} alt={`Profile image of ${item.username}`} width={50} height={50} />
                             <Username>{item.username}</Username>
                         </StyledRowWrapper>
-                        <Button tertiary size='small' label='신청'/>
+                        <Link href={`/coffeecaht/${index}`}><Button tertiary size='small' label='신청'/></Link>
                     </UserInfo>
                 
                 ))}

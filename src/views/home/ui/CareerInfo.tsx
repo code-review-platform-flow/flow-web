@@ -9,6 +9,7 @@ import { RowWrapper } from '@/widgets/wrapper/RowWrapper';
 import { Medium } from './Font';
 import Button from '@/widgets/button/Button';
 import { ColumnWrapper } from '@/widgets/wrapper/ColumnWrapper';
+import Link from 'next/link';
 
 
 const careerData = [
@@ -24,7 +25,9 @@ const CareerInfo: React.FC = () => {
         <>
             <StyledRowWrapper>
                 <Medium>💼 채용 정보</Medium>
-                <Button  size="small" tertiary label="채용바로가기" />
+                <Link href={'/career'}>
+                    <Button  size="small" tertiary label="채용바로가기" />
+                </Link>
             </StyledRowWrapper>
         
             <StyledAutoSwiper>

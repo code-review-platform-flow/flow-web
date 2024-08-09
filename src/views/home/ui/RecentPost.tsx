@@ -7,6 +7,7 @@ import ProfileImage from '../../../../public/images/profileImageExample.png'
 import Image from 'next/image';
 import PostInfo from '@/widgets/post/PostInfo';
 import PostTag from '@/widgets/post/PostTag';
+import Link from 'next/link';
 
 const RecentPost = () => {
     const name = '지민성'
@@ -19,11 +20,12 @@ const RecentPost = () => {
     const tumbCount = 125
     const commentCount = 6
     return (
+        <StyledLink href={'/postdetail'}>
         <StyledContainer size='wide'>
             <ColumnWrapper gap='1em'>
                 <ColumnWrapper gap='0.5em'>
                     <RowWrapper gap='0.5em'>
-                        <Image width={32} src={ProfileImage} alt='예시프로필'/>
+                        <Link href={'/user'}><Image width={32} src={ProfileImage} alt='예시프로필'/></Link>
                         <ColumnWrapper>
                         <PostDescreption>
                             {name}<GreyText>님이 <BlueText>{category}</BlueText>를 공유했어요.</GreyText>
@@ -48,10 +50,15 @@ const RecentPost = () => {
             </ColumnWrapper>
             <PostInfo commentCount={commentCount} tumbCount={tumbCount} />
         </StyledContainer>
+        </StyledLink>
     );
 };
 
 export default RecentPost;
+
+const StyledLink = styled(Link)`
+    width : 100%;   
+`;
 
 const PostTitle = styled.div`
     font-size: 1.125em;

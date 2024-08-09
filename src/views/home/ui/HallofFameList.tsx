@@ -6,6 +6,7 @@ import Container from '@/widgets/container/Container';
 import Button from '@/widgets/button/Button';
 import Image from 'next/image';
 import ProfileImage2 from '../../../../public/images/profileImageExample2.png';
+import Link from 'next/link';
 
 // 명예의 전당 데이터
 const hallOfFameData = [
@@ -16,6 +17,7 @@ const hallOfFameData = [
 ];
 
 const HallofFameList = () => {
+
     return (
         <ColumnWrapper gap='0.75em'>
             <Medium>🏆 명예의 전당</Medium>
@@ -31,7 +33,9 @@ const HallofFameList = () => {
                 
                 ))}
             </ColumnWrapper>
-                <Button tertiary label='더보기' size='wide' />
+                <Link href={'/halloffame'}>
+                    <Button tertiary label='더보기' size='wide' />
+                </Link>
             </Container>
         </ColumnWrapper>
     );

@@ -21,8 +21,8 @@ const nextConfig = {
         ];
     },
     env: {
-        VITE_TOSS_CLIENT_KEY: process.env.VITE_TOSS_CLIENT_KEY,
-        VITE_TOSS_SECERET_KEY: process.env.VITE_TOSS_SECERET_KEY
+        NEXT_PUBLIC_TOSS_CLIENT_KEY: process.env.NEXT_PUBLIC_TOSS_CLIENT_KEY,
+        NEXT_PUBLIC_TOSS_SECERET_KEY: process.env.NEXT_PUBLIC_TOSS_SECERET_KEY
     },
     // webpack(config) {
     //     config.module.rules.push({

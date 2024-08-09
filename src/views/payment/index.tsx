@@ -1,13 +1,12 @@
 'use client'
 import React from 'react';
-import { PaymentCheckoutPage } from './ui/PaymentCheckout'
 import { PageWrapper } from '@/widgets/wrapper/PageWrapper';
 
 
 const PaymentPage: React.FC = ({  }) => {
     return (
         <PageWrapper>
-            <PaymentCheckoutPage/>
+            토스 테스트
         </PageWrapper>
     );
 };

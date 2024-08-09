@@ -7,6 +7,8 @@ import SendIcon from '../../../../public/icons/coffeeChatSendIcon.svg';
 import { ColumnWrapper } from '@/widgets/wrapper/ColumnWrapper';
 import styled from 'styled-components';
 import Button from '@/widgets/button/Button';
+import Link from 'next/link';
+import TossPaymentAPIs from '../api/TossPaymentAPI';
 
 interface CoffeeChatSendContainerProps {}
 
@@ -23,14 +25,9 @@ const CoffeeChatSendContainer: React.FC<CoffeeChatSendContainerProps> = ({}) => 
         }
     ];
 
-    //임시구현
-    const submitCoffeeChat = () =>{
-        if(!coffeeChatSuccess){
-            setcoffeeChatSuccess(true)
-        }
-        else{
-            setcoffeeChatSuccess(false)
-        }
+    // 임시 구현
+    const submitCoffeeChat = () => {
+        setcoffeeChatSuccess(!coffeeChatSuccess);
     }
 
     return (
@@ -38,27 +35,29 @@ const CoffeeChatSendContainer: React.FC<CoffeeChatSendContainerProps> = ({}) => 
             {coffeeChatData.map((chat, index) => (
                 <Container key={index} width="800px" height="600px" round>
                     <CoffeeChatWrapper alignItems='center'>
-                        <CoffeeChatTitle>{coffeeChatSuccess ? '커피챗을 요청 했어요!': `${chat.senderName}님에게 커피챗 요청하기`}</CoffeeChatTitle>
+                        <CoffeeChatTitle>{coffeeChatSuccess ? '커피챗을 요청 했어요!' : `${chat.senderName}님에게 커피챗 요청하기`}</CoffeeChatTitle>
                         {coffeeChatSuccess ? (
                             <CoffeeChatStatus>
-                                {chat.receiverName}님이 수락하시면 대화를 시작하실 수 있어요.<br/>조금만 기다려주세요!
+                                {chat.receiverName}님이 수락하시면 대화를 시작하실 수 있어요.<br />조금만 기다려주세요!
                             </CoffeeChatStatus>
                         ) : (
                             <>
-                        <RowWrapper gap='2.25em' justifyContent='center'>
-                            <StyledImage src={chat.senderImage} alt="sender" />
-                            <Image src={SendIcon} alt='보내기아이콘'/>
-                            <StyledImage src={chat.receiverImage} alt="receiver" />
-                        </RowWrapper>
+                                <RowWrapper gap='2.25em' justifyContent='center'>
+                                    <StyledImage src={chat.senderImage} alt="sender" />
+                                    <Image src={SendIcon} alt='보내기아이콘'/>
+                                    <StyledImage src={chat.receiverImage} alt="receiver" />
+                                </RowWrapper>
 
-                        <StyledColumnWrapper>
-                            <CoffeeChatSemiTitle>{chat.receiverName}님에게 요청 메시지를 남겨보세요*</CoffeeChatSemiTitle>  
-                            <CoffeeChatContent placeholder=''>
-                            </CoffeeChatContent>
-                        </StyledColumnWrapper>
-                        </>
+                                <StyledColumnWrapper>
+                                    <CoffeeChatSemiTitle>{chat.receiverName}님에게 요청 메시지를 남겨보세요*</CoffeeChatSemiTitle>  
+                                    <CoffeeChatContent placeholder=''>
+                                    </CoffeeChatContent>
+                                </StyledColumnWrapper>
+                            </>
                         )}
-                        <StyledButton primary label={coffeeChatSuccess ? '메인으로':'결제하기'} size='wide' onClick={submitCoffeeChat}/>
+                        {coffeeChatSuccess ? <StyledButton primary label='메인으로' size='wide' onClick={submitCoffeeChat}/> : 
+                            <TossPaymentAPIs onClick={submitCoffeeChat}/>
+                        }  
                     </CoffeeChatWrapper>
                 </Container>
             ))}
@@ -67,6 +66,10 @@ const CoffeeChatSendContainer: React.FC<CoffeeChatSendContainerProps> = ({}) => 
 };
 
 export default CoffeeChatSendContainer;
+
+const StyledLink = styled(Link)`
+    width : 100%;
+`
 
 const CoffeeChatStatus = styled.div`
     font-size : 1.25em;
@@ -86,7 +89,6 @@ const CoffeeChatStatus = styled.div`
 const CoffeeChatWrapper = styled(ColumnWrapper)`
     height: 100%;
 `
-
 
 const StyledColumnWrapper = styled(ColumnWrapper)`
     margin-top: 4em;
@@ -125,7 +127,6 @@ const CoffeeChatContent = styled.textarea`
         outline: none;
     }
 `
-
 
 const StyledImage = styled(Image)`
     width: 150px;

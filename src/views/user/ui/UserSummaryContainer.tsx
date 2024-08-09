@@ -9,6 +9,7 @@ import styled from 'styled-components';
 import SendIcon from  '../../../../public/icons/sendIcon.svg';
 import PlusIcon from  '../../../../public/icons/plusIcon.svg';
 import { UserDepartmentEnterYear } from './Font';
+import Link from 'next/link';
 
 interface UserSummaryContainerProps {
 }
@@ -34,8 +35,10 @@ const UserSummaryContainer: React.FC<UserSummaryContainerProps> = ({  }) => {
                 </RowWrapper>
 
                 <RowWrapper gap='1em'>
+                    <StyledLink href={'/coffeechat'}>
                     <Button  size='wide' gap='0.4em' tertiary label='커피챗'>
                         <Image src={SendIcon} alt='보내기버튼'/></Button>
+                    </StyledLink>
                     <Button size='wide' gap='0.4em' tertiary label='팔로우'>
                         <Image src={PlusIcon} alt='팔로우버튼'/></Button>
                 </RowWrapper>
@@ -52,6 +55,10 @@ const UserSummaryContainer: React.FC<UserSummaryContainerProps> = ({  }) => {
 };
 
 export default UserSummaryContainer;
+
+const StyledLink = styled(Link)`
+    width : 100%;
+`
 
 const UserSummaryContainerWrapper = styled(Container)`
     position : fixed;
