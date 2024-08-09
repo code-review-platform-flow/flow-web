@@ -107,8 +107,7 @@ const PostUserContainer = styled.div`
 `;
 
 const UserName = styled.div`
-    font-size: 16px;
-    font-weight: bold;
+    font-weight: 500;
 `;
 
 const UploadTime = styled.div`
