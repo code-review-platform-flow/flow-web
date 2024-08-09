@@ -21,17 +21,10 @@ const nextConfig = {
         ];
     },
     env: {
-        TOSS_CLIENT_KEY: process.env.TOSS_CLIENT_KEY,
-        TOSS_SECRET_KEY: process.env.TOSS_SECRET_KEY
+        NEXT_PUBLIC_TOSS_CLIENT_KEY: process.env.NEXT_PUBLIC_TOSS_CLIENT_KEY,
+        NEXT_PUBLOC_TOSS_SECRET_KEY: process.env.NEXT_PUBLOC_TOSS_SECRET_KEY
     },
-    // webpack(config) {
-    //     config.module.rules.push({
-    //         test: /\.svg$/,
-    //         use: ["@svgr/webpack"]
-    //         });
-        
-    //     return config;
-    // }
+
 };
 
 
