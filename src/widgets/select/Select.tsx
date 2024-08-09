@@ -6,12 +6,12 @@ import Image from 'next/image';
 export interface SelectProps {
     border?: boolean;
     size?: 'medium' | 'large';
-    onChange?: () => void;
+    onChange?: (e: React.ChangeEvent<HTMLSelectElement>) => void;  // onChange 타입 수정
     backgroundColor?: string;
     placeholder?: string;
     icon?: string; 
     firstValue?: string;
-    children?:React.ReactNode;
+    children?: React.ReactNode;
 }
 
 export const Select = ({

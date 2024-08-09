@@ -57,7 +57,7 @@ const Header = ({ user, onLogin, onLogout, onCreateAccount }: HeaderProps) => {
             <>
               <Link href="/login"><Button size="medium" onClick={onLogin} label="로그인"/></Link>
               <SizedBox/>
-              <Link href="/register"><Button primary size="medium" onClick={onCreateAccount} label="회원가입" /></Link>
+              <Link href="/register"><Button $primary size="medium" onClick={onCreateAccount} label="회원가입" /></Link>
             </>
           )}
         </ButtonContainer>

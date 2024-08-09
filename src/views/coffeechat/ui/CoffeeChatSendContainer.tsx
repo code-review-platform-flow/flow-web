@@ -8,7 +8,7 @@ import { ColumnWrapper } from '@/widgets/wrapper/ColumnWrapper';
 import styled from 'styled-components';
 import Button from '@/widgets/button/Button';
 import Link from 'next/link';
-import TossPaymentAPIs from '../api/TossPaymentAPI';
+import TossPaymentAPI from '../api/TossPaymentAPI';
 
 interface CoffeeChatSendContainerProps {}
 
@@ -55,8 +55,8 @@ const CoffeeChatSendContainer: React.FC<CoffeeChatSendContainerProps> = ({}) => 
                                 </StyledColumnWrapper>
                             </>
                         )}
-                        {coffeeChatSuccess ? <StyledButton primary label='메인으로' size='wide' onClick={submitCoffeeChat}/> : 
-                            <TossPaymentAPIs onClick={submitCoffeeChat}/>
+                        {coffeeChatSuccess ? <StyledButton $primary label='메인으로' size='wide' onClick={()=>submitCoffeeChat()}/> : 
+                            <TossPaymentAPI onClick={()=>submitCoffeeChat()}/>
                         }  
                     </CoffeeChatWrapper>
                 </Container>
@@ -67,9 +67,6 @@ const CoffeeChatSendContainer: React.FC<CoffeeChatSendContainerProps> = ({}) => 
 
 export default CoffeeChatSendContainer;
 
-const StyledLink = styled(Link)`
-    width : 100%;
-`
 
 const CoffeeChatStatus = styled.div`
     font-size : 1.25em;

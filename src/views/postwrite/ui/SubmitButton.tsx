@@ -8,7 +8,7 @@ interface SubmitButtonProps {
 const SubmitButton: React.FC<SubmitButtonProps> = ({  }) => {
     return (
         <RightWrapper>
-        <StyledButton primary size="medium" label="작성완료" onClick={()=>console.log('작성완료')}/>
+        <StyledButton $primary size="medium" label="작성완료" onClick={()=>console.log('작성완료')}/>
         </RightWrapper>
     );
 };

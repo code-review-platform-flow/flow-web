@@ -20,7 +20,7 @@ type Story = StoryObj<typeof meta>;
 
 export const Primary: Story = {
   args: {
-    primary: true,
+    $primary: true,
     label: 'Button',
     size: "medium",
     backgroundColor: "#004E96"
