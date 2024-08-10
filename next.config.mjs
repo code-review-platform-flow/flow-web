@@ -1,3 +1,5 @@
+const dotenv = require('dotenv').config({ path: '/app/.env' });;
+
 /** @type {import('next').NextConfig} */
 
 const nextConfig = {
