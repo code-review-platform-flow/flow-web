@@ -33,8 +33,15 @@ jobs:
         run: gcloud auth configure-docker asia-northeast3-docker.pkg.dev
 
       - name: Build and push Docker image
+        env:
+          NEXT_PUBLIC_TOSS_CLIENT_KEY: ${{ secrets.NEXT_PUBLIC_TOSS_CLIENT_KEY }}
+          NEXT_PUBLIC_TOSS_SECRET_KEY: ${{ secrets.NEXT_PUBLIC_TOSS_SECRET_KEY }}
+          NEXT_PUBLIC_SERVER_URL: ${{ secrets.NEXT_PUBLIC_SERVER_URL }}
         run: |
           docker buildx build --push \
+            --build-arg NEXT_PUBLIC_TOSS_CLIENT_KEY=${{ secrets.NEXT_PUBLIC_TOSS_CLIENT_KEY }} \
+            --build-arg NEXT_PUBLIC_TOSS_SECRET_KEY=${{ secrets.NEXT_PUBLIC_TOSS_SECRET_KEY }} \
+            --build-arg NEXT_PUBLIC_SERVER_URL=${{ secrets.NEXT_PUBLIC_SERVER_URL }} \
             --tag asia-northeast3-docker.pkg.dev/code-review-platform-flow/flow-dev/flow-nextjs-dev:${{ github.sha }} .
 
   deploy:
