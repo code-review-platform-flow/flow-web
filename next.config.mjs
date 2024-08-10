@@ -1,6 +1,6 @@
-const dotenv = require('dotenv').config({ path: '/app/.env' });;
+import { config } from 'dotenv';
 
-/** @type {import('next').NextConfig} */
+config({ path: '/app/.env' });
 
 const nextConfig = {
     swcMinify: true,
