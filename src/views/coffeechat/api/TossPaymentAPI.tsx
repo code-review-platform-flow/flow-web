@@ -17,7 +17,7 @@ const TossPaymentAPI: React.FC<TossPaymentAPIProps> = ({ onClick }) => {
   >(null);
 
   useEffect(() => {
-    console.log(`process.env: ${process.env}`);
+    console.log(`process.env: ${JSON.stringify(process.env)}`);
     console.log(`clientKey : ${clientKey}`);
 
     if (!clientKey) {
