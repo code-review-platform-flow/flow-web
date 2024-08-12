@@ -8,7 +8,7 @@ import UserInfoContainer from "./ui/UserInfoContainer";
 import RegisterContainer from "./ui/RegisterContainer";
 import Button from "@/widgets/button/Button";
 import styled from "styled-components";
-import { departmentState, emailState, enterYearState, nameState, pwState, schoolEmailState, schoolNameState } from "@/app/util/register/register";
+import { departmentState, schoolEmailState, enterYearState, nameState, pwState, schoolNameState } from "@/app/util/register/register";
 import { useRecoilState } from "recoil";
 
 
@@ -21,16 +21,16 @@ const RegisterPage: React.FC = () => {
     const [schoolName, setSchoolName] = useRecoilState(schoolNameState);  
     const [department, setDepartment] = useRecoilState(departmentState);
     const [ name , setName ] = useRecoilState(nameState);
-    const [ email , setMail ] = useRecoilState(emailState);
-    const [ pw, setPw] = useRecoilState( pwState);
     const [ schoolEmail, setSchoolEmailState]  = useRecoilState(schoolEmailState);
+    const [ pw, setPw] = useRecoilState( pwState);
+    
 
 
     const handleRegister = () => {
         if ((register === 0 && (!enterYear || !schoolName)) || (register === 1 && !department)) {
             setShowError(true);  // 필요한 정보가 입력되지 않았을 때 경고 메시지 표시
         } 
-        else if(register === 2 && (!name || !email || !pw || !schoolEmail)){
+        else if(register === 2 && (!name || !schoolEmail || !pw || !schoolEmail)){
             setShowError(true);
         }else if(register <= 1){
             setRegister((prev) => (prev + 1) % 3);

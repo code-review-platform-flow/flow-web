@@ -21,17 +21,13 @@ export const nameState = atom({
     default: '',
 });
 
-export const emailState = atom({
-    key: 'emailState',
-    default: '',
-});
 
 export const pwState = atom({
     key: 'pwState',
-    default: false,
+    default: '',
 });
 
 export const schoolEmailState = atom({
     key: 'schoolEmailState',
-    default: false,
+    default: 'iamjms4237@gachon.ac.kr',
 });
