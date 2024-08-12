@@ -1,4 +1,6 @@
-/** @type {import('next').NextConfig} */
+import { config } from 'dotenv';
+
+config({ path: '/app/.env' });
 
 const nextConfig = {
     swcMinify: true,
@@ -23,7 +25,7 @@ const nextConfig = {
     env: {
         NEXT_PUBLIC_TOSS_CLIENT_KEY: process.env.NEXT_PUBLIC_TOSS_CLIENT_KEY,
         NEXT_PUBLOC_TOSS_SECRET_KEY: process.env.NEXT_PUBLOC_TOSS_SECRET_KEY,
-        NEXT_PUBLIC_SERVER_URL : process.env.NEXT_PUBLIC_SERVER_URL
+        NEXT_PUBLIC_SERVER_URL: process.env.NEXT_PUBLIC_SERVER_URL
     },
 
 };

@@ -10,7 +10,7 @@ export interface InputProps {
     placeholder?: string;
     icon?: string;
     lowround?: boolean;
-    value?: string;
+    value?: string ;
 }
 
 export const Input = ({
