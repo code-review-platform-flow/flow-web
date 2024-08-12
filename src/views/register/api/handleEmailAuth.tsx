@@ -9,7 +9,6 @@ export const handleEmailAuth = async (email: string, universityName: string): Pr
     try {
         const response: EmailAuthResponse = await ky.post(`${process.env.NEXT_PUBLIC_SERVER_URL}/auth/email`, {
             json: { email, universityName },
-            timeout: 30000 // 타임아웃 시간 30초로 설정
         }).json();
 
         if (response.ok) {

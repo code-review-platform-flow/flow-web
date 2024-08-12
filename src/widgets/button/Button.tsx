@@ -23,13 +23,14 @@ export const Button = ({
   ...props
 }: ButtonProps) => {
   return (
-    <StyledButton
+    <StyledButton 
       $primary={$primary}
       size={size}
       backgroundColor={backgroundColor}
       tertiary={tertiary}
       gap={gap}
       {...props}
+      type='button'
     >
       {children}
       {label}
