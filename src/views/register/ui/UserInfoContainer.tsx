@@ -18,13 +18,14 @@ const UserInfoContainer: React.FC<UserInfoContainerProps> = ({ showError = false
     const [schoolEmail, setSchoolEmail] = useRecoilState(schoolEmailState);
     const [schoolName, setSchoolName] = useRecoilState(schoolNameState);  
 
-    const handleEmailAuthClick = () => {
-        if (schoolName && schoolEmail) {
-            handleEmailAuth(schoolName, schoolEmail );
-        } else {
+    const submitEmail = () => {
+        if (!schoolName || !schoolEmail) {
             console.error('Email or School Email is missing');
+            return;
         }
+        handleEmailAuth(schoolName, schoolEmail);
     };
+    
 
     return (
         <>
@@ -50,7 +51,7 @@ const UserInfoContainer: React.FC<UserInfoContainerProps> = ({ showError = false
                 {showError && <ErrorMessage>인증번호가 틀렸습니다.</ErrorMessage>}
             </Column>
 
-            <Button onClick={()=>handleEmailAuthClick()} size='large' label='이메일 인증하기' />
+            <Button onClick={()=>submitEmail()} size='large' label='이메일 인증하기' />
             {/* 인증번호가 발송되었을 때 성공 메시지를 표시 */}
             {registerCheck && <SuccessMessage>인증번호가 발송되었습니다</SuccessMessage>}
 
