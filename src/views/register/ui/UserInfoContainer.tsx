@@ -23,7 +23,7 @@ const UserInfoContainer: React.FC<UserInfoContainerProps> = ({ showError = false
             console.error('Email or School Email is missing');
             return;
         }
-        handleEmailAuth(schoolName, schoolEmail);
+        handleEmailAuth(schoolEmail, schoolName);
     };
     
 
