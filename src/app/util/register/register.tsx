@@ -22,12 +22,12 @@ export const nameState = atom({
 });
 
 
-export const pwState = atom({
-    key: 'pwState',
-    default: '',
+export const pwCheckState = atom({
+    key: 'pwCheckState',
+    default: false,
 });
 
 export const schoolEmailState = atom({
     key: 'schoolEmailState',
-    default: 'iamjms4237@gachon.ac.kr',
+    default: '',
 });

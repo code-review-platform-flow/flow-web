@@ -5,6 +5,8 @@ import RecoilRootProvider from './state/RecoilRootProvider';
 import StyledComponentsRegistry from './styles/registry';
 import Header from '@/widgets/header/Header';
 import Footer from '@/widgets/footer/Footer';
+import ReactQueryProviders from './state/ReactQueryProviders';
+
 
 export const metadata: Metadata = {
   title: 'FLOW',
@@ -19,16 +21,19 @@ export default function RootLayout({
 }: {
   children: React.ReactNode
 }) {
+
   return (
     <html>
       <body className={Pretendard.className}>
       <RecoilRootProvider>
-        <StyledComponentsRegistry>
-          <Header/>
-            {children}
-          <Footer />
-        </StyledComponentsRegistry>
-      </RecoilRootProvider>
+        <ReactQueryProviders>
+            <StyledComponentsRegistry>
+              <Header/>
+                {children}
+              <Footer />
+            </StyledComponentsRegistry>
+        </ReactQueryProviders>
+        </RecoilRootProvider>
       </body>
     </html>
   );

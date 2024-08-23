@@ -7,14 +7,16 @@ import styled from 'styled-components';
 import schoolData from '../model/school.json';
 import { useRecoilState } from 'recoil';
 import { enterYearState, schoolNameState } from '@/app/util/register/register';
+import Button from '@/widgets/button/Button';
 
 interface SearchSchoolContainerProps {
-    showError?: boolean; // 여기에서 타입 정의를 수정했습니다.
+    showError?: boolean;
+    onNext: (isValid: boolean) => void;
 }
 
-const SearchSchoolContainer: React.FC<SearchSchoolContainerProps> = ({ showError = false }) => {
+const SearchSchoolContainer: React.FC<SearchSchoolContainerProps> = ({ showError = false, onNext }) => {
     const [enterYear, setEnterYear] = useRecoilState(enterYearState);
-    const [schoolName, setSchoolName] = useRecoilState(schoolNameState);  
+    const [schoolName, setSchoolName] = useRecoilState(schoolNameState);
     const currentYear = new Date().getFullYear();
     const startYear = 2000;
     const years = Array.from({ length: currentYear - startYear + 1 }, (_, i) => startYear + i);
@@ -25,9 +27,9 @@ const SearchSchoolContainer: React.FC<SearchSchoolContainerProps> = ({ showError
 
     const handleSearchItem = (school?: string) => {
         setSearchTerm(school || '');
-        setSchoolName(school || ''); 
+        setSchoolName(school || '');
     }
-    
+
     const handleEnterYear = (year: number) => {
         setEnterYear(year);
     }
@@ -42,6 +44,11 @@ const SearchSchoolContainer: React.FC<SearchSchoolContainerProps> = ({ showError
             setFilteredSchools(filtered.slice(0, 5)); // 최대 5개의 결과 표시
         }
     }, [schoolNames, searchTerm]);
+
+    const handleNext = () => {
+        const isValid = !!enterYear && !!schoolName;
+        onNext(isValid);
+    }
 
     return (
         <>
@@ -78,6 +85,7 @@ const SearchSchoolContainer: React.FC<SearchSchoolContainerProps> = ({ showError
                     </SearchResults>
                 )}
             </Column2>
+            <Button $primary size='wide' label='다음' onClick={handleNext} />
         </>
     );
 };
@@ -111,5 +119,3 @@ const SearchResultItem = styled.div`
         background-color: #f0f0f0;
     }
 `;
-
-
