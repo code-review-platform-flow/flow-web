@@ -1,5 +1,5 @@
 import { selector } from "recoil";
-import { enterYearState, departmentState, nameState, schoolNameState, pwState, schoolEmailState } from "./register";
+import { enterYearState, departmentState, nameState, schoolNameState, pwCheckState, schoolEmailState } from "./register";
 
 // 모든 필드 값을 하나로 결합한 selector (선택적)
 export const studentInfoSelector = selector({
@@ -9,7 +9,7 @@ export const studentInfoSelector = selector({
       const schoolName = get(schoolNameState);
       const department = get(departmentState);
       const name = get(nameState);
-      const pw = get(pwState);
+      const pwCheck = get(pwCheckState);
       const schoolEmail = get(schoolEmailState);
 
       return {
@@ -17,7 +17,7 @@ export const studentInfoSelector = selector({
         schoolName,
         department,
         name,
-        pw,
+        pwCheck,
         schoolEmail
       };
     },
