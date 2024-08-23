@@ -10,6 +10,7 @@ import boxIcon from '../../../public/icons/boxIcon.svg';
 import profileExampleImage from '../../../public/images/profileImageExample.png';
 import Image from 'next/image';
 import Link from 'next/link'
+import { useRouter } from 'next/navigation';
 
 type User = {
   name: string;
@@ -23,13 +24,14 @@ export interface HeaderProps {
 }
 
 const Header = ({ user, onLogin, onLogout, onCreateAccount }: HeaderProps) => {
+  const router = useRouter();
 
   return (
     <>
       <HeaderContainer>
         <Row>
           <LogoContainer>
-            <StyledLogo src={FlowLogo} alt="Flow Logo" />
+            <StyledLogo onClick={()=>router.push('/')} src={FlowLogo} alt="Flow Logo" />
           </LogoContainer>
           <SearchContainer>
             <SearchIconWrapper>

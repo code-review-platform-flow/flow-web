@@ -7,6 +7,7 @@ import Header from '@/widgets/header/Header';
 import Footer from '@/widgets/footer/Footer';
 import ReactQueryProviders from './state/ReactQueryProviders';
 
+
 export const metadata: Metadata = {
   title: 'FLOW',
   description: 'University CodeReview, Coffeechat Community',
@@ -20,6 +21,7 @@ export default function RootLayout({
 }: {
   children: React.ReactNode
 }) {
+
   return (
     <html>
       <body className={Pretendard.className}>
