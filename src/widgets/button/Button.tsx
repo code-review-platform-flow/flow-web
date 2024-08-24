@@ -30,7 +30,6 @@ export const Button = ({
       tertiary={tertiary}
       gap={gap}
       {...props}
-      type= 'button'
     >
       {children}
       {label}
