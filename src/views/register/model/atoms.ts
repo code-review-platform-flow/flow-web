@@ -21,7 +21,6 @@ export const nameState = atom({
     default: '',
 });
 
-
 export const pwCheckState = atom({
     key: 'pwCheckState',
     default: false,

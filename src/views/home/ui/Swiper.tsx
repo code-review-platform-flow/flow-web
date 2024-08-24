@@ -51,11 +51,7 @@ const Swiper: React.FC<SwiperProps> = ({ children }) => {
         }
     }, []);
 
-    return (
-        <SwiperWrapper ref={swiperRef}>
-            {children}
-        </SwiperWrapper>
-    );
+    return <SwiperWrapper ref={swiperRef}>{children}</SwiperWrapper>;
 };
 
 export default Swiper;
@@ -65,7 +61,7 @@ const SwiperWrapper = styled.div`
     grid-template-columns: repeat(3, 1fr);
     gap: 1.5em;
     width: 100%;
-    height: 100%;  
+    height: 100%;
 
     @media (max-width: 768px) {
         display: flex;

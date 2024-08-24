@@ -8,8 +8,8 @@ import Link from 'next/link';
 const WriteContainer = () => {
     return (
         <StyledLink href={'/postwrite'}>
-            <StyledContainer size='wide' round>
-                <Image src={WriteIcon} alt='쓰기 아이콘'/>
+            <StyledContainer size="wide" round>
+                <Image src={WriteIcon} alt="쓰기 아이콘" />
                 어떤 이야기를 나누고 싶나요?
             </StyledContainer>
         </StyledLink>
@@ -19,14 +19,14 @@ const WriteContainer = () => {
 export default WriteContainer;
 
 const StyledLink = styled(Link)`
-    width : 100%;
-`
+    width: 100%;
+`;
 
-const StyledContainer = styled(Container)`  
-    display : flex;
-    align-items : center;
-    font-size : 0.8125em;
-    color : #8E8E8E;
-    justify-content : start;
-    gap : 1em;
-`
+const StyledContainer = styled(Container)`
+    display: flex;
+    align-items: center;
+    font-size: 0.8125em;
+    color: #8e8e8e;
+    justify-content: start;
+    gap: 1em;
+`;

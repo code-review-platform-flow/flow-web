@@ -1,10 +1,10 @@
 import HomePage from '@/views/home';
-import './styles/globals.css'
+import './styles/globals.css';
 
 const page = () => {
     return (
         <>
-            <HomePage/>
+            <HomePage />
         </>
     );
 };
