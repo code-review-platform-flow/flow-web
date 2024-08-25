@@ -1,8 +1,8 @@
-import './styles/globals.css';
+import '@/shared/styles/globals.css';
 import { Pretendard } from '../../public/fonts/font';
 import type { Metadata } from 'next';
-import RecoilRootProvider from '@/shared/state/RecoilRootProvider';
-import StyledComponentsRegistry from './styles/registry';
+import RecoilRootProvider from '@/shared/state/ReactQueryProviders';
+import StyledComponentsRegistry from '@/shared/styles/StyledComponentsRegistry';
 import Header from '@/widgets/header/Header';
 import Footer from '@/widgets/footer/Footer';
 import ReactQueryProviders from '@/shared/state/ReactQueryProviders';
