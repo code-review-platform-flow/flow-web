@@ -9,7 +9,7 @@ import { RowWrapper } from '@/widgets/wrapper/RowWrapper';
 import { ColumnWrapper } from '@/widgets/wrapper/ColumnWrapper';
 import Button from '@/widgets/button/Button';
 import styled from 'styled-components';
-import TossPaymentAPI from '@/features/coffee-chat/api/TossPaymentAPI';
+import TossPaymentAPI from '@/entities/coffee-chat/ui/TossPaymentAPI';
 import { useSendCoffeeChat } from '@/features/coffee-chat/api/coffeeChatApi';
 
 const CoffeeChatSendContainer: React.FC = () => {
@@ -35,9 +35,10 @@ const CoffeeChatSendContainer: React.FC = () => {
     });
 
     const handleSubmit = () => {
+        console.log('handleSubmit triggered');
         sendCoffeeChat({
-            sender: 'iam123@gachon.ac.kr',
-            receiver: 'you123@gachon.ac.kr',
+            sender: 'a1061602@gmail.com',
+            receiver: 'iamjms4237@gachon.ac.kr',
             contents,
         });
     };

@@ -1,12 +1,13 @@
 import ky from 'ky';
 
 const apiClient = ky.create({
-    prefixUrl: process.env.NEXT_PUBLIC_API_BASE_URL,
+    prefixUrl: process.env.NEXT_PUBLIC_SERVER_URL,
     timeout: 10000,
     hooks: {
         beforeRequest: [
             (request) => {
-                const token = localStorage.getItem('token'); // FIXME 나중에 수정 해야 함
+                console.log(`Requesting: ${request.url}`);
+                const token = localStorage.getItem('token');
                 if (token) {
                     request.headers.set('Authorization', `Bearer ${token}`);
                 }

@@ -1,7 +1,3 @@
-import { config } from 'dotenv';
-
-config({ path: '/app/.env' });
-
 const nextConfig = {
     swcMinify: true,
     compiler: {
@@ -20,6 +16,10 @@ const nextConfig = {
                 source: '/storybook/:path*',
                 destination: '/storybook-static/:path*',
             },
+            {
+                source: '/api/:path*',
+                destination: 'http://localhost:8080/:path*'
+            }
         ];
     },
     env: {

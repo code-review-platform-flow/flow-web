@@ -1,8 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { loadTossPayments } from '@tosspayments/tosspayments-sdk';
-import '@/entities/coffee-chat/ui/payment.css';
-import styled from 'styled-components';
-import dynamic from 'next/dynamic';
+import TossPaymentButton from './TossPaymentButton';
 
 interface TossPaymentAPIProps {
     onClick?: () => void;
@@ -48,6 +46,10 @@ const TossPaymentAPI: React.FC<TossPaymentAPIProps> = ({ onClick }) => {
     }
 
     async function requestPayment() {
+        if (onClick) {
+            onClick();
+        }
+
         if (!payment) {
             console.error('Error: Payment object is not loaded');
             return;
@@ -64,8 +66,8 @@ const TossPaymentAPI: React.FC<TossPaymentAPIProps> = ({ onClick }) => {
                 },
                 orderId: generateRandomString(),
                 orderName: '토스 티셔츠 외 2건',
-                successUrl: serverUrl + '/payment/success',
-                failUrl: serverUrl + '/fail',
+                successUrl: `${serverUrl}/payment/success`,
+                failUrl: `${serverUrl}/fail`,
                 customerEmail: 'customer123@gmail.com',
                 customerName: '김토스',
                 customerMobilePhone: '01012341234',
@@ -76,10 +78,6 @@ const TossPaymentAPI: React.FC<TossPaymentAPIProps> = ({ onClick }) => {
                     useAppCardOnly: false,
                 },
             });
-
-            if (onClick) {
-                onClick();
-            }
         } catch (error) {
             console.error('Error during payment request:', error);
         }
@@ -93,23 +91,7 @@ const TossPaymentAPI: React.FC<TossPaymentAPIProps> = ({ onClick }) => {
         return <p>Loading payment...</p>;
     }
 
-    return <TossCheckOutButton onClick={requestPayment}>결제하기</TossCheckOutButton>;
+    return <TossPaymentButton onClick={requestPayment} label="결제하기" />;
 };
 
-export default dynamic(() => Promise.resolve(TossPaymentAPI), { ssr: false });
-
-const TossCheckOutButton = styled.button`
-    display: flex;
-    justify-content: center;
-    border-radius: 8px;
-    cursor: pointer;
-    background-color: #004e96;
-    border: none;
-    color: #ffffff;
-    font-size: 0.875em;
-    padding: 0.6875em;
-    width: 100%;
-    @media (max-width: 768px) {
-        font-size: 0.5em;
-    }
-`;
+export default TossPaymentAPI;
