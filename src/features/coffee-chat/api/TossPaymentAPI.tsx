@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { loadTossPayments } from '@tosspayments/tosspayments-sdk';
-import '../ui/payment.css';
+import '@/entities/coffee-chat/ui/payment.css';
 import styled from 'styled-components';
 import dynamic from 'next/dynamic';
 

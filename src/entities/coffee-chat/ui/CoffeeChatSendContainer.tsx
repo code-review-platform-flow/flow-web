@@ -8,7 +8,7 @@ import { ColumnWrapper } from '@/widgets/wrapper/ColumnWrapper';
 import styled from 'styled-components';
 import Button from '@/widgets/button/Button';
 import Link from 'next/link';
-import TossPaymentAPI from '../api/TossPaymentAPI';
+import TossPaymentAPI from '@/features/coffee-chat/api/TossPaymentAPI';
 
 interface CoffeeChatSendContainerProps {}
 
