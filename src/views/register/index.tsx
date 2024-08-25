@@ -28,8 +28,7 @@ const RegisterPage: React.FC = () => {
 
         }
 
-        if (register == 2  
-            // && registerCheck == true
+        if (register == 2  && registerCheck == true
         ){
             console.log('회원가입 성공')
             redirect('/')
