@@ -8,10 +8,13 @@ import CommentContainer from './ui/CommentContainer';
 import CommentWriteContainer from './ui/CommentWriteContainer';
 import { ColumnWrapper } from '@/widgets/wrapper/ColumnWrapper';
 
-interface PostDetailProps {
+
+interface PostProps {
+    params: string
 }
 
-const PostDetailPage: React.FC<PostDetailProps> = ({  }) => {
+const PostPage: React.FC<PostProps> = ({params }) => {
+    console.log({ params })
     return (
         <PageWrapper gap="0.875em">
             <RowWrapper>
@@ -29,4 +32,4 @@ const PostDetailPage: React.FC<PostDetailProps> = ({  }) => {
     );
 };
 
-export default PostDetailPage;
+export default PostPage;
