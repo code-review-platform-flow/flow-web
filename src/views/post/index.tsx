@@ -10,11 +10,16 @@ import { ColumnWrapper } from '@/widgets/wrapper/ColumnWrapper';
 
 
 interface PostProps {
-    params: string
+    params: {
+        postId: string;
+    };
 }
 
 const PostPage: React.FC<PostProps> = ({params }) => {
-    console.log({ params })
+    console.log(params)
+    const  postId  = params.postId;
+    console.log(postId); 
+    
     return (
         <PageWrapper gap="0.875em">
             <RowWrapper>
