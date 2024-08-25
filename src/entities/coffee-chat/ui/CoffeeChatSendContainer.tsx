@@ -1,74 +1,86 @@
-import Container from '@/widgets/container/Container';
 import React, { useState } from 'react';
-import ProfileExample from '../../../../public/images/profileImageExample.png';
+import { useRecoilState } from 'recoil';
+import { coffeeChatSuccessState } from '@/entities/coffee-chat/model';
+import Container from '@/widgets/container/Container';
 import Image from 'next/image';
-import { RowWrapper } from '@/widgets/wrapper/RowWrapper';
+import ProfileExample from '../../../../public/images/profileImageExample.png';
 import SendIcon from '../../../../public/icons/coffeeChatSendIcon.svg';
+import { RowWrapper } from '@/widgets/wrapper/RowWrapper';
 import { ColumnWrapper } from '@/widgets/wrapper/ColumnWrapper';
-import styled from 'styled-components';
 import Button from '@/widgets/button/Button';
-import Link from 'next/link';
+import styled from 'styled-components';
 import TossPaymentAPI from '@/features/coffee-chat/api/TossPaymentAPI';
+import { useSendCoffeeChat } from '@/features/coffee-chat/api/coffeeChatApi';
 
-interface CoffeeChatSendContainerProps {}
+const CoffeeChatSendContainer: React.FC = () => {
+    const [coffeeChatSuccess, setCoffeeChatSuccess] = useRecoilState(coffeeChatSuccessState);
+    const [contents, setContents] = useState('');
 
-const CoffeeChatSendContainer: React.FC<CoffeeChatSendContainerProps> = ({}) => {
-    const [coffeeChatSuccess, setcoffeeChatSuccess] = useState(false);
+    const coffeeChatData = {
+        senderName: '지민성',
+        receiverName: '박찬영',
+        coffeeChatContent: '',
+        senderImage: ProfileExample,
+        receiverImage: ProfileExample,
+    };
 
-    const coffeeChatData = [
-        {
-            senderName: '지민성',
-            receiverName: '박찬영',
-            coffeeChatContent: '',
-            senderImage: ProfileExample,
-            receiverImage: ProfileExample,
+    const { mutate: sendCoffeeChat } = useSendCoffeeChat({
+        onSuccess: (data) => {
+            console.log('Coffee chat sent successfully:', data);
+            setCoffeeChatSuccess(true);
         },
-    ];
+        onError: (error) => {
+            console.error('Error sending coffee chat:', error);
+        },
+    });
 
-    // 임시 구현
-    const submitCoffeeChat = () => {
-        setcoffeeChatSuccess(!coffeeChatSuccess);
+    const handleSubmit = () => {
+        sendCoffeeChat({
+            sender: 'iam123@gachon.ac.kr',
+            receiver: 'you123@gachon.ac.kr',
+            contents,
+        });
     };
 
     return (
-        <>
-            {coffeeChatData.map((chat, index) => (
-                <Container key={index} width="800px" height="600px" round>
-                    <CoffeeChatWrapper alignItems="center">
-                        <CoffeeChatTitle>
-                            {coffeeChatSuccess ? '커피챗을 요청 했어요!' : `${chat.senderName}님에게 커피챗 요청하기`}
-                        </CoffeeChatTitle>
-                        {coffeeChatSuccess ? (
-                            <CoffeeChatStatus>
-                                {chat.receiverName}님이 수락하시면 대화를 시작하실 수 있어요.
-                                <br />
-                                조금만 기다려주세요!
-                            </CoffeeChatStatus>
-                        ) : (
-                            <>
-                                <RowWrapper gap="2.25em" justifyContent="center">
-                                    <StyledImage src={chat.senderImage} alt="sender" />
-                                    <Image src={SendIcon} alt="보내기아이콘" />
-                                    <StyledImage src={chat.receiverImage} alt="receiver" />
-                                </RowWrapper>
+        <Container width="800px" height="600px" round>
+            <CoffeeChatWrapper alignItems="center">
+                <CoffeeChatTitle>
+                    {coffeeChatSuccess ? '커피챗을 요청 했어요!' : `${coffeeChatData.senderName}님에게 커피챗 요청하기`}
+                </CoffeeChatTitle>
+                {coffeeChatSuccess ? (
+                    <CoffeeChatStatus>
+                        {coffeeChatData.receiverName}님이 수락하시면 대화를 시작하실 수 있어요.
+                        <br />
+                        조금만 기다려주세요!
+                    </CoffeeChatStatus>
+                ) : (
+                    <>
+                        <RowWrapper gap="2.25em" justifyContent="center">
+                            <StyledImage src={coffeeChatData.senderImage} alt="sender" />
+                            <Image src={SendIcon} alt="보내기아이콘" />
+                            <StyledImage src={coffeeChatData.receiverImage} alt="receiver" />
+                        </RowWrapper>
 
-                                <StyledColumnWrapper>
-                                    <CoffeeChatSemiTitle>
-                                        {chat.receiverName}님에게 요청 메시지를 남겨보세요*
-                                    </CoffeeChatSemiTitle>
-                                    <CoffeeChatContent placeholder=""></CoffeeChatContent>
-                                </StyledColumnWrapper>
-                            </>
-                        )}
-                        {coffeeChatSuccess ? (
-                            <StyledButton $primary label="메인으로" size="wide" onClick={() => submitCoffeeChat()} />
-                        ) : (
-                            <TossPaymentAPI onClick={() => submitCoffeeChat()} />
-                        )}
-                    </CoffeeChatWrapper>
-                </Container>
-            ))}
-        </>
+                        <StyledColumnWrapper>
+                            <CoffeeChatSemiTitle>
+                                {coffeeChatData.receiverName}님에게 요청 메시지를 남겨보세요*
+                            </CoffeeChatSemiTitle>
+                            <CoffeeChatContent
+                                value={contents}
+                                onChange={(e) => setContents(e.target.value)}
+                                placeholder=""
+                            />
+                        </StyledColumnWrapper>
+                    </>
+                )}
+                {coffeeChatSuccess ? (
+                    <StyledButton $primary label="메인으로" size="wide" onClick={() => setCoffeeChatSuccess(false)} />
+                ) : (
+                    <TossPaymentAPI onClick={handleSubmit} />
+                )}
+            </CoffeeChatWrapper>
+        </Container>
     );
 };
 
@@ -89,6 +101,7 @@ const CoffeeChatStatus = styled.div`
         margin-top: 0em;
     }
 `;
+
 const CoffeeChatWrapper = styled(ColumnWrapper)`
     height: 100%;
 `;
