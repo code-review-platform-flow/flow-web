@@ -16,7 +16,7 @@ const LoginPage: React.FC = () => {
         <FillWrapper>
             <LoginContainer>
                 <Input size="large" placeholder="아이디"/>
-                <Input size="large" placeholder="비밀번호"/>
+                <Input type='password' size="large" placeholder="비밀번호"/>
                 <Button $primary size="large" label="로그인"/>
                 <Row>
                     <LoginSessionCheck/>
