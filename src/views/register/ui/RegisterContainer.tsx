@@ -9,8 +9,11 @@ interface RegisterContainerProps {
 
 const RegisterContainer: React.FC<RegisterContainerProps> = ({ children }) => {
     return (
-        <StyledContainer border={true} size="wide" width='50%' zIndex={10}>
-            <RegisterTitle><Logo/>회원가입</RegisterTitle>
+        <StyledContainer border={true} size="wide" width="50%" zIndex={10}>
+            <RegisterTitle>
+                <Logo />
+                회원가입
+            </RegisterTitle>
             {children}
         </StyledContainer>
     );
@@ -18,15 +21,15 @@ const RegisterContainer: React.FC<RegisterContainerProps> = ({ children }) => {
 
 export default RegisterContainer;
 
-const StyledContainer  = styled(Container)`
-    display : flex;
-    flex-direction : column;
-    gap : 1.25em;
+const StyledContainer = styled(Container)`
+    display: flex;
+    flex-direction: column;
+    gap: 1.25em;
 `;
 
 const RegisterTitle = styled.div`
-    display : flex;
-    gap : 0.5em;
+    display: flex;
+    gap: 0.5em;
     font-size: 1.375em;
-    font-weight : 400;
-`
+    font-weight: 400;
+`;

@@ -14,8 +14,12 @@ interface PostInfoProps {
 const PostInfo: React.FC<PostInfoProps> = ({ commentCount, tumbCount, isStatic }) => {
     return (
         <PostInfoWrapper isStatic={isStatic ?? false}>
-            <RowWrapper><Image src={CommentIcon} alt='댓글수' /> {commentCount}</RowWrapper>
-            <RowWrapper><Image src={TumbIcon} alt='좋아요수' /> {tumbCount}</RowWrapper>
+            <RowWrapper>
+                <Image src={CommentIcon} alt="댓글수" /> {commentCount}
+            </RowWrapper>
+            <RowWrapper>
+                <Image src={TumbIcon} alt="좋아요수" /> {tumbCount}
+            </RowWrapper>
         </PostInfoWrapper>
     );
 };
@@ -30,5 +34,5 @@ const PostInfoWrapper = styled.div<{ isStatic: boolean }>`
     bottom: 1.25em;
     right: 1.25em;
     font-size: 0.875em;
-    color: #ACACAC;
+    color: #acacac;
 `;

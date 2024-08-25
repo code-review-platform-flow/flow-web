@@ -1,3 +1,3 @@
-import CareerPage from '@/views/career'
+import CareerPage from '@/views/career';
 
-export default CareerPage
+export default CareerPage;

@@ -1,3 +1,3 @@
-import PostDetailPage from '@/views/postdetail';
+import PostDetailPage from '@/views/post-detail';
 
 export default PostDetailPage;

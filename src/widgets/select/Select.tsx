@@ -6,10 +6,10 @@ import Image from 'next/image';
 export interface SelectProps {
     border?: boolean;
     size?: 'medium' | 'large';
-    onChange?: (e: React.ChangeEvent<HTMLSelectElement>) => void;  // onChange 타입 수정
+    onChange?: (e: React.ChangeEvent<HTMLSelectElement>) => void; // onChange 타입 수정
     backgroundColor?: string;
     placeholder?: string;
-    icon?: string; 
+    icon?: string;
     firstValue?: string;
     children?: React.ReactNode;
 }
@@ -17,16 +17,14 @@ export interface SelectProps {
 export const Select = ({
     size = 'medium',
     placeholder = '',
-    icon = BottomArrow,  // 기본 아이콘 설정
+    icon = BottomArrow, // 기본 아이콘 설정
     firstValue,
     children,
     ...props
 }: SelectProps) => {
     return (
         <SelectWrapper>
-            <StyledSelect
-                size={size}
-                {...props}>
+            <StyledSelect size={size} {...props}>
                 <option value="">{firstValue}</option>
                 {children}
             </StyledSelect>
@@ -46,7 +44,12 @@ const Icon = styled(Image)`
     right: 10px;
 `;
 
-const StyledSelect = styled.select<{ border?: boolean; size: 'medium' | 'large'; primary?: boolean; backgroundColor?: string; }>`
+const StyledSelect = styled.select<{
+    border?: boolean;
+    size: 'medium' | 'large';
+    primary?: boolean;
+    backgroundColor?: string;
+}>`
     border: ${({ border }) => (border ? 'solid 1px #EDEDED' : 'none')};
     border-radius: 12px;
     background-color: ${({ backgroundColor }) => backgroundColor || '#F9F9F9'};
@@ -56,9 +59,9 @@ const StyledSelect = styled.select<{ border?: boolean; size: 'medium' | 'large';
     font-weight: 400;
     font-family: 'Pretendard';
     outline: none;
-    -webkit-appearance: none;  /* 크롬 화살표 없애기 */
+    -webkit-appearance: none; /* 크롬 화살표 없애기 */
     -moz-appearance: none; /* 파이어폭스 화살표 없애기 */
-    appearance: none;  /* 화살표 없애기 */
+    appearance: none; /* 화살표 없애기 */
     width: ${({ size }) => {
         switch (size) {
             case 'medium':

@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 
 interface SizedBoxProps {
     height?: string;
@@ -6,6 +6,6 @@ interface SizedBoxProps {
 }
 
 export const SizedBox = styled.div<SizedBoxProps>`
-    width : ${(props) => props.width || '100%'}; 
-    height :${(props) => props.height || '0.5em'}; 
-`
+    width: ${(props) => props.width || '100%'};
+    height: ${(props) => props.height || '0.5em'};
+`;

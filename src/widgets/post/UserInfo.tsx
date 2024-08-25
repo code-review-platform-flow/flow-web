@@ -16,11 +16,13 @@ const UserInfo: React.FC<UserInfoProps> = ({ name, imgUrl, department, enterYear
     const imageUrl = typeof imgUrl === 'string' ? imgUrl : imgUrl.src;
 
     return (
-        <RowWrapper gap='0.5em'>
-            <ProfileImage width={32} height={32} src={imageUrl} alt='프로필' />
+        <RowWrapper gap="0.5em">
+            <ProfileImage width={32} height={32} src={imageUrl} alt="프로필" />
             <ColumnWrapper>
                 <UserName>{name}</UserName>
-                <UserDetailInfo>{department} {enterYear}학번</UserDetailInfo>
+                <UserDetailInfo>
+                    {department} {enterYear}학번
+                </UserDetailInfo>
             </ColumnWrapper>
         </RowWrapper>
     );
@@ -28,9 +30,7 @@ const UserInfo: React.FC<UserInfoProps> = ({ name, imgUrl, department, enterYear
 
 export default UserInfo;
 
-const ProfileImage = styled(Image)`
-
-`;
+const ProfileImage = styled(Image)``;
 
 const UserName = styled.div`
     font-size: 0.875em;
@@ -39,5 +39,5 @@ const UserName = styled.div`
 
 const UserDetailInfo = styled.div`
     font-size: 0.75em;
-    color: #8E8E8E;
+    color: #8e8e8e;
 `;
