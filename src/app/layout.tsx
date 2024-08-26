@@ -6,7 +6,8 @@ import StyledComponentsRegistry from './styles/registry';
 import Header from '@/widgets/header/Header';
 import Footer from '@/widgets/footer/Footer';
 import ReactQueryProviders from './state/ReactQueryProviders';
-
+import { SessionProvider } from "next-auth/react"
+import AuthContext from './util/auth/AuthContext';
 
 export const metadata: Metadata = {
   title: 'FLOW',
@@ -25,6 +26,7 @@ export default function RootLayout({
   return (
     <html>
       <body className={Pretendard.className}>
+      <AuthContext>
       <RecoilRootProvider>
         <ReactQueryProviders>
             <StyledComponentsRegistry>
@@ -34,6 +36,8 @@ export default function RootLayout({
             </StyledComponentsRegistry>
         </ReactQueryProviders>
         </RecoilRootProvider>
+      </AuthContext>
+        
       </body>
     </html>
   );

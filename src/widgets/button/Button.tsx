@@ -10,6 +10,7 @@ export interface ButtonProps {
   tertiary?: boolean;
   children?: React.ReactNode;
   gap?: string;
+  type?: 'button' | 'submit' | 'reset';
 }
 
 export const Button = ({
@@ -20,6 +21,7 @@ export const Button = ({
   tertiary = false,
   children,
   gap='0em',
+  type='button',
   ...props
 }: ButtonProps) => {
   return (
@@ -29,6 +31,7 @@ export const Button = ({
       backgroundColor={backgroundColor}
       tertiary={tertiary}
       gap={gap}
+      type={type}
       {...props}
     >
       {children}
