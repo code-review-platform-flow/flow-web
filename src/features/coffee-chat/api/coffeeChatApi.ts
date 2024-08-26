@@ -12,7 +12,8 @@ interface CoffeeChatResponse {
 }
 
 const sendCoffeeChatRequest = async (chatData: CoffeeChatRequest): Promise<CoffeeChatResponse> => {
-    return await apiClient.post(`coffee`, { json: chatData }).json<CoffeeChatResponse>();
+    console.log(`chatData : ${JSON.stringify(chatData)}`);
+    return await apiClient.post('coffee', { json: chatData }).json<CoffeeChatResponse>();
 };
 
 export const useSendCoffeeChat = (options?: UseMutationOptions<CoffeeChatResponse, Error, CoffeeChatRequest>) => {
