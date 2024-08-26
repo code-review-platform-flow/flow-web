@@ -1,3 +1,3 @@
-import PaymentPage from "@/views/payment";
+import PaymentPage from '@/views/payment';
 
 export default PaymentPage;

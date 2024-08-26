@@ -1,3 +1,3 @@
-import CoffeeChatPage from "@/views/coffeechat";
+import CoffeeChatPage from "@/views/coffee-chat"
 
 export default CoffeeChatPage;

@@ -41,14 +41,14 @@ const LoginPage: React.FC = () => {
                     <Button type="submit" $primary size="wide" label="로그인"/>
                 </LoginForm>
                 <Row>
-                    <LoginSessionCheck/>
-                    <FindPw/>
+                    <LoginSessionCheck />
+                    <FindPw />
                 </Row>
-                <RegisterButton/>
+                <RegisterButton />
             </LoginContainer>
         </FillWrapper>
     );
-}
+};
 
 export default LoginPage;
 

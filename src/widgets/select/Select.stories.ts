@@ -19,7 +19,7 @@ export const LargeSelect: Story = {
     args: {
         border: true,
         size: 'large',
-    }
+    },
 };
 
 export const MediumSelect: Story = {

@@ -20,23 +20,28 @@ const coffechatData = [
 
 const CoffeChatList = () => {
     return (
-        <ColumnWrapper gap='0.75em'>
+        <ColumnWrapper gap="0.75em">
             <Medium>☕️ 커피챗 신청하기</Medium>
-            <Container size='small' width='100%' height='100%'>
-            <ColumnWrapper gap='0.75em'>
-                {coffechatData.map((item, index) => (
-                
-                    <UserInfo key={index}>
-                        <StyledRowWrapper>
-                            <Rank>{item.rank}</Rank>
-                            <ProfileImage src={item.profileImage} alt={`Profile image of ${item.username}`} width={50} height={50} />
-                            <Username>{item.username}</Username>
-                        </StyledRowWrapper>
-                        <Link href={`/coffeecaht/${index}`}><Button tertiary size='small' label='신청'/></Link>
-                    </UserInfo>
-                
-                ))}
-            </ColumnWrapper>
+            <Container size="small" width="100%" height="100%">
+                <ColumnWrapper gap="0.75em">
+                    {coffechatData.map((item, index) => (
+                        <UserInfo key={index}>
+                            <StyledRowWrapper>
+                                <Rank>{item.rank}</Rank>
+                                <ProfileImage
+                                    src={item.profileImage}
+                                    alt={`Profile image of ${item.username}`}
+                                    width={50}
+                                    height={50}
+                                />
+                                <Username>{item.username}</Username>
+                            </StyledRowWrapper>
+                            <Link href={`/coffeecaht/${index}`}>
+                                <Button tertiary size="small" label="신청" />
+                            </Link>
+                        </UserInfo>
+                    ))}
+                </ColumnWrapper>
             </Container>
         </ColumnWrapper>
     );
@@ -45,28 +50,28 @@ const CoffeChatList = () => {
 export default CoffeChatList;
 
 const StyledRowWrapper = styled(RowWrapper)`
-    width : auto;
-`
+    width: auto;
+`;
 
 const UserInfo = styled.div`
-    display : flex;
-    align-items : center;
-    justify-content : space-between;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
     margin-bottom: 0.5em;
-    width : 100%;
+    width: 100%;
 `;
 
 const Rank = styled.div`
     font-size: 0.875em;
-    color : #8E8E8E;
-    width : 1em;
+    color: #8e8e8e;
+    width: 1em;
 `;
 
 const ProfileImage = styled(Image)`
     border-radius: 10px;
     margin-right: 0.5em;
-    width : 2em;
-    height : 2em;
+    width: 2em;
+    height: 2em;
 `;
 
 const Username = styled.div`

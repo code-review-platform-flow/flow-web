@@ -28,19 +28,17 @@ const SearchSchoolContainer: React.FC<SearchSchoolContainerProps> = ({ showError
     const handleSearchItem = (school?: string) => {
         setSearchTerm(school || '');
         setSchoolName(school || '');
-    }
+    };
 
     const handleEnterYear = (year: number) => {
         setEnterYear(year);
-    }
+    };
 
     useEffect(() => {
         if (searchTerm === '') {
             setFilteredSchools([]);
         } else {
-            const filtered = schoolNames.filter(school =>
-                school.includes(searchTerm)
-            );
+            const filtered = schoolNames.filter((school) => school.includes(searchTerm));
             setFilteredSchools(filtered.slice(0, 5)); // 최대 5개의 결과 표시
         }
     }, [schoolNames, searchTerm]);
@@ -48,20 +46,22 @@ const SearchSchoolContainer: React.FC<SearchSchoolContainerProps> = ({ showError
     const handleNext = () => {
         const isValid = !!enterYear && !!schoolName;
         onNext(isValid);
-    }
+    };
 
     return (
         <>
-            <Title>학교 선택</Title>   
+            <Title>학교 선택</Title>
             <Column>
                 <SemiTitle>입학연도</SemiTitle>
-                <StyledSelect 
-                    size="large" 
+                <StyledSelect
+                    size="large"
                     firstValue="연도 선택 (학번)"
                     onChange={(e: React.ChangeEvent<HTMLSelectElement>) => handleEnterYear(parseInt(e.target.value))}
                 >
-                    {years.map(year => (
-                        <option key={year} value={year}>{year}</option>
+                    {years.map((year) => (
+                        <option key={year} value={year}>
+                            {year}
+                        </option>
                     ))}
                 </StyledSelect>
                 {showError && !enterYear && <ErrorMessage>입학연도를 선택해주세요.</ErrorMessage>}
@@ -69,23 +69,25 @@ const SearchSchoolContainer: React.FC<SearchSchoolContainerProps> = ({ showError
 
             <Column2>
                 <SemiTitle>학교</SemiTitle>
-                <Input 
-                    icon={SearchIcon2} 
-                    size='large' 
-                    value={searchTerm} 
-                    onChange={(e: React.ChangeEvent<any>) => setSearchTerm(e.target.value)} 
+                <Input
+                    icon={SearchIcon2}
+                    size="large"
+                    value={searchTerm}
+                    onChange={(e: React.ChangeEvent<any>) => setSearchTerm(e.target.value)}
                     placeholder="학교 이름 검색"
                 />
                 {showError && !schoolName && <ErrorMessage>학교를 선택해주세요.</ErrorMessage>}
                 {filteredSchools.length > 0 && (
                     <SearchResults>
                         {filteredSchools.map((school, index) => (
-                            <SearchResultItem onClick={()=>handleSearchItem(school)} key={index}>{school}</SearchResultItem>
+                            <SearchResultItem onClick={() => handleSearchItem(school)} key={index}>
+                                {school}
+                            </SearchResultItem>
                         ))}
                     </SearchResults>
                 )}
             </Column2>
-            <Button $primary size='wide' label='다음' onClick={handleNext} />
+            <Button $primary size="wide" label="다음" onClick={handleNext} />
         </>
     );
 };
@@ -99,13 +101,13 @@ const Column = styled.div`
 `;
 
 const Column2 = styled(Column)`
-    height : 200px;
+    height: 200px;
 `;
 
 const StyledSelect = styled(Select)``;
 
 const SearchResults = styled.div`
-    font-size : 0.8125em;
+    font-size: 0.8125em;
     margin-top: 0.5em;
     border-radius: 4px;
     max-height: 150px;

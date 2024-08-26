@@ -1,10 +1,9 @@
 ---
-name: "Bug 이슈 템플릿"
+name: 'Bug 이슈 템플릿'
 about: '버그 이슈 템플릿 '
-title: "[BUG]"
+title: '[BUG]'
 labels: bug
 assignees: ''
-
 ---
 
 ## 어떤 버그인가요?

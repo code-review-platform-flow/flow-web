@@ -22,11 +22,11 @@ const SelectDepartmentContainer: React.FC<SelectDepartmentContainerProps> = ({ s
     const handleNext = () => {
         const isValid = !!majorName;
         onNext(isValid);
-    }
+    };
 
     return (
         <>
-            <Title>학과 선택</Title>   
+            <Title>학과 선택</Title>
             <Column>
                 <SemiTitle>학과</SemiTitle>
                 <Input 
@@ -39,7 +39,7 @@ const SelectDepartmentContainer: React.FC<SelectDepartmentContainerProps> = ({ s
                 {showError && !majorName && <ErrorMessage>학과를 선택해주세요.</ErrorMessage>}
             </Column>
             <ButtonWrapper>
-                <Button $primary size='wide' label='다음' onClick={handleNext} />
+                <Button $primary size="wide" label="다음" onClick={handleNext} />
             </ButtonWrapper>
         </>
     );
@@ -48,8 +48,8 @@ const SelectDepartmentContainer: React.FC<SelectDepartmentContainerProps> = ({ s
 export default SelectDepartmentContainer;
 
 const Column = styled.div`
-    display : flex;
-    flex-direction : column;
+    display: flex;
+    flex-direction: column;
     gap: 0.5em;
 `;
 

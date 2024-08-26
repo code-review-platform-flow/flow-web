@@ -4,7 +4,7 @@ import Input from '@/widgets/input/Input';
 import styled from 'styled-components';
 import Button from '@/widgets/button/Button';
 import { useRecoilState } from 'recoil';
-import { nameState, pwCheckState, schoolEmailState, schoolNameState, studentNumberState, majorNameState } from '@/app/util/register/register';
+import { nameState, schoolEmailState, schoolNameState, studentNumberState, majorNameState } from '@/app/util/register/register';
 import { codeAuth, emailAuth } from '../api/emailAuthAPI';
 import { submitRegister } from '../api/registerAPI';
 
@@ -20,7 +20,6 @@ const UserInfoContainer: React.FC<UserInfoContainerProps> = ({ showError = false
     const [pw2, setPw2] = useState('');
 
     const [majorName] = useRecoilState(majorNameState);
-    const [pwCheck, setPwCheck] = useRecoilState(pwCheckState);
     const [schoolEmail, setSchoolEmail] = useRecoilState(schoolEmailState);
     const [schoolName, setSchoolName] = useRecoilState(schoolNameState);
     const [studentNumber, setStudentNumber] = useRecoilState(studentNumberState);

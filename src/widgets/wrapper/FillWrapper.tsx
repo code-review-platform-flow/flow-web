@@ -16,9 +16,9 @@ const StyledWrapper = styled.div`
     width: 100%;
     height: 100%;
     z-index: 5;
-    background-color: #F5F5F7;
-    padding-left : 1em;
-    padding-right : 1em;
+    background-color: #f5f5f7;
+    padding-left: 1em;
+    padding-right: 1em;
 `;
 
 export const FillWrapper: React.FC<FillWrapperProps> = ({ children }) => {
