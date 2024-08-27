@@ -39,7 +39,7 @@ export function PaymentSuccessPage() {
                 setResponseData(data);
             })
             .catch((error) => {
-                router.push(`/fail?code=${error.code}&message=${error.message}`);
+                // router.push(`/fail?code=${error.code}&message=${error.message}`);
             });
     }, [searchParams]);
 

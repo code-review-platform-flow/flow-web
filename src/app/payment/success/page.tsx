@@ -1,3 +1,3 @@
-import { PaymentSuccessPage } from '@/views/payment/ui/PaymentSuccess';
+import PaymentSuccessPage from '@/features/payment/success';
 
 export default PaymentSuccessPage;

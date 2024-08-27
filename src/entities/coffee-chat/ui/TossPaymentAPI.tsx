@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useCallback } from 'react';
-import { loadTossPayments, TossPaymentsPayment, CardPaymentRequest } from '@tosspayments/tosspayments-sdk';
+import { loadTossPayments, TossPaymentsPayment } from '@tosspayments/tosspayments-sdk';
 import TossPaymentButton from './TossPaymentButton';
 import { useSendCoffeeChat } from '@/features/coffee-chat/api/coffeeChatApi';
 import { useCreateOrder } from '@/features/order/api/orderApi';
@@ -14,6 +14,27 @@ interface OrderData {
     orderId: number;
     customerKey: string;
     tossOrderId: string;
+}
+
+interface CardPaymentRequest {
+    method: 'CARD'; // 결제 수단은 반드시 'CARD'여야 합니다.
+    amount: {
+        currency: 'KRW'; // 통화는 원화(KRW)로 고정됩니다.
+        value: number; // 결제 금액입니다.
+    };
+    orderId: string; // 주문 ID를 나타내는 문자열입니다.
+    orderName: string; // 주문 이름입니다.
+    successUrl: string; // 결제 성공 시 리다이렉트될 URL입니다.
+    failUrl: string; // 결제 실패 시 리다이렉트될 URL입니다.
+    customerEmail?: string; // 구매자의 이메일 주소 (선택 사항).
+    customerName?: string; // 구매자의 이름 (선택 사항).
+    customerMobilePhone?: string; // 구매자의 휴대폰 번호 (선택 사항).
+    card: {
+        useEscrow?: boolean; // 에스크로 사용 여부 (선택 사항).
+        flowMode?: 'DEFAULT' | 'DIRECT'; // 결제 흐름 모드 (기본 또는 직접).
+        useCardPoint?: boolean; // 카드 포인트 사용 여부 (선택 사항).
+        useAppCardOnly?: boolean; // 앱 카드만 사용할지 여부 (선택 사항).
+    };
 }
 
 const TossPaymentAPI: React.FC<TossPaymentAPIProps> = ({ contents }) => {
@@ -39,7 +60,7 @@ const TossPaymentAPI: React.FC<TossPaymentAPIProps> = ({ contents }) => {
         onSuccess: (data: OrderData) => {
             console.log('Order created successfully:', data);
             setOrderData(data);
-            // requestPayment(data);
+            requestPayment(data);
         },
         onError: (error: any) => {
             console.error('Error creating order:', error);
@@ -101,7 +122,6 @@ const TossPaymentAPI: React.FC<TossPaymentAPIProps> = ({ contents }) => {
                     customerEmail: 'customer123@gmail.com',
                     customerName: '김토스',
                     customerMobilePhone: '01012341234',
-                    customerKey: order.customerKey,
                     card: {
                         useEscrow: false,
                         flowMode: 'DEFAULT',
