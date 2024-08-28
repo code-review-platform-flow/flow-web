@@ -10,20 +10,28 @@ import FindPw from "./ui/FindPw";
 import RegisterButton from "./ui/RegisterButton";
 import styled from "styled-components";
 
+// import { authenticate } from "./api/authAction"
+import { useFormState } from "react-dom";
 
 const LoginPage: React.FC = () => {
+    // const [errorMsg, dispatch] = useFormState(authenticate, undefined)
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const [error, setError] = useState('');
 
-    const handleSubmit = async (e: React.FormEvent) => {
-        e.preventDefault();
-    };
+    const data = {
+        email,
+        password
+    }
+
+    const handleLogin = async () => {
+    }
 
     return (
         <FillWrapper>
             <LoginContainer>
-                <LoginForm onSubmit={handleSubmit}>
+                <LoginForm 
+                // action={dispatch}
+                >
                     <Input 
                         size="large" 
                         placeholder="아이디" 
@@ -37,7 +45,7 @@ const LoginPage: React.FC = () => {
                         value={password} 
                         onChange={(e) => setPassword(e.target.value)} 
                     />
-                    {error && <ErrorText>{error}</ErrorText>}
+                    {/* {errorMsg && <ErrorText>{errorMsg}</ErrorText>} */}
                     <Button type="submit" $primary size="wide" label="로그인"/>
                 </LoginForm>
                 <Row>
@@ -58,13 +66,14 @@ const Row = styled.div`
 `;
 
 const LoginForm = styled.form`
-    display  : flex;
-    flex-direction : column;
-    width : 100%;
-    gap : 1em;
-`
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    gap: 1em;
+`;
 
 const ErrorText = styled.p`
     color: red;
     margin: 10px 0;
+    font-size: 0.8125em;
 `;

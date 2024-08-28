@@ -5,11 +5,10 @@ import GridWrapper from './ui/GridWrapper';
 import BackButton from '@/widgets/button/BackButton';
 import TrendingPostContainer from './ui/TrendingPostContainer';
 
-interface indexProps {}
 
-const index: React.FC<indexProps> = ({}) => {
+const TrendingPostPage: React.FC = () => {
     return (
-        <PageWrapper padding="20%">
+        <PageWrapper padding="15%">
             <BackButton label="️🔥 트렌딩 포스트" />
             <GridWrapper>
                 <TrendingPostContainer />
@@ -18,4 +17,4 @@ const index: React.FC<indexProps> = ({}) => {
     );
 };
 
-export default index;
+export default TrendingPostPage;

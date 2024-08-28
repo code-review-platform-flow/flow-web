@@ -1,6 +1,6 @@
 import ky from 'ky';
 
-const apiClient = ky.create({
+const apiClient = ky.extend({
     prefixUrl: process.env.NEXT_PUBLIC_SERVER_URL,
     timeout: 10000,
     hooks: {

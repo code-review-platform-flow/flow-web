@@ -11,6 +11,7 @@ import profileExampleImage from '../../../public/images/profileImageExample.png'
 import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
+import { signIn, useSession } from 'next-auth/react';
 
 type User = {
     name: string;
@@ -25,6 +26,7 @@ export interface HeaderProps {
 
 const Header = ({ user, onLogin, onLogout, onCreateAccount }: HeaderProps) => {
     const router = useRouter();
+    const { data: session } = useSession()
 
     return (
         <>
@@ -41,11 +43,11 @@ const Header = ({ user, onLogin, onLogout, onCreateAccount }: HeaderProps) => {
                     </SearchContainer>
                 </Row>
                 <ButtonContainer>
-                    {user ? (
+                    {session ? (
                         // 로그인시
                         <Row2>
-                            <Icon src={boxIcon} alt="박스 아이콘" />
-                            <Icon src={bellIcon} alt="벨 아이콘" />
+                            <Icon src={boxIcon} alt="박스 아이콘"/>
+                            <Icon src={bellIcon} alt="벨 아이콘"/>
                             <ButtonWrapper>
                                 <StyledButton tertiary size="medium" onClick={onCreateAccount} label="새 포스트" />
                                 <PencilIconWrapper>
@@ -58,7 +60,7 @@ const Header = ({ user, onLogin, onLogout, onCreateAccount }: HeaderProps) => {
                         // 로그아웃시
                         <>
                             <Link href="/login">
-                                <Button size="medium" onClick={onLogin} label="로그인" />
+                                <Button size="medium"  label="로그인" />
                             </Link>
                             <SizedBox />
                             <Link href="/register">
@@ -75,6 +77,7 @@ const Header = ({ user, onLogin, onLogout, onCreateAccount }: HeaderProps) => {
 export default Header;
 
 const StyledLogo = styled(Image)`
+    cursor : pointer;
     @media (max-width: 768px) {
         width: 7em;
     }
