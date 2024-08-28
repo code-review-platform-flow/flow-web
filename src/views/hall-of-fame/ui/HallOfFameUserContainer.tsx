@@ -5,7 +5,6 @@ import CrownIcon from '../../../../public/icons/crownIcon.svg';
 import SilverMedalIcon from '../../../../public/icons/silverMedalIcon.svg';
 import BronzeMedalIcon from '../../../../public/icons/bronzeMedalIcon.svg';
 import Container from '@/widgets/container/Container';
-import UserProfileImage from '../../../../public/images/profileImageExample.png';
 import { ColumnWrapper } from '@/widgets/wrapper/ColumnWrapper';
 import { RowWrapper } from '@/widgets/wrapper/RowWrapper';
 import { useQuery } from '@tanstack/react-query';
