@@ -67,7 +67,7 @@ const TrendingPostContainer: React.FC<TrendingPostContainerProps> = ({}) => {
                                 <ColumnWrapper>
                                     <UserName>{post.userName}</UserName>
                                     <UserDepartmentEnterYear>
-                                        {post.majorName} {post.studentNumber}학번
+                                        {post.majorName} {post.studentNumber ? `${String(post.studentNumber).substring(0, 2)}학번` : ''}
                                     </UserDepartmentEnterYear>
                                 </ColumnWrapper>
                                 <PostInfo commentCount={0} tumbCount={ 0} />
