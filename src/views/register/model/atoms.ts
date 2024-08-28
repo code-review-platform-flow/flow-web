@@ -3,7 +3,12 @@ import { atom } from 'recoil';
 // 각 필드에 대한 atom 생성
 export const enterYearState = atom({
     key: 'enterYearState',
-    default: 0, // 초기값을 빈 문자열로 설정
+    default: 0, 
+})
+
+export const studentNumberState = atom({
+    key: 'studentNumberState',
+    default: '', 
 });
 
 export const schoolNameState = atom({
@@ -11,8 +16,8 @@ export const schoolNameState = atom({
     default: '',
 });
 
-export const departmentState = atom({
-    key: 'departmentState',
+export const majorNameState = atom({
+    key: 'majorNameState',
     default: '',
 });
 

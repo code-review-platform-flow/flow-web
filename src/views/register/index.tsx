@@ -26,12 +26,10 @@ const RegisterPage: React.FC = () => {
             setRegisterCheck(true);
         }
 
-        if (
-            register == 2
-            // && registerCheck == true
-        ) {
-            console.log('회원가입 성공');
-            redirect('/');
+        if (register == 2  && registerCheck == true
+        ){
+            console.log('회원가입 성공')
+            redirect('/')
         }
     };
 
