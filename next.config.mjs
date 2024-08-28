@@ -1,8 +1,10 @@
+/** @type {import('next').NextConfig} */
 const nextConfig = {
     images: {
         domains: ['storage.googleapis.com','static.wanted.co.kr','cdn.jumpit.co.kr','grepp-programmers.s3.amazonaws.com'], 
     },
     swcMinify: true,
+    reactStrictMode: false,
     compiler: {
         styledComponents: {
             ssr: true,
@@ -20,8 +22,8 @@ const nextConfig = {
                 destination: '/storybook-static/:path*',
             },
             {
-                source: '/api/:path*',
-                destination: 'http://localhost:8080/:path*',
+                source: '/:path*',
+                destination: `${process.env.NEXT_PUBLIC_SERVER_URL}/:path*`,
             },
         ];
     },

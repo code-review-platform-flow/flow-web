@@ -20,6 +20,7 @@ const UserInfoContainer: React.FC<UserInfoContainerProps> = ({ showError = false
     const [pw2, setPw2] = useState('');
 
     const [majorName] = useRecoilState(majorNameState);
+
     const [schoolEmail, setSchoolEmail] = useRecoilState(schoolEmailState);
     const [schoolName, setSchoolName] = useRecoilState(schoolNameState);
     const [studentNumber, setStudentNumber] = useRecoilState(studentNumberState);
