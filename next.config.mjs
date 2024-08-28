@@ -1,6 +1,6 @@
 const nextConfig = {
     images: {
-        domains: ['storage.googleapis.com'], 
+        domains: ['storage.googleapis.com','static.wanted.co.kr','cdn.jumpit.co.kr','grepp-programmers.s3.amazonaws.com'], 
     },
     swcMinify: true,
     compiler: {

@@ -83,7 +83,8 @@ const TrendingPostContainer: React.FC<TrendingPostContainerProps> = ({}) => {
 export default TrendingPostContainer;
 
 const PostContainer = styled(Container)`
-    max-width: 290px;
+    min-width: 290px;
+    width : 100%;
     min-height: 300px;
     @media (max-width: 768px) {
         width: 100%;
