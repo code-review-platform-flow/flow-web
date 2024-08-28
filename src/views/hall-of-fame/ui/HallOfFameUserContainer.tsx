@@ -10,6 +10,8 @@ import { ColumnWrapper } from '@/widgets/wrapper/ColumnWrapper';
 import { RowWrapper } from '@/widgets/wrapper/RowWrapper';
 import { useQuery } from '@tanstack/react-query';
 import { fetchHallOfFameListDetail } from '../api/fetchHallOfFameList'; // fetch 함수를 별도 파일로 분리하여 임포트
+import FlexWrapper from '@/widgets/wrapper/FlexWrapper';
+import { SizedBox } from '@/widgets/wrapper/SizedBox';
 
 export interface HallOfFameUser {
     name: string;
@@ -61,13 +63,14 @@ const HallOfFameUserContainer: React.FC = () => {
     }
 
     return (
-        <GridWrapper>
+        <FlexWrapper>
+            <SizedBox height='1em'/>
             {hallOfFameList &&
                 hallOfFameList.map((user, index) => (
-                    <UserContainer width="200px" height="200px" key={index}>
+                    <UserContainer key={index}>
                         {index + 1 <= 3 && <RankIcon rank={index + 1} />}
                         <ColumnWrapper alignItems="center" gap="1em">
-                            <Image width={44} height={44} sizes="50vw" src={UserProfileImage} alt="프로필" />
+                            <UserImage width={44} height={44} sizes="50vw" src={user.profileUrl} alt="프로필" />
                             {user.userName}
                             <RowWrapper justifyContent="center">
                                 <UserInfo>
@@ -78,32 +81,17 @@ const HallOfFameUserContainer: React.FC = () => {
                         </ColumnWrapper>
                     </UserContainer>
                 ))}
-        </GridWrapper>
+        </FlexWrapper>
     );
 };
 
 export default HallOfFameUserContainer;
 
-// 스타일 컴포넌트는 그대로 유지합니다.
-const GridWrapper = styled.div`
-    margin-top: 1em;
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    place-content: center center;
-    gap: 0.5em;
-
-    @media (max-width: 768px) {
-        grid-template-columns: repeat(2, 1fr);
-        padding-bottom: 1em;
-    }
-
-    @media (max-width: 480px) {
-        grid-template-columns: 1fr;
-        padding-bottom: 1em;
-    }
-`;
 
 const UserContainer = styled(Container)`
+    width : 31%;
+    height: 200px;
+
     position: relative;
     display: flex;
     align-items: center;
@@ -133,3 +121,7 @@ const StyledImage = styled(Image)`
         height: 2em;
     }
 `;
+
+const UserImage = styled(Image)`
+    border-radius :10px;
+`

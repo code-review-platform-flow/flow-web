@@ -2,19 +2,18 @@
 import BackButton from '@/widgets/button/BackButton';
 import { PageWrapper } from '@/widgets/wrapper/PageWrapper';
 import React from 'react';
-import CareerInfo from '../home/ui/CareerInfo';
-import GridWrapper from '../trending-post/ui/GridWrapper';
+import FlexWrapper from '../../widgets/wrapper/FlexWrapper';
 import CareerContainer from './ui/CareerContainer';
 
 interface CareerPageProps {}
 
 const CareerPage: React.FC<CareerPageProps> = ({}) => {
     return (
-        <PageWrapper padding="25%">
+        <PageWrapper padding="15%">
             <BackButton label="💼  채용 정보" />
-            <GridWrapper>
+            <FlexWrapper>
                 <CareerContainer />
-            </GridWrapper>
+            </FlexWrapper>
         </PageWrapper>
     );
 };

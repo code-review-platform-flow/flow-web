@@ -21,7 +21,7 @@ const TrendingPostContainer: React.FC<TrendingPostContainerProps> = ({}) => {
 
     const { data: trendingPostList = [], isLoading, error } = useQuery<PostDetail[]>({
         queryKey: ['trendingPostList', page, count],
-        queryFn: (context) => fetchTrendingPostDetails(context),  
+        queryFn: () => fetchTrendingPostDetails(),  
     });
 
     if (isLoading) return <div>Loading...</div>;
@@ -67,7 +67,7 @@ const TrendingPostContainer: React.FC<TrendingPostContainerProps> = ({}) => {
                                 <ColumnWrapper>
                                     <UserName>{post.userName}</UserName>
                                     <UserDepartmentEnterYear>
-                                        {post.majorName} {post.studentNumber}학번
+                                        {post.majorName} {post.studentNumber ? `${String(post.studentNumber).substring(0, 2)}학번` : ''}
                                     </UserDepartmentEnterYear>
                                 </ColumnWrapper>
                                 <PostInfo commentCount={0} tumbCount={ 0} />
@@ -83,8 +83,10 @@ const TrendingPostContainer: React.FC<TrendingPostContainerProps> = ({}) => {
 export default TrendingPostContainer;
 
 const PostContainer = styled(Container)`
-    max-width: 290px;
+    max-width: 31%;
+    width : 100%;
     min-height: 300px;
+
     @media (max-width: 768px) {
         width: 100%;
     }

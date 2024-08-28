@@ -5,40 +5,50 @@ import { Medium } from './Font';
 import Container from '@/widgets/container/Container';
 import Button from '@/widgets/button/Button';
 import Image from 'next/image';
-import ProfileImage2 from '../../../../public/images/profileImageExample2.png';
 import { RowWrapper } from '@/widgets/wrapper/RowWrapper';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
+import { PostDetail } from '@/views/trending-post/model/type';
 
-// 명예의 전당 데이터
-const hallOfFameData = [
-    { rank: 1, profileImage: ProfileImage2, username: '사용자1', title: '백엔드 선배님들의 조언이 절실합니다.' },
-    { rank: 2, profileImage: ProfileImage2, username: '사용자2', title: '생애 첫 학점 4.5 달성 팁' },
-    {
-        rank: 3,
-        profileImage: ProfileImage2,
-        username: '사용자3',
-        title: '5년 전 첫 창업은 고객을 몰라서 망했다 하지만',
-    },
-];
 
-const HallofFameList = () => {
+interface TrendingPostListProps {
+    trendingPostList?: PostDetail[];
+}
+
+// postId: number;
+// title: string;
+// content: string;
+// userName: string;
+// profileUrl: string;
+// majorName: string;
+// studentNumber: string;
+// categoryName: string;
+// tags: {
+//     tagName: string;
+// }[];
+// createDate: string;
+
+
+const TrendingPostList: React.FC<TrendingPostListProps> = ({ trendingPostList = [] }) => {
+    const router = useRouter();
+
     return (
         <ColumnWrapper gap="0.75em">
             <Medium>️🔥 트렌딩 포스트</Medium>
             <Container size="small" width="100%" height="100%">
                 <ColumnWrapper gap="1.25em">
-                    {hallOfFameData.map((item, index) => (
+                    {trendingPostList && trendingPostList.map((item, index) => (
                         <UserInfo key={index}>
-                            <Rank>{item.rank}</Rank>
+                            <Rank>{index+1}</Rank>
                             <ColumnWrapper gap="0.25em">
                                 <RowWrapper>
                                     <ProfileImage
-                                        src={item.profileImage}
-                                        alt={`Profile image of ${item.username}`}
+                                        src={item.profileUrl}
+                                        alt={`Profile image of ${item.userName}`}
                                         width={50}
                                         height={50}
                                     />
-                                    <Username>{item.username}</Username>
+                                    <Username>{item.userName}</Username>
                                 </RowWrapper>
                                 <PostTitle>{item.title}</PostTitle>
                             </ColumnWrapper>
@@ -53,7 +63,7 @@ const HallofFameList = () => {
     );
 };
 
-export default HallofFameList;
+export default TrendingPostList;
 
 const UserInfo = styled.div`
     display: flex;

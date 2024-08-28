@@ -24,7 +24,6 @@ const StyledWrapper = styled.div<{ padding?: string; gap?: string; height?: stri
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    width: 100%;
     height: ${(props) => props.height || 'auto'};
     gap: ${(props) => props.gap || '1.5em'};
     padding-left: ${(props) => props.padding || '15%'};
