@@ -10,13 +10,26 @@ export interface InputProps {
     placeholder?: string;
     icon?: string;
     lowround?: boolean;
-    value?: string;
+    type?: string;
+    value?: string ;
 }
 
-export const Input = ({ size = 'medium', placeholder = '', icon = '', ...props }: InputProps) => {
+export const Input = ({
+    size = 'medium',
+    placeholder = '',
+    icon = '',
+    type = '',
+    ...props
+}: InputProps) => {
     return (
         <InputWrapper>
-            <StyledInput size={size} placeholder={placeholder} {...props}></StyledInput>
+            <StyledInput
+                size={size}
+                placeholder={placeholder}
+                type={type}
+                {...props}>
+                
+            </StyledInput>
             {icon && <Icon width={16} height={16} src={icon} alt="icon" />}
         </InputWrapper>
     );

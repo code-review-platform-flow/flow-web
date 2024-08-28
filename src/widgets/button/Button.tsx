@@ -22,20 +22,19 @@ export const Button = ({
     gap = '0em',
     ...props
 }: ButtonProps) => {
-    return (
-        <StyledButton
-            $primary={$primary}
-            size={size}
-            backgroundColor={backgroundColor}
-            tertiary={tertiary}
-            gap={gap}
-            {...props}
-            type="button"
-        >
-            {children}
-            {label}
-        </StyledButton>
-    );
+  return (
+    <StyledButton 
+      $primary={$primary}
+      size={size}
+      backgroundColor={backgroundColor}
+      tertiary={tertiary}
+      gap={gap}
+      {...props}
+    >
+      {children}
+      {label}
+    </StyledButton>
+  );
 };
 
 const StyledButton = styled.button<{

@@ -4,8 +4,9 @@ import Input from '@/widgets/input/Input';
 import styled from 'styled-components';
 import Button from '@/widgets/button/Button';
 import { useRecoilState } from 'recoil';
-import { nameState, pwCheckState, schoolEmailState, schoolNameState } from '@/app/util/register/register';
-import { handleEmailAuth } from '../api/handleEmailAuth';
+import { nameState, pwCheckState, schoolEmailState, schoolNameState, studentNumberState, majorNameState } from '@/app/util/register/register';
+import { codeAuth, emailAuth } from '../api/emailAuthAPI';
+import { submitRegister } from '../api/registerAPI';
 
 interface UserInfoContainerProps {
     showError?: boolean;
@@ -18,12 +19,13 @@ const UserInfoContainer: React.FC<UserInfoContainerProps> = ({ showError = false
     const [pw, setPw] = useState('');
     const [pw2, setPw2] = useState('');
 
+    const [majorName] = useRecoilState(majorNameState);
     const [pwCheck, setPwCheck] = useRecoilState(pwCheckState);
     const [schoolEmail, setSchoolEmail] = useRecoilState(schoolEmailState);
     const [schoolName, setSchoolName] = useRecoilState(schoolNameState);
+    const [studentNumber, setStudentNumber] = useRecoilState(studentNumberState);
 
-    const [authCode, setAuthCode] = useState('');
-    const [authCodeInput, setAuthCodeInput] = useState('');
+    const [authCode, setAuthCode] = useState<number>(0);
 
     const [buttonLabel, setButtonLabel] = useState('이메일 인증하기');
     const [isMailSuccess, setIsMailSuccess] = useState(false);
@@ -32,8 +34,9 @@ const UserInfoContainer: React.FC<UserInfoContainerProps> = ({ showError = false
     const nameRegex = /^[가-힣]{2,}$/;
     const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
     const passwordRegex = /^(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,15}$/;
+    const studentNumberRegex = /^[0-9]+$/;
 
-    const submitEmail = async () => {
+    const handleEmailSubmission = async () => {
         if (!schoolName || !schoolEmail || !emailRegex.test(schoolEmail)) {
             console.error('유효한 학교명 또는 이메일이 필요합니다.');
             return;
@@ -65,9 +68,21 @@ const UserInfoContainer: React.FC<UserInfoContainerProps> = ({ showError = false
         );
     };
 
-    const handleNext = () => {
+    const handleNext = async () => {
         const isValid = validateForm();
         onNext(isValid);
+        if (!isValid) return;
+
+        try {
+            const response = await submitRegister(studentNumber, schoolName, schoolEmail, pw, name, majorName);
+            if (response.ok) {
+                console.log('회원가입 성공');
+            } else {
+                console.error('회원가입 실패');
+            }
+        } catch (error) {
+            console.error('회원가입 중 에러 발생:', error);
+        }
     };
 
     return (
@@ -84,6 +99,19 @@ const UserInfoContainer: React.FC<UserInfoContainerProps> = ({ showError = false
                 />
                 {showError && !nameRegex.test(name) && (
                     <ErrorMessage>이름을 정확히 입력해주세요 (한글 2자 이상)</ErrorMessage>
+                )}
+            </Column>
+
+            <Column>
+                <SemiTitle>학번</SemiTitle>
+                <Input
+                    size='large'
+                    placeholder='학번을 입력해주세요'
+                    value={studentNumber}
+                    onChange={(e) => setStudentNumber(e.target.value)}
+                />
+                {showError && !studentNumberRegex.test(studentNumber) && (
+                    <ErrorMessage>학번을 정확히 입력해주세요</ErrorMessage>
                 )}
             </Column>
 

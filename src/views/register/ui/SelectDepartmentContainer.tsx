@@ -4,7 +4,7 @@ import Input from '@/widgets/input/Input';
 import SearchIcon2 from '../../../../public/icons/searchIcon2.svg';
 import styled from 'styled-components';
 import { useRecoilState } from 'recoil';
-import { departmentState } from '@/app/util/register/register';
+import { majorNameState } from '@/app/util/register/register';
 import Button from '@/widgets/button/Button';
 
 interface SelectDepartmentContainerProps {
@@ -20,7 +20,7 @@ const SelectDepartmentContainer: React.FC<SelectDepartmentContainerProps> = ({ s
     };
 
     const handleNext = () => {
-        const isValid = !!department;
+        const isValid = !!majorName;
         onNext(isValid);
     };
 
@@ -36,7 +36,7 @@ const SelectDepartmentContainer: React.FC<SelectDepartmentContainerProps> = ({ s
                     placeholder="학과 이름을 검색해주세요"
                     onChange={(e: React.ChangeEvent<any>) => handleSearchItem(e.target.value)}
                 />
-                {showError && !department && <ErrorMessage>학과를 선택해주세요.</ErrorMessage>}
+                {showError && !majorName && <ErrorMessage>학과를 선택해주세요.</ErrorMessage>}
             </Column>
             <ButtonWrapper>
                 <Button $primary size="wide" label="다음" onClick={handleNext} />
