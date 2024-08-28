@@ -5,18 +5,18 @@ import { QueryFunctionContext } from '@tanstack/react-query';
 // Trending Post 리스트를 가져오는 함수
 const fetchTrendingPostList = async (page: number, count: number): Promise<PostSummary[]> => {
     try {
-        const response = await ky.get(`${process.env.NEXT_PUBLIC_SERVER_URL}/post/tranding/${page}/${count}`);
+        const response = await ky.get(`${process.env.NEXT_PUBLIC_SERVER_URL}/post/trending/${page}/${count}`);
 
         if (!response.ok) {
             throw new Error('데이터를 가져오는 중 오류가 발생했습니다.');
         }
 
             // data의 타입을 명확히 정의합니다.
-        const data: { trandingPostsList: PostSummary[] } = await response.json();
+        const data: { trendingPostsList: PostSummary[] } = await response.json();
 
-        console.log('Trending Posts:', data.trandingPostsList);
+        console.log('Trending Posts:', data.trendingPostsList);
 
-        return data.trandingPostsList as PostSummary[];
+        return data.trendingPostsList as PostSummary[];
     } catch (error) {
         console.error('fetchTrendingPostList Error:', error);
         throw error; // 예외를 다시 던져서 호출자에게 알림
@@ -42,9 +42,8 @@ const getPostDetail = async (postId: number): Promise<PostDetail> => {
 };
 
 // 모든 Trending Post의 상세 정보를 가져오는 함수
-export const fetchTrendingPostDetails = async (context: QueryFunctionContext<Readonly<[string, number, number]>>): Promise<PostDetail[]> => {
+export const fetchTrendingPostDetails = async (page:number = 1, count:number = 9): Promise<PostDetail[]> => {
     try {
-        const [, page, count] = context.queryKey;
         const trendingPosts = await fetchTrendingPostList(page, count);
         const postDetailsPromises = trendingPosts && trendingPosts.map((post) => getPostDetail(post.postId));
         const postDetails = await Promise.all(postDetailsPromises);

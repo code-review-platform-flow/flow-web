@@ -43,7 +43,7 @@ const getCareerDetail = async (jobId: number): Promise<CareerDetail> => {
 };
 
 
-export const fetchCareerListDetail = async (context: QueryFunctionContext<Readonly<[string]>>): Promise<CareerDetail[]> => {
+export const fetchCareerListDetail = async (): Promise<CareerDetail[]> => {
     try {
         const careerItems = await fetchCareerList();
         console.log(careerItems)

@@ -8,20 +8,12 @@ import { ColumnWrapper } from '@/widgets/wrapper/ColumnWrapper';
 import { CareerDetail } from '../model/type';
 import { fetchCareerListDetail } from '../api/fetchCareerList';
 import { useQuery } from '@tanstack/react-query';
+import { useRouter } from 'next/navigation';
 
 interface CareerContainerProps {}
 
 const CareerContainer: React.FC<CareerContainerProps> = ({}) => {
-    // const careerData = [
-    //     {
-    //         index: 1,
-    //         careerImage: DangguenImage,
-    //         careerTitle: '당근 프론트엔드 개발자 채용 공고',
-    //         job: '플랫폼',
-    //         size: '100~200',
-    //         descreption:
-    //             '당근은 활발한 교류가 있는 지역 생활 커뮤니티를 꿈꿉니다. 누구나 동네에서의 즐겁고 따뜻한 연결을 경험할 수 있도록 하이퍼로컬의 새로운 길을 만들어가고 있습니다',
-    //     },]
+    const router = useRouter();
 
     const {
         data: careerData = [],
@@ -29,7 +21,7 @@ const CareerContainer: React.FC<CareerContainerProps> = ({}) => {
         error,
     } = useQuery<CareerDetail[]>({
         queryKey: ['careerList'],
-        queryFn: (context) => fetchCareerListDetail(context),
+        queryFn: () => fetchCareerListDetail(),
     });
 
     if (isLoading) return <div>Loading...</div>;
@@ -42,7 +34,7 @@ const CareerContainer: React.FC<CareerContainerProps> = ({}) => {
         <>
             {careerData &&
                 careerData.map((career, index) => (
-                    <StyledContainer key={index} size="small" width="100%" height="100%" round>
+                    <StyledContainer onClick={()=>router.push(`${career.redirectUrl}`)} key={index} size="small" width="100%" height="100%" round>
                         <StyledRowWrapper2>
                             <CareerImage width={44} height={44} src={career.imageUrl} alt="공고이미지" />
                             <ColumnWrapper gap="0.25em">

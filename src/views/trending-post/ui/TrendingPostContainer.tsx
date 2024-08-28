@@ -21,7 +21,7 @@ const TrendingPostContainer: React.FC<TrendingPostContainerProps> = ({}) => {
 
     const { data: trendingPostList = [], isLoading, error } = useQuery<PostDetail[]>({
         queryKey: ['trendingPostList', page, count],
-        queryFn: (context) => fetchTrendingPostDetails(context),  
+        queryFn: () => fetchTrendingPostDetails(),  
     });
 
     if (isLoading) return <div>Loading...</div>;
@@ -83,9 +83,10 @@ const TrendingPostContainer: React.FC<TrendingPostContainerProps> = ({}) => {
 export default TrendingPostContainer;
 
 const PostContainer = styled(Container)`
-    min-width: 290px;
+    max-width: 31%;
     width : 100%;
     min-height: 300px;
+
     @media (max-width: 768px) {
         width: 100%;
     }

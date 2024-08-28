@@ -7,7 +7,22 @@ import Swiper from './ui/Swiper';
 import TrendingPostList from './ui/TrendingPostList';
 import WriteContainer from './ui/WriteContainer';
 import CareerInfo from './ui/CareerInfo';
+import { useQuery } from '@tanstack/react-query';
+import { fetchHomeData } from './api/fetchHomeData';
+import { fetchHallOfFameListDetail } from '../hall-of-fame/api/fetchHallOfFameList';
+
+
 export default function HomePage() {
+
+    const { data: homeData = {careers: [], posts: [], hallOfFame: []} } = useQuery({
+        queryKey: ['fetchhomeData'],
+        queryFn: () => fetchHomeData(),
+    });
+
+    console.log(homeData.careers);
+    console.log(homeData.posts);
+    console.log(homeData.hallOfFame);
+
     return (
         <PageWrapper padding="15%">
             <>
@@ -15,12 +30,16 @@ export default function HomePage() {
                 <RecentPost />
             </>
             <Swiper>
-                <HallofFameList />
+                <HallofFameList 
+                // hallOfFame={hallOfFame} 
+                />
                 <CoffeeChatList />
-                <TrendingPostList />
+                <TrendingPostList 
+                // posts={posts} 
+                />
             </Swiper>
             <>
-                <CareerInfo />
+                <CareerInfo careers={homeData.careers} />
             </>
         </PageWrapper>
     );
