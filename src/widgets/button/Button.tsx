@@ -2,25 +2,27 @@ import React from 'react';
 import styled from 'styled-components';
 
 export interface ButtonProps {
-    $primary?: boolean;
-    backgroundColor?: string;
-    size?: 'small' | 'medium' | 'large' | 'wide';
-    label: string;
-    onClick?: () => void;
-    tertiary?: boolean;
-    children?: React.ReactNode;
-    gap?: string;
+  $primary?: boolean;
+  backgroundColor?: string;
+  size?: 'small' | 'medium' | 'large' | 'wide' ;
+  label: string;
+  onClick?: () => void;
+  tertiary?: boolean;
+  children?: React.ReactNode;
+  gap?: string;
+  type?: 'button' | 'submit' | 'reset';
 }
 
 export const Button = ({
-    $primary = false,
-    size = 'medium',
-    backgroundColor,
-    label,
-    tertiary = false,
-    children,
-    gap = '0em',
-    ...props
+  $primary = false,
+  size = 'medium',
+  backgroundColor,
+  label,
+  tertiary = false,
+  children,
+  gap='0em',
+  type='button',
+  ...props
 }: ButtonProps) => {
   return (
     <StyledButton 
@@ -29,6 +31,7 @@ export const Button = ({
       backgroundColor={backgroundColor}
       tertiary={tertiary}
       gap={gap}
+      type={type}
       {...props}
     >
       {children}

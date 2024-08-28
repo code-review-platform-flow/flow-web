@@ -35,7 +35,7 @@ const HallofFameList = () => {
                         </UserInfo>
                     ))}
                 </ColumnWrapper>
-                <Link href={'/halloffame'}>
+                <Link href={'/hall-of-fame'}>
                     <Button tertiary label="더보기" size="wide" />
                 </Link>
             </Container>
