@@ -1,8 +1,8 @@
 import React from 'react';
-import { Swiper, SwiperSlide } from "swiper/react"; 
-import { Pagination, Autoplay } from "swiper/modules";
-import "swiper/css";
-import "swiper/css/pagination";
+import { Swiper, SwiperSlide } from 'swiper/react';
+import { Pagination, Autoplay } from 'swiper/modules';
+import 'swiper/css';
+import 'swiper/css/pagination';
 
 export interface AutoSwiperProps {
     children?: React.ReactNode;
@@ -16,9 +16,7 @@ interface CustomCSSProperties extends React.CSSProperties {
     '--swiper-pagination-bullet-horizontal-gap'?: string;
 }
 
-export const AutoSwiper = ({
-    children
-}: AutoSwiperProps) => {
+export const AutoSwiper = ({ children }: AutoSwiperProps) => {
     const swiperStyle: CustomCSSProperties = {
         width: '100%',
         height: '270px',
@@ -31,11 +29,11 @@ export const AutoSwiper = ({
 
     return (
         <Swiper
-            modules={[Pagination, Autoplay]} 
-            spaceBetween={24} 
+            modules={[Pagination, Autoplay]}
+            spaceBetween={24}
             slidesPerView={3}
-            loop={true} 
-            autoplay={{ delay: 3000 }} 
+            loop={true}
+            autoplay={{ delay: 3000 }}
             style={swiperStyle}
             pagination={{
                 clickable: true,

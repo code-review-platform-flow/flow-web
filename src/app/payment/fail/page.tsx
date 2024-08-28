@@ -1,3 +1,3 @@
-import {FailPage} from "@/views/payment/ui/Fail";
+import PaymentFailPage from '@/features/payment/fail';
 
-export default FailPage;
+export default PaymentFailPage;

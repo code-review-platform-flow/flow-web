@@ -42,37 +42,30 @@ const UserInfoContainer: React.FC<UserInfoContainerProps> = ({ showError = false
             return;
         }
 
-        try {
-            const response = await emailAuth(schoolEmail, schoolName);
-            if (response.ok) {
-                setIsMailSuccess(true);
-                setButtonLabel('인증 번호 입력 완료');
-            } else {
-                console.error('이메일 인증 실패');
-            }
-        } catch (error) {
-            console.error('이메일 인증 중 에러 발생:', error);
+        const response = await handleEmailAuth(schoolEmail, schoolName);
+        if (response.status === 200) {
+            setIsMailSuccess(true);
+            setButtonLabel('인증 번호 입력 완료');
+        } else {
+            setIsMailSuccess(true);
+            setButtonLabel('인증 번호 입력 완료');
+            console.error('이메일 인증 실패');
         }
     };
 
-    const handleAuthCodeSubmission = async () => {
-        try {
-            const response = await codeAuth(schoolEmail, schoolName, authCode);
-            if (response.ok) {
-                setIsMailSuccess(false);
-                setIsMailCheckSuccess(true);
-            } else {
-                console.error('인증 실패');
-                setIsMailCheckSuccess(false);
-            }
-        } catch (error) {
-            console.error('인증 오류 발생:', error);
-            setIsMailCheckSuccess(false);
-        }
+    const submitAuthCode = () => {
+        setIsMailSuccess(false);
+        setIsMailCheckSuccess(true);
     };
 
     const validateForm = () => {
-        return nameRegex.test(name) && emailRegex.test(schoolEmail) && passwordRegex.test(pw) && pw === pw2;
+        return (
+            nameRegex.test(name) &&
+            emailRegex.test(schoolEmail) &&
+            passwordRegex.test(pw) &&
+            pw === pw2 &&
+            authCode === authCodeInput
+        );
     };
 
     const handleNext = async () => {
@@ -99,8 +92,8 @@ const UserInfoContainer: React.FC<UserInfoContainerProps> = ({ showError = false
             <Column>
                 <SemiTitle>이름</SemiTitle>
                 <Input
-                    size='large'
-                    placeholder='이름을 입력해주세요'
+                    size="large"
+                    placeholder="이름을 입력해주세요"
                     value={name}
                     onChange={(e) => setName(e.target.value)}
                 />
@@ -125,8 +118,8 @@ const UserInfoContainer: React.FC<UserInfoContainerProps> = ({ showError = false
             <Column>
                 <SemiTitle>이메일</SemiTitle>
                 <Input
-                    size='large'
-                    placeholder='example1234@gachon.ac.kr'
+                    size="large"
+                    placeholder="example1234@gachon.ac.kr"
                     value={schoolEmail}
                     onChange={(e) => setSchoolEmail(e.target.value)}
                 />
@@ -138,14 +131,14 @@ const UserInfoContainer: React.FC<UserInfoContainerProps> = ({ showError = false
             <Column>
                 <SemiTitle>인증번호 입력</SemiTitle>
                 <Input
-                    size='large'
-                    placeholder='인증번호 4자리를 입력해주세요'
-                    value={authCode.toString()}
-                    onChange={(e) => setAuthCode(Number(e.target.value))}
+                    size="large"
+                    placeholder="인증번호 4자리를 입력해주세요"
+                    value={authCodeInput}
+                    onChange={(e) => setAuthCodeInput(e.target.value)}
                 />
             </Column>
-            
-            <Button onClick={isMailSuccess ? handleAuthCodeSubmission : handleEmailSubmission} size='large' label={buttonLabel} />
+
+            <Button onClick={isMailSuccess ? submitAuthCode : submitEmail} size="large" label={buttonLabel} />
             {isMailCheckSuccess ? (
                 <SuccessMessage>인증번호가 인증되었습니다</SuccessMessage>
             ) : (
@@ -156,34 +149,28 @@ const UserInfoContainer: React.FC<UserInfoContainerProps> = ({ showError = false
             <Column>
                 <SemiTitle>비밀번호</SemiTitle>
                 <Input
-                    type='password'
-                    size='large'
-                    placeholder='대문자,특수문자 포함 8~15자리'
+                    size="large"
+                    placeholder="대문자,특수문자 포함 8~15자리"
                     value={pw}
                     onChange={(e) => setPw(e.target.value)}
                 />
                 {showError && !passwordRegex.test(pw) && (
-                    <ErrorMessage>
-                        대문자, 숫자, 특수문자를 포함한 8~15자리의 비밀번호를 입력해주세요
-                    </ErrorMessage>
+                    <ErrorMessage>대문자, 숫자, 특수문자를 포함한 8~15자리의 비밀번호를 입력해주세요</ErrorMessage>
                 )}
             </Column>
 
             <Column>
                 <SemiTitle>비밀번호 확인</SemiTitle>
                 <Input
-                    type="password"
-                    size='large'
-                    placeholder='비밀번호를 한번 더 입력해주세요'
+                    size="large"
+                    placeholder="비밀번호를 한번 더 입력해주세요"
                     value={pw2}
                     onChange={(e) => setPw2(e.target.value)}
                 />
-                {showError && pw !== pw2 && (
-                    <ErrorMessage>입력하신 비밀번호와 다릅니다</ErrorMessage>
-                )}
+                {showError && pw !== pw2 && <ErrorMessage>입력하신 비밀번호와 다릅니다</ErrorMessage>}
             </Column>
-            
-            <Button $primary onClick={handleNext} size='large' label='회원가입 하기' />
+
+            <Button $primary onClick={handleNext} size="large" label="회원가입 하기" />
         </>
     );
 };

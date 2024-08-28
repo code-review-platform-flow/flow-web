@@ -14,42 +14,45 @@ const MailList: React.FC<MailListProps> = () => {
         coffechat: [
             {
                 coffechatId: 1,
-                sender: "iam123@gachon.ac.kr",
+                sender: 'iam123@gachon.ac.kr',
                 senderName: '지민성',
-                receiver: "you123@gachon.ac.kr",
+                receiver: 'you123@gachon.ac.kr',
                 receiverName: '박찬영',
-                coffeechatText: "안녕하세요~~~1",
+                coffeechatText: '안녕하세요~~~1',
                 imgUrl: ProfileExample,
                 part: ['프론트엔드개발', '크로스플랫폼앱개발'],
                 date: 7,
             },
             {
                 coffechatId: 2,
-                sender: "iam123@gachon.ac.kr",
+                sender: 'iam123@gachon.ac.kr',
                 senderName: '지민성',
-                receiver: "you123@gachon.ac.kr",
+                receiver: 'you123@gachon.ac.kr',
                 receiverName: '박찬영',
-                coffeechatText: "안녕하세요~~~1",
+                coffeechatText: '안녕하세요~~~1',
                 imgUrl: ProfileExample,
                 part: ['프론트엔드개발', '크로스플랫폼앱개발'],
                 date: 5,
             },
-        ]
+        ],
     };
 
-    const filteredData = mailData.coffechat.filter(chat =>
-        selected === 'receiveBox' ? chat.receiver === "you123@gachon.ac.kr" : chat.sender === "iam123@gachon.ac.kr"
+    const filteredData = mailData.coffechat.filter((chat) =>
+        selected === 'receiveBox' ? chat.receiver === 'you123@gachon.ac.kr' : chat.sender === 'iam123@gachon.ac.kr',
     );
 
     return (
-        <ColumnWrapper gap='1em'>
+        <ColumnWrapper gap="1em">
             <Title>{selected === 'receiveBox' ? '받은 요청' : '보낸 요청'}</Title>
             {filteredData.map((chat) => (
                 <Container key={chat.coffechatId} round>
-                    <RowWrapper gap='1em'>
+                    <RowWrapper gap="1em">
                         <ProfileImage width={100} height={100} src={chat.imgUrl} alt="profile" />
                         <ColumnWrapper>
-                            <SubTitle>{selected === 'receiveBox' ? chat.senderName : chat.receiverName}님이 커피챗을 요청했어요!</SubTitle>
+                            <SubTitle>
+                                {selected === 'receiveBox' ? chat.senderName : chat.receiverName}님이 커피챗을
+                                요청했어요!
+                            </SubTitle>
                             <Part>{chat.part.join(', ')}</Part>
                             <RowWrapper>
                                 <Time>{chat.date}일 전</Time>
@@ -69,7 +72,7 @@ const Title = styled.div`
     font-size: 1.5em;
     font-weight: 600;
     margin-bottom: 1em;
-    @media(max-width : 768px){
+    @media (max-width: 768px) {
         font-size: 1.25em;
     }
 `;
@@ -93,13 +96,12 @@ const Time = styled.div`
 
 const State = styled.div`
     font-size: 0.875em;
-    color: #004E96;
-    background-color: #EBF1F7;
-    padding : 0.25em;
-    box-sizing : border-box;
-    border-radius : 0.5em;
-    margin-left : 0.5em;
-
+    color: #004e96;
+    background-color: #ebf1f7;
+    padding: 0.25em;
+    box-sizing: border-box;
+    border-radius: 0.5em;
+    margin-left: 0.5em;
 `;
 
 const ProfileImage = styled(Image)`

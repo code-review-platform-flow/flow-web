@@ -1,9 +1,7 @@
-import { config } from 'dotenv';
-
-config({ path: '/app/.env' });
-
+/** @type {import('next').NextConfig} */
 const nextConfig = {
     swcMinify: true,
+    reactStrictMode: false,
     compiler: {
         styledComponents: {
             ssr: true,
@@ -20,16 +18,18 @@ const nextConfig = {
                 source: '/storybook/:path*',
                 destination: '/storybook-static/:path*',
             },
+            {
+                source: '/:path*',
+                destination: `${process.env.NEXT_PUBLIC_SERVER_URL}/:path*`,
+            },
         ];
     },
     env: {
         NEXT_PUBLIC_TOSS_CLIENT_KEY: process.env.NEXT_PUBLIC_TOSS_CLIENT_KEY,
-        NEXT_PUBLOC_TOSS_SECRET_KEY: process.env.NEXT_PUBLOC_TOSS_SECRET_KEY,
-        NEXT_PUBLIC_SERVER_URL: process.env.NEXT_PUBLIC_SERVER_URL
+        NEXT_PUBLIC_TOSS_SECRET_KEY: process.env.NEXT_PUBLIC_TOSS_SECRET_KEY,
+        NEXT_PUBLIC_SERVER_URL: process.env.NEXT_PUBLIC_SERVER_URL,
     },
 
 };
 
-
 export default nextConfig;
-

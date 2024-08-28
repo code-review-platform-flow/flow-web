@@ -13,33 +13,33 @@ interface SelectDepartmentContainerProps {
 }
 
 const SelectDepartmentContainer: React.FC<SelectDepartmentContainerProps> = ({ showError = false, onNext }) => {
-    const [majorName, setDepartment] = useRecoilState(majorNameState);
-    
-    const handleSearchItem = (majorName?: string) => {
-        setDepartment(majorName || '');
-    }
+    const [department, setDepartment] = useRecoilState(departmentState);
+
+    const handleSearchItem = (department?: string) => {
+        setDepartment(department || '');
+    };
 
     const handleNext = () => {
         const isValid = !!majorName;
         onNext(isValid);
-    }
+    };
 
     return (
         <>
-            <Title>학과 선택</Title>   
+            <Title>학과 선택</Title>
             <Column>
                 <SemiTitle>학과</SemiTitle>
-                <Input 
-                    icon={SearchIcon2} 
-                    value={majorName}  
-                    size='large' 
-                    placeholder='학과 이름을 검색해주세요'
-                    onChange={(e: React.ChangeEvent<any>) => handleSearchItem(e.target.value)} 
+                <Input
+                    icon={SearchIcon2}
+                    value={department}
+                    size="large"
+                    placeholder="학과 이름을 검색해주세요"
+                    onChange={(e: React.ChangeEvent<any>) => handleSearchItem(e.target.value)}
                 />
                 {showError && !majorName && <ErrorMessage>학과를 선택해주세요.</ErrorMessage>}
             </Column>
             <ButtonWrapper>
-                <Button $primary size='wide' label='다음' onClick={handleNext} />
+                <Button $primary size="wide" label="다음" onClick={handleNext} />
             </ButtonWrapper>
         </>
     );
@@ -48,8 +48,8 @@ const SelectDepartmentContainer: React.FC<SelectDepartmentContainerProps> = ({ s
 export default SelectDepartmentContainer;
 
 const Column = styled.div`
-    display : flex;
-    flex-direction : column;
+    display: flex;
+    flex-direction: column;
     gap: 0.5em;
 `;
 

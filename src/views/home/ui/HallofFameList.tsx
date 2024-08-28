@@ -17,24 +17,26 @@ const hallOfFameData = [
 ];
 
 const HallofFameList = () => {
-
     return (
-        <ColumnWrapper gap='0.75em'>
+        <ColumnWrapper gap="0.75em">
             <Medium>🏆 명예의 전당</Medium>
-            <Container size='small' width='100%' height='100%'>
-            <ColumnWrapper gap='0.75em'>
-                {hallOfFameData.map((item, index) => (
-                
-                    <UserInfo key={index}>
-                        <Rank>{item.rank}</Rank>
-                        <ProfileImage src={item.profileImage} alt={`Profile image of ${item.username}`} width={50} height={50} />
-                        <Username>{item.username}</Username>
-                    </UserInfo>
-                
-                ))}
-            </ColumnWrapper>
+            <Container size="small" width="100%" height="100%">
+                <ColumnWrapper gap="0.75em">
+                    {hallOfFameData.map((item, index) => (
+                        <UserInfo key={index}>
+                            <Rank>{item.rank}</Rank>
+                            <ProfileImage
+                                src={item.profileImage}
+                                alt={`Profile image of ${item.username}`}
+                                width={50}
+                                height={50}
+                            />
+                            <Username>{item.username}</Username>
+                        </UserInfo>
+                    ))}
+                </ColumnWrapper>
                 <Link href={'/halloffame'}>
-                    <Button tertiary label='더보기' size='wide' />
+                    <Button tertiary label="더보기" size="wide" />
                 </Link>
             </Container>
         </ColumnWrapper>
@@ -49,21 +51,21 @@ const UserInfo = styled.div`
     margin-bottom: 0.5em;
 
     &:last-child {
-        margin-bottom: 1.5em; 
+        margin-bottom: 1.5em;
     }
 `;
 
 const Rank = styled.div`
     font-size: 0.875em;
-    color : #8E8E8E;
-    width : 1em;
+    color: #8e8e8e;
+    width: 1em;
 `;
 
 const ProfileImage = styled(Image)`
     border-radius: 10px;
     margin-right: 0.5em;
-    width : 2em;
-    height : 2em;
+    width: 2em;
+    height: 2em;
 `;
 
 const Username = styled.div`

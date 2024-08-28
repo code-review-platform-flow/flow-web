@@ -11,20 +11,20 @@ interface BackButtonProps {
     href?: string;
 }
 
-const BackButton: React.FC<BackButtonProps> = ({ href='/',label='뒤로'  ,onClick}) => {
+const BackButton: React.FC<BackButtonProps> = ({ href = '/', label = '뒤로', onClick }) => {
     return (
-            <StyledLink href={href}>
-                <Image onClick={onClick} src={BackIcon} alt='뒤로가기 아이콘'/>{label}
-            </StyledLink>
+        <StyledLink href={href}>
+            <Image onClick={onClick} src={BackIcon} alt="뒤로가기 아이콘" />
+            {label}
+        </StyledLink>
     );
 };
 
 export default BackButton;
 
-
 const StyledLink = styled(Link)`
-    display : flex;
-    align-self : start;
-    align-items : center;
-    gap : 1.3125em;
-`
+    display: flex;
+    align-self: start;
+    align-items: center;
+    gap: 1.3125em;
+`;

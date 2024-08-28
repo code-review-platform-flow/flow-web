@@ -1,14 +1,13 @@
-'use client'
+'use client';
 import React from 'react';
 import styled from 'styled-components';
 import gachonLogo from '../../../public/logos/gachonLogo.svg';
 import Image from 'next/image';
 
-
 const Footer = () => {
     return (
         <>
-            <FooterLogo src={gachonLogo} alt='schoolLogo'/>
+            <FooterLogo src={gachonLogo} alt="schoolLogo" />
         </>
     );
 };
@@ -16,12 +15,12 @@ const Footer = () => {
 export default Footer;
 
 const FooterLogo = styled(Image)`
-    position : absolute;
-    bottom : 1.5em;
-    left : 1.5em; 
-    z-index : 10;
+    position: absolute;
+    bottom: 1.5em;
+    left: 1.5em;
+    z-index: 10;
 
     @media (max-width: 768px) {
-        display : none;
+        display: none;
     }
 `;
