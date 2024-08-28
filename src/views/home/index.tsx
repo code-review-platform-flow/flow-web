@@ -9,12 +9,10 @@ import WriteContainer from './ui/WriteContainer';
 import CareerInfo from './ui/CareerInfo';
 import { useQuery } from '@tanstack/react-query';
 import { fetchHomeData } from './api/fetchHomeData';
-import { fetchHallOfFameListDetail } from '../hall-of-fame/api/fetchHallOfFameList';
 
-
+    
 export default function HomePage() {
-
-    const { data: homeData = {careers: [], posts: [], hallOfFame: []} } = useQuery({
+    const { data: homeData = { careers: [], posts: [], hallOfFame: [] } } = useQuery({
         queryKey: ['fetchhomeData'],
         queryFn: () => fetchHomeData(),
     });
@@ -30,13 +28,9 @@ export default function HomePage() {
                 <RecentPost />
             </>
             <Swiper>
-                <HallofFameList 
-                // hallOfFame={hallOfFame} 
-                />
+                <HallofFameList hallOfFameData={homeData.hallOfFame} />
                 <CoffeeChatList />
-                <TrendingPostList 
-                // posts={posts} 
-                />
+                <TrendingPostList trendingPostList={homeData.posts} />
             </Swiper>
             <>
                 <CareerInfo careers={homeData.careers} />

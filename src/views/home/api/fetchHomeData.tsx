@@ -1,3 +1,4 @@
+import { User } from '@/entities/user/model/type';
 import { fetchCareerListDetail } from '@/views/career/api/fetchCareerList';
 import { CareerDetail } from '@/views/career/model/type';
 import { fetchHallOfFameListDetail } from '@/views/hall-of-fame/api/fetchHallOfFameList';
@@ -5,11 +6,11 @@ import { fetchTrendingPostDetails } from '@/views/trending-post/api/fetchTrendin
 import { PostDetail } from '@/views/trending-post/model/type';
 
 // 홈 데이터 가져오는 함수
-export const fetchHomeData = async (): Promise<{ careers: CareerDetail[]; posts: PostDetail[]; hallOfFame: any[] }> => {
+export const fetchHomeData = async (): Promise<{ careers: CareerDetail[]; posts: PostDetail[]; hallOfFame: User[] }> => {
     try {
         const [careerList, trendingPostList, hallOfFameList] = await Promise.all([
             fetchCareerListDetail(),
-            fetchTrendingPostDetails(1, 4),
+            fetchTrendingPostDetails(1, 3),
             fetchHallOfFameListDetail(3),
         ]);
         console.log('Career List:', careerList);

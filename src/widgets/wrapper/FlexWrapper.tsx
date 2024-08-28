@@ -19,6 +19,7 @@ const FlexContainer = styled.div`
     row-gap: 1em; 
     width: fit-content;
     box-sizing: border-box;
+    width : 100%;
 
     @media (max-width: 768px) {
         justify-content: center;

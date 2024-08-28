@@ -10,6 +10,7 @@ export const getServerSideProps: GetServerSideProps = async () => {
         queryFn: fetchHomeData,
     });
 
+
     return {
         props: {
             dehydratedState: dehydrate(queryClient),

@@ -7,33 +7,40 @@ import Button from '@/widgets/button/Button';
 import Image from 'next/image';
 import ProfileImage2 from '../../../../public/images/profileImageExample2.png';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
+import { User } from '@/entities/user/model/type';
 
-// 명예의 전당 데이터
-const hallOfFameData = [
-    { rank: 1, profileImage: ProfileImage2, username: '사용자1' },
-    { rank: 2, profileImage: ProfileImage2, username: '사용자2' },
-    { rank: 3, profileImage: ProfileImage2, username: '사용자3' },
-    { rank: 4, profileImage: ProfileImage2, username: '사용자4' },
-];
+interface HallofFameListProps {
+    hallOfFameData?: User[];
+}
 
-const HallofFameList = () => {
+// userName: string;
+// profileUrl: string;
+// majorName: string;
+// studentNumber: number;
+
+
+const HallofFameList: React.FC<HallofFameListProps> = ({ hallOfFameData = [] }) => {
+    const router = useRouter();
+
     return (
         <ColumnWrapper gap="0.75em">
             <Medium>🏆 명예의 전당</Medium>
             <Container size="small" width="100%" height="100%">
                 <ColumnWrapper gap="0.75em">
-                    {hallOfFameData.map((item, index) => (
-                        <UserInfo key={index}>
-                            <Rank>{item.rank}</Rank>
-                            <ProfileImage
-                                src={item.profileImage}
-                                alt={`Profile image of ${item.username}`}
-                                width={50}
-                                height={50}
-                            />
-                            <Username>{item.username}</Username>
-                        </UserInfo>
-                    ))}
+                    {hallOfFameData &&
+                        hallOfFameData.map((item, index) => (
+                            <UserInfo key={index}>
+                                <Rank>{index + 1}</Rank>
+                                <ProfileImage
+                                    src={item.profileUrl}
+                                    alt={`Profile image of ${item.userName}`}
+                                    width={50}
+                                    height={50}
+                                />
+                                <Username>{item.userName}</Username>
+                            </UserInfo>
+                        ))}
                 </ColumnWrapper>
                 <Link href={'/hall-of-fame'}>
                     <Button tertiary label="더보기" size="wide" />

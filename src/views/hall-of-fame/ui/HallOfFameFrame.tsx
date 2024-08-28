@@ -14,7 +14,7 @@ const HallOfFameFrame: React.FC<HallOfFameFrameProps> = ({ children }) => {
                 <Image src={hallOfFameFrame} alt="명예의전당배경" layout="fill" objectFit="cover" />
             </StyledImageWrapper>
             <Children>
-                <BackDrop />
+                <BackDrop/>
                 {children}
             </Children>
         </Frame>
@@ -43,7 +43,7 @@ const Children = styled.div`
     position: absolute;
     top: 0;
     left: 0;
-    width: 100%;
+    width: 90%;
     height: 100%;
     padding: 0em 8.5em;
     display: flex;
