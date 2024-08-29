@@ -34,9 +34,8 @@ export interface HeaderProps {
 
 const Header = ({ user, onLogin, onLogout, onCreateAccount }: HeaderProps) => {
     const router = useRouter();
-    // const { data: session } = useSession()
+    const { data: session } = useSession()
     const [showModal, setShowModal] = useState(false);
-    const [session, setSession] = useState(true);
 
     const clickModal = () => {
         setShowModal(!showModal);
@@ -76,9 +75,9 @@ const Header = ({ user, onLogin, onLogout, onCreateAccount }: HeaderProps) => {
                             <MyProfileButton>
                                 <ModalIcon src={profileIcon} alt="프로필 아이콘" />내 프로필
                             </MyProfileButton>
-                            <LogOutButton onClick={() => setSession(false)}>
+                            <LogOutButton >
                                 <ModalIcon src={logOutIcon} alt="로그아웃 아이콘" />
-                                로그 아웃
+                                로그아웃
                             </LogOutButton>
                         </ModalWrapper>
                     )}
