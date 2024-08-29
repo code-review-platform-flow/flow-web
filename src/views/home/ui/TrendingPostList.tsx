@@ -45,7 +45,7 @@ const HallofFameList = () => {
                         </UserInfo>
                     ))}
                 </ColumnWrapper>
-                <Link href={'/trendingpost'}>
+                <Link href={'/trending-post'}>
                     <Button tertiary label="더보기" size="wide" />
                 </Link>
             </Container>

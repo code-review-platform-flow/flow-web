@@ -13,7 +13,7 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 
 type User = {
-    name: string;
+    email?: string;
 };
 
 export interface HeaderProps {
@@ -41,13 +41,15 @@ const Header = ({ user, onLogin, onLogout, onCreateAccount }: HeaderProps) => {
                     </SearchContainer>
                 </Row>
                 <ButtonContainer>
-                    {user ? (
+                    {user?.email ? (
                         // 로그인시
                         <Row2>
                             <Icon src={boxIcon} alt="박스 아이콘" />
                             <Icon src={bellIcon} alt="벨 아이콘" />
                             <ButtonWrapper>
-                                <StyledButton tertiary size="medium" onClick={onCreateAccount} label="새 포스트" />
+                                <Link href="/post-write">
+                                    <StyledButton tertiary size="medium" onClick={() => {}} label="새 포스트" />
+                                </Link>
                                 <PencilIconWrapper>
                                     <Image src={pencilIcon} alt="쓰기 아이콘" />
                                 </PencilIconWrapper>

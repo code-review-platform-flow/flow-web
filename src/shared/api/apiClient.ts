@@ -1,11 +1,5 @@
 import ky from 'ky-universal';
-
-const getCookie = (name: string): string | undefined => {
-    const value = `; ${document.cookie}`;
-    const parts = value.split(`; ${name}=`);
-    if (parts.length === 2) return parts.pop()?.split(';').shift();
-    return undefined;
-};
+import { getCookie } from 'cookies-next'; // cookies-next에서 getCookie import
 
 const apiClient = ky.create({
     prefixUrl: process.env.NEXT_PUBLIC_SERVER_URL,
@@ -14,8 +8,9 @@ const apiClient = ky.create({
         beforeRequest: [
             (request) => {
                 console.log(`Requesting: ${request.url}`);
-                const token = getCookie('accessToken');
+                const token = getCookie('accessToken') as string;
                 console.log(`accessToken : ${token}`);
+
                 if (token) {
                     request.headers.set('Authorization', `Bearer ${token}`);
                 } else {
