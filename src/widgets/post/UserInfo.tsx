@@ -9,7 +9,7 @@ interface UserInfoProps {
     name: string;
     imgUrl: string | StaticImageData;
     department: string;
-    enterYear: number;
+    enterYear: string;
 }
 
 const UserInfo: React.FC<UserInfoProps> = ({ name, imgUrl, department, enterYear }) => {
@@ -21,7 +21,7 @@ const UserInfo: React.FC<UserInfoProps> = ({ name, imgUrl, department, enterYear
             <ColumnWrapper>
                 <UserName>{name}</UserName>
                 <UserDetailInfo>
-                    {department} {enterYear}학번
+                    {department} {enterYear ? `${enterYear.toString().substring(0, 2)}학번` : ''}
                 </UserDetailInfo>
             </ColumnWrapper>
         </RowWrapper>

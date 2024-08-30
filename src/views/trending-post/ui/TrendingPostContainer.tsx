@@ -10,8 +10,9 @@ import { UserDepartmentEnterYear } from '@/views/user/ui/Font';
 import PostTag from '@/widgets/post/PostTag';
 import { fetchTrendingPostDetails } from '../api/fetchTrendingPostList';
 import { useQuery } from '@tanstack/react-query';
-import { PostDetail } from '../model/type'; // PostDetail 타입을 임포트
+import { PostDetail } from '../../../shared/type/post/type'; // PostDetail 타입을 임포트
 import { useRouter } from 'next/navigation';
+import filterTime from '@/shared/hook/filterTime';
 
 interface TrendingPostContainerProps {}
 
@@ -27,31 +28,14 @@ const TrendingPostContainer: React.FC<TrendingPostContainerProps> = ({}) => {
         queryFn: () => fetchTrendingPostDetails(),  
     });
 
+
     if (isLoading) return <div>Loading...</div>;
     if (error) {
         console.log(error);
         return <div>오류가 발생했습니다.</div>;
     }
 
-    function timeAgo(dateString:string) {
-        const postDate = new Date(dateString); // 게시물의 생성 날짜
-        const now = new Date(); // 현재 시간
-    
-        const diffInSeconds = Math.floor((now.getTime() - postDate.getTime()) / 1000); // 두 시간의 차이를 초 단위로 계산
-    
-        if (diffInSeconds < 60) {
-            return `${diffInSeconds}초 전`;
-        } else if (diffInSeconds < 3600) {
-            const diffInMinutes = Math.floor(diffInSeconds / 60);
-            return `${diffInMinutes}분 전`;
-        } else if (diffInSeconds < 86400) {
-            const diffInHours = Math.floor(diffInSeconds / 3600);
-            return `${diffInHours}시간 전`;
-        } else {
-            const diffInDays = Math.floor(diffInSeconds / 86400);
-            return `${diffInDays}일 전`;
-        }
-    }
+
     
     return (
         <>
@@ -72,7 +56,7 @@ const TrendingPostContainer: React.FC<TrendingPostContainerProps> = ({}) => {
                                         <PostTag key={index}>{tag.tagName}</PostTag>
                                     ))}
                                 </Tags>
-                                <UploadTime>{timeAgo(post.createDate)}</UploadTime>
+                                <UploadTime>{filterTime(post.createDate)}</UploadTime>
                             </RowWrapper>
 
                             <Line />

@@ -9,11 +9,10 @@ import CommentWriteContainer from './ui/CommentWriteContainer';
 import { ColumnWrapper } from '@/widgets/wrapper/ColumnWrapper';
 
 interface PostDetailProps {
-    postId: number
+    postId: string
 }
 
-const PostDetailPage: React.FC<PostDetailProps> = ({postId:number = 1}) => {
-    const postId = 1;
+const PostDetailPage: React.FC<PostDetailProps> = ({postId}) => {
     return (
         <PageWrapper gap="0.875em">
             <RowWrapper>

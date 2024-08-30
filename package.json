@@ -30,7 +30,9 @@
         "react-dom": "18",
         "react-markdown": "9.0.1",
         "recoil": "0.7.7",
+        "remark": "15.0.1",
         "remark-gfm": "4.0.0",
+        "remark-html": "16.0.1",
         "slick-carousel": "1.8.1",
         "styled-components": "6.1.12",
         "swiper": "11.1.8"
@@ -47,6 +49,7 @@
         "@storybook/nextjs": "8.2.6",
         "@storybook/react": "8.2.6",
         "@storybook/test": "8.2.6",
+        "@swc/core": "^1.7.22",
         "@swc/plugin-styled-components": "2.0.10",
         "@types/node": "20",
         "@types/react": "18",
