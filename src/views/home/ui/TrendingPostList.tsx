@@ -8,7 +8,7 @@ import Image from 'next/image';
 import { RowWrapper } from '@/widgets/wrapper/RowWrapper';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import { PostDetail } from '@/views/trending-post/model/type';
+import { PostDetail } from '@/shared/type/post/type';
 
 
 interface TrendingPostListProps {
