@@ -1,6 +1,7 @@
-import { PostSummary, PostDetail } from '../model/type';
+import { PostSummary, PostDetail } from '../../../shared/type/post/type';
 import ky from 'ky';
 import { QueryFunctionContext } from '@tanstack/react-query';
+import { getPostDetail } from '@/shared/api/post/getPostDetail';
 
 // Trending Post 리스트를 가져오는 함수
 const fetchTrendingPostList = async (page: number, count: number): Promise<PostSummary[]> => {
@@ -23,23 +24,7 @@ const fetchTrendingPostList = async (page: number, count: number): Promise<PostS
     }
 };
 
-// 특정 게시물의 상세 정보를 가져오는 함수
-const getPostDetail = async (postId: number): Promise<PostDetail> => {
-    try {
-        const response = await ky.get(`${process.env.NEXT_PUBLIC_SERVER_URL}/post/${postId}`);
 
-        if (!response.ok) {
-            throw new Error('데이터를 가져오는 중 오류가 발생했습니다.');
-        }
-        const data = await response.json();
-        console.log(data)
-        return data as PostDetail;
-
-    } catch (error) {
-        console.error(`getPostDetail Error for postId ${postId}:`, error);
-        throw error; 
-    }
-};
 
 // 모든 Trending Post의 상세 정보를 가져오는 함수
 export const fetchTrendingPostDetails = async (page:number = 1, count:number = 9): Promise<PostDetail[]> => {

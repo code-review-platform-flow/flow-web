@@ -3,7 +3,6 @@ import BackButton from '@/widgets/button/BackButton';
 import { PageWrapper } from '@/widgets/wrapper/PageWrapper';
 import HallOfFameUserContainer from './ui/HallOfFameUserContainer';
 import HallOfFameFrame from './ui/HallOfFameFrame';
-import Link from 'next/link';
 
 export default function HallOfFamePage() {
     return (

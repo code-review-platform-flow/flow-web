@@ -51,7 +51,7 @@ const CommentContainer: React.FC<CommentContainerProps> = ({}) => {
                         <UserInfo
                             name={commentData.commentUser}
                             department={commentData.department}
-                            enterYear={commentData.enterYear}
+                            enterYear={commentData.enterYear.toString()}
                             imgUrl={ProfileExample}
                         />
                     </RowWrapper>
@@ -74,7 +74,7 @@ const CommentContainer: React.FC<CommentContainerProps> = ({}) => {
                                 <UserInfo
                                     name={reply.replyUser}
                                     department={reply.department}
-                                    enterYear={reply.enterYear}
+                                    enterYear={reply.enterYear.toString()}
                                     imgUrl={ProfileExample}
                                 />
                                 <ReplyContent>{reply.replyContent}</ReplyContent>

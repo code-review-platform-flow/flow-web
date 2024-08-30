@@ -1,15 +1,17 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
     images: {
-        domains: ['storage.googleapis.com','static.wanted.co.kr','cdn.jumpit.co.kr','grepp-programmers.s3.amazonaws.com'], 
+        domains: [
+            'storage.googleapis.com',
+            'static.wanted.co.kr',
+            'cdn.jumpit.co.kr',
+            'grepp-programmers.s3.amazonaws.com',
+        ],
     },
     swcMinify: true,
     reactStrictMode: false,
     compiler: {
-        styledComponents: {
-            ssr: true,
-            displayName: true,
-        },
+        styledComponents: true,
     },
     async rewrites() {
         return [
@@ -21,10 +23,11 @@ const nextConfig = {
                 source: '/storybook/:path*',
                 destination: '/storybook-static/:path*',
             },
-            {
-                source: '/:path*',
-                destination: `${process.env.NEXT_PUBLIC_SERVER_URL}/:path*`,
-            },
+            // {
+            //     source: '/:path*',
+            //     destination: `${process.env.NEXT_PUBLIC_SERVER_URL}/:path*`,
+            // },
+            
         ];
     },
     env: {
@@ -35,3 +38,9 @@ const nextConfig = {
 };
 
 export default nextConfig;
+
+
+// /** @type {import('next').NextConfig} */
+// const nextConfig = {};
+
+// export default nextConfig;

@@ -11,7 +11,7 @@ export default function ClientWrapper({ children }: { children: React.ReactNode 
         <RecoilRoot>
             <ReactQueryProviders>
                 <AuthContext>
-                <StyledComponentsRegistry>{children}</StyledComponentsRegistry>
+                    <StyledComponentsRegistry>{children}</StyledComponentsRegistry>
                 </AuthContext>
             </ReactQueryProviders>
         </RecoilRoot>

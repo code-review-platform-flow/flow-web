@@ -16,6 +16,7 @@ export function ReactQueryProvidersBase({ children }: React.PropsWithChildren) {
             }),
     );
 
+    
     return (
         <QueryClientProvider client={client}>
             {children}
