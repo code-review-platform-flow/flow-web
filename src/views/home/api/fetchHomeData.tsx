@@ -3,7 +3,7 @@ import { fetchCareerListDetail } from '@/views/career/api/fetchCareerList';
 import { CareerDetail } from '@/views/career/model/type';
 import { fetchHallOfFameListDetail } from '@/views/hall-of-fame/api/fetchHallOfFameList';
 import { fetchTrendingPostDetails } from '@/views/trending-post/api/fetchTrendingPostList';
-import { PostDetail } from '@/views/trending-post/model/type';
+import { PostDetail } from '@/shared/type/post/type'; 
 
 // 홈 데이터 가져오는 함수
 export const fetchHomeData = async (): Promise<{ careers: CareerDetail[]; posts: PostDetail[]; hallOfFame: User[] }> => {
