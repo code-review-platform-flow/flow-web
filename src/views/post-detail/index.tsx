@@ -8,16 +8,19 @@ import CommentContainer from './ui/CommentContainer';
 import CommentWriteContainer from './ui/CommentWriteContainer';
 import { ColumnWrapper } from '@/widgets/wrapper/ColumnWrapper';
 
-interface PostDetailProps {}
+interface PostDetailProps {
+    postId: number
+}
 
-const PostDetailPage: React.FC<PostDetailProps> = ({}) => {
+const PostDetailPage: React.FC<PostDetailProps> = ({postId:number = 1}) => {
+    const postId = 1;
     return (
         <PageWrapper gap="0.875em">
             <RowWrapper>
                 <ShareTumbContainer />
 
                 <ColumnWrapper gap="1.5em">
-                    <PostContainer />
+                    <PostContainer postId={postId} />
                     <CommentContainer />
                     <CommentWriteContainer />
                 </ColumnWrapper>

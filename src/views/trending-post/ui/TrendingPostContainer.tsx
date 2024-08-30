@@ -11,6 +11,7 @@ import PostTag from '@/widgets/post/PostTag';
 import { fetchTrendingPostDetails } from '../api/fetchTrendingPostList';
 import { useQuery } from '@tanstack/react-query';
 import { PostDetail } from '../model/type'; // PostDetail 타입을 임포트
+import { useRouter } from 'next/navigation';
 
 interface TrendingPostContainerProps {}
 
@@ -18,6 +19,8 @@ const TrendingPostContainer: React.FC<TrendingPostContainerProps> = ({}) => {
     // 페이지 번호와 개수를 정의합니다.
     const page = 1;
     const count = 10;
+
+    const router = useRouter()
 
     const { data: trendingPostList = [], isLoading, error } = useQuery<PostDetail[]>({
         queryKey: ['trendingPostList', page, count],
@@ -30,10 +33,32 @@ const TrendingPostContainer: React.FC<TrendingPostContainerProps> = ({}) => {
         return <div>오류가 발생했습니다.</div>;
     }
 
+    function timeAgo(dateString:string) {
+        const postDate = new Date(dateString); // 게시물의 생성 날짜
+        const now = new Date(); // 현재 시간
+    
+        const diffInSeconds = Math.floor((now.getTime() - postDate.getTime()) / 1000); // 두 시간의 차이를 초 단위로 계산
+    
+        if (diffInSeconds < 60) {
+            return `${diffInSeconds}초 전`;
+        } else if (diffInSeconds < 3600) {
+            const diffInMinutes = Math.floor(diffInSeconds / 60);
+            return `${diffInMinutes}분 전`;
+        } else if (diffInSeconds < 86400) {
+            const diffInHours = Math.floor(diffInSeconds / 3600);
+            return `${diffInHours}시간 전`;
+        } else {
+            const diffInDays = Math.floor(diffInSeconds / 86400);
+            return `${diffInDays}일 전`;
+        }
+    }
+    
     return (
         <>
             {trendingPostList.map((post, index) => (
-                <PostContainer key={index} size="small" width="100%" height="300px" round animation>
+                <PostContainer 
+                    onClick={()=>router.push(`/post-detail/${post.postId}`)}
+                    key={index} size="small" width="100%" height="300px" round animation>
                     <StyledColumnWrapper justifyContent="space-between">
                         <ColumnWrapper gap="0.5em">
                             <PostTitle>{post.title}</PostTitle>
@@ -47,7 +72,7 @@ const TrendingPostContainer: React.FC<TrendingPostContainerProps> = ({}) => {
                                         <PostTag key={index}>{tag.tagName}</PostTag>
                                     ))}
                                 </Tags>
-                                <UploadTime>{new Date(post.createDate).toLocaleString()}</UploadTime>
+                                <UploadTime>{timeAgo(post.createDate)}</UploadTime>
                             </RowWrapper>
 
                             <Line />
@@ -115,6 +140,7 @@ const UserImage = styled.div`
 `;
 
 const PostTitle = styled.div`
+    width : 100%;
     font-size: 1.125em;
     color: #333333;
     font-weight: 600;

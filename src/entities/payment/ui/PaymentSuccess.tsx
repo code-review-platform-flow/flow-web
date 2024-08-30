@@ -11,8 +11,12 @@ const PaymentSuccess = () => {
 
     const confirmPaymentMutation = useConfirmPayment({
         onSuccess: (data) => {},
-        onError: (error) => {
-            router.push(`/payment/fail?code=${error.code}&message=${error.message}`);
+        onError: (error: any) => {
+            if (error.code) {
+                router.push(`/payment/fail?code=${error.code}&message=${error.message}`);
+            } else {
+                router.push(`/payment/fail?message=${error.message}`);
+            }
         },
     });
 

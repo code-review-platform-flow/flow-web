@@ -9,9 +9,11 @@ import PostTag from '@/widgets/post/PostTag';
 import ProfileExample from '../../../../public/images/profileImageExample.png';
 import ShareTumbContainer from './ShareTumbContainer';
 
-interface PostContainerProps {}
+interface PostContainerProps {
+    postId:number
+}
 
-const PostContainer: React.FC<PostContainerProps> = () => {
+const PostContainer: React.FC<PostContainerProps> = ({postId:number}) => {
     const postData = {
         id: 'fdfd',
         title: 'KT 60만명 해킹의 심각성: 사상 최악의 \n 사이버 범죄로부터 당신은 지금도 안전하지 않다',
