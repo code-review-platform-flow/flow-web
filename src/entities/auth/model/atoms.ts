@@ -20,7 +20,14 @@ export const authDataState = atom<AuthData | null>({
     key: 'authDataState',
     default: getLocalStorageValue('authData'), // LocalStorage에서 초기값을 불러옴
     effects: [
-        ({ onSet }) => {
+        ({ onSet, setSelf }) => {
+            // Initialize state with localStorage value
+            const savedValue = getLocalStorageValue('authData');
+            if (savedValue) {
+                setSelf(savedValue);
+            }
+
+            // Listen for changes and update localStorage
             onSet((newValue) => {
                 if (newValue) {
                     // 상태가 변경되면 LocalStorage에 저장

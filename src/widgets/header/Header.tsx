@@ -71,7 +71,12 @@ const Header = ({ user, onLogin, onLogout, onCreateAccount }: HeaderProps) => {
                             <MyProfileButton>
                                 <ModalIcon src={profileIcon} alt="프로필 아이콘" />내 프로필
                             </MyProfileButton>
-                            <LogOutButton>
+                            <LogOutButton
+                                onClick={() => {
+                                    onLogout?.();
+                                    clickModal();
+                                }}
+                            >
                                 <ModalIcon src={logOutIcon} alt="로그아웃 아이콘" />
                                 로그아웃
                             </LogOutButton>
