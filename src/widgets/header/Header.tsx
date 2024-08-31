@@ -16,9 +16,6 @@ import profileExampleImage from '../../../public/images/profileImageExample.png'
 import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import { signIn, useSession } from 'next-auth/react';
-import { RowWrapper } from '../wrapper/RowWrapper';
-import { ColumnWrapper } from '../wrapper/ColumnWrapper';
 import Container from '../container/Container';
 
 type User = {
@@ -34,7 +31,6 @@ export interface HeaderProps {
 
 const Header = ({ user, onLogin, onLogout, onCreateAccount }: HeaderProps) => {
     const router = useRouter();
-    const { data: session } = useSession()
     const [showModal, setShowModal] = useState(false);
 
     const clickModal = () => {
@@ -75,7 +71,7 @@ const Header = ({ user, onLogin, onLogout, onCreateAccount }: HeaderProps) => {
                             <MyProfileButton>
                                 <ModalIcon src={profileIcon} alt="프로필 아이콘" />내 프로필
                             </MyProfileButton>
-                            <LogOutButton >
+                            <LogOutButton>
                                 <ModalIcon src={logOutIcon} alt="로그아웃 아이콘" />
                                 로그아웃
                             </LogOutButton>
@@ -160,10 +156,10 @@ const WritePostButton = styled(MyProfileButton)`
     display: none;
     @media (max-width: 768px) {
         display: flex;
-        flex-direction : column;
-        gap : 0.625em;
-        align-items : start;
-        justify-content : center;
+        flex-direction: column;
+        gap: 0.625em;
+        align-items: start;
+        justify-content: center;
     }
 `;
 
