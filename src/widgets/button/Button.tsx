@@ -2,42 +2,46 @@ import React from 'react';
 import styled from 'styled-components';
 
 export interface ButtonProps {
-  $primary?: boolean;
-  backgroundColor?: string;
-  size?: 'small' | 'medium' | 'large' | 'wide' ;
-  label: string;
-  onClick?: () => void;
-  tertiary?: boolean;
-  children?: React.ReactNode;
-  gap?: string;
+    $primary?: boolean;
+    backgroundColor?: string;
+    size?: 'small' | 'medium' | 'large' | 'wide';
+    label: string;
+    onClick?: (e: React.MouseEvent<HTMLButtonElement>) => void;
+    tertiary?: boolean;
+    children?: React.ReactNode;
+    gap?: string;
   type?: 'button' | 'submit' | 'reset';
 }
 
 export const Button = ({
-  $primary = false,
-  size = 'medium',
-  backgroundColor,
-  label,
-  tertiary = false,
-  children,
-  gap='0em',
-  type='button',
-  ...props
+    $primary = false,
+    size = 'medium',
+    backgroundColor,
+    label,
+    tertiary = false,
+    children,
+    gap = '0em',
+    onClick,
+    type='button',
+    ...props
+  
 }: ButtonProps) => {
-  return (
-    <StyledButton 
-      $primary={$primary}
-      size={size}
-      backgroundColor={backgroundColor}
-      tertiary={tertiary}
-      gap={gap}
-      type={type}
-      {...props}
-    >
-      {children}
-      {label}
-    </StyledButton>
-  );
+    return (
+        <StyledButton
+            $primary={$primary}
+            size={size}
+            backgroundColor={backgroundColor}
+            tertiary={tertiary}
+            gap={gap}
+            onClick={onClick}
+            type={type}
+            {...props}
+        >
+            {children}
+            {label}
+        </StyledButton>
+    );
+      
 };
 
 const StyledButton = styled.button<{

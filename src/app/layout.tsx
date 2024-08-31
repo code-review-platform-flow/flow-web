@@ -1,9 +1,9 @@
 import '@/shared/styles/globals.css';
 import { Pretendard } from '../../public/fonts/font';
 import type { Metadata } from 'next';
-import Header from '@/widgets/header/Header';
 import Footer from '@/widgets/footer/Footer';
 import ClientWrapper from '@/shared/providers/ClientWrapper';
+import ClientLayout from './ClientLayout'; // 클라이언트 전용 레이아웃 컴포넌트 임포트
 
 export const metadata: Metadata = {
     title: 'FLOW',
@@ -18,8 +18,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <html>
             <body className={Pretendard.className}>
                 <ClientWrapper>
-                    <Header />
-                    {children}
+                    <ClientLayout>{children}</ClientLayout>
                     <Footer />
                 </ClientWrapper>
             </body>

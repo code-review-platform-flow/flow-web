@@ -1,6 +1,7 @@
 'use client';
-import { useState } from 'react';
-import React from 'react';
+
+import React, { useState } from 'react';
+import { useRouter } from 'next/navigation';
 import { FillWrapper } from '@/widgets/wrapper/FillWrapper';
 import LoginContainer from './ui/LoginContainer';
 import Input from '@/widgets/input/Input';
@@ -9,8 +10,10 @@ import LoginSessionCheck from './ui/LoginSessionCheck';
 import FindPw from './ui/FindPw';
 import RegisterButton from './ui/RegisterButton';
 import styled from 'styled-components';
-import getUserFromDb from './api/getUserFromDb'; // getUserFromDb 함수 가져오기
-import { useRouter } from 'next/navigation';
+import { setCookie } from 'cookies-next';
+import { useRecoilState } from 'recoil';
+import { authDataState } from '@/entities/auth/model/atoms';
+import { useLogin } from '@/features/auth/api/loginApi';
 
 // User 타입 정의
 type User = {
@@ -20,49 +23,53 @@ type User = {
 };
 
 const LoginPage: React.FC = () => {
-    const router = useRouter();
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const [errorMsg, setErrorMsg] = useState<string | null>(null); // 에러 메시지 상태 추가
-    const [user, setUser] = useState<User | null>(null); // 로그인 성공 시 사용자 데이터 저장
+    const [error, setError] = useState('');
+    const router = useRouter();
+    const [, setAuthData] = useRecoilState(authDataState);
 
-    const handleLogin = async (event: React.FormEvent) => {
-        event.preventDefault(); // 기본 폼 제출 방지
-        setErrorMsg(null); // 이전 에러 메시지 초기화
+    // useLogin 훅 사용
+    const loginMutation = useLogin({
+        onSuccess: (data) => {
+            console.log('Login successful:', data);
 
-        try {
-            const userData = await getUserFromDb(email, password); // getUserFromDb 함수 호출
+            // 성공 시 토큰을 쿠키에 저장
+            setCookie('accessToken', data.accessToken, { path: '/', sameSite: 'strict', secure: true });
 
-            if (userData) {
-                setUser(userData); // 로그인 성공 시 사용자 데이터 설정
-                console.log('로그인 성공:', userData);
-                // 로그인 성공 후 리디렉션 또는 추가 작업 수행
-            } else {
-                setErrorMsg('로그인에 실패했습니다. 이메일 또는 비밀번호를 확인하세요.'); // 에러 메시지 설정
-            }
-        } catch (error) {
-            console.error('로그인 요청 중 에러 발생:', error);
-            setErrorMsg('서버와의 통신에 문제가 발생했습니다.');
-        }
+            // 이메일을 Recoil 상태에 저장
+            setAuthData({ email, role: data.role, accessToken: data.accessToken, refreshToken: data.refreshToken });
+
+            // 로그인 성공 시 '/'로 리디렉션
+            router.push('/');
+        },
+        onError: (error) => {
+            setError('로그인에 실패했습니다. 다시 시도해주세요.');
+            console.error('Login failed:', error);
+        },
+    });
+
+    // 로그인 핸들러
+    const handleLogin = (e: React.MouseEvent<HTMLButtonElement>) => {
+        e.preventDefault();
+        setError('');
+        loginMutation.mutate({ email, password });
     };
 
     return (
         <FillWrapper>
             <LoginContainer>
-                <LoginForm onSubmit={handleLogin}>
-                    <Input size="large" placeholder="아이디" value={email} onChange={(e) => setEmail(e.target.value)} />
-                    <Input
-                        type="password"
-                        size="large"
-                        placeholder="비밀번호"
-                        value={password}
-                        onChange={(e) => setPassword(e.target.value)}
-                    />
-                    {errorMsg && <ErrorText>{errorMsg}</ErrorText>}
-                    <Button type="submit" $primary size="wide" label="로그인" />
-                </LoginForm>
+                <Input size="large" placeholder="아이디" value={email} onChange={(e) => setEmail(e.target.value)} />
+                <Input
+                    size="large"
+                    type="password"
+                    placeholder="비밀번호"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                />
+                {error && <ErrorText>{error}</ErrorText>}
+                <Button $primary size="large" label="로그인" onClick={handleLogin} />
                 <Row>
-                    <LoginSessionCheck />
                     <FindPw />
                 </Row>
                 <RegisterButton onClick={() => router.push('/register')} />
@@ -78,15 +85,7 @@ const Row = styled.div`
     justify-content: space-between;
 `;
 
-const LoginForm = styled.form`
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-    gap: 1em;
-`;
-
 const ErrorText = styled.p`
     color: red;
     margin: 10px 0;
-    font-size: 0.8125em;
 `;
