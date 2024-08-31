@@ -36,7 +36,7 @@ const CoffeChatList = () => {
                                 />
                                 <Username>{item.username}</Username>
                             </StyledRowWrapper>
-                            <Link href={`/coffeecaht/${index}`}>
+                            <Link href={`/user/${index}`}>
                                 <Button tertiary size="small" label="신청" />
                             </Link>
                         </UserInfo>

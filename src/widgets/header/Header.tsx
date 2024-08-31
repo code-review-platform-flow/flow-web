@@ -22,7 +22,7 @@ import { ColumnWrapper } from '../wrapper/ColumnWrapper';
 import Container from '../container/Container';
 
 type User = {
-    name: string;
+    email?: string;
 };
 
 export interface HeaderProps {
@@ -81,7 +81,7 @@ const Header = ({ user, onLogin, onLogout, onCreateAccount }: HeaderProps) => {
                             </LogOutButton>
                         </ModalWrapper>
                     )}
-                    {session ? (
+                    {user?.email ? (
                         // 로그인시
                         <Row2>
                             <Row3>
@@ -90,7 +90,9 @@ const Header = ({ user, onLogin, onLogout, onCreateAccount }: HeaderProps) => {
                                 <HambergerIcon onClick={clickModal} src={hamburgerIcon} alt="햄버거 아이콘" />
                             </Row3>
                             <ButtonWrapper>
-                                <StyledButton tertiary size="medium" onClick={onCreateAccount} label="새 포스트" />
+                                <Link href="/post-write">
+                                    <StyledButton tertiary size="medium" onClick={() => {}} label="새 포스트" />
+                                </Link>
                                 <PencilIconWrapper>
                                     <Image src={pencilIcon} alt="쓰기 아이콘" />
                                 </PencilIconWrapper>

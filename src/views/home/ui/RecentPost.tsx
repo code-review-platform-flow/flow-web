@@ -20,7 +20,7 @@ const RecentPost = () => {
     const tumbCount = 125;
     const commentCount = 6;
     return (
-        <StyledLink href={'/postdetail'}>
+        <StyledLink href={'/post-detail'}>
             <StyledContainer size="wide">
                 <ColumnWrapper gap="1em">
                     <ColumnWrapper gap="0.5em">
