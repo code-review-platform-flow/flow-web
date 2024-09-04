@@ -4,7 +4,7 @@ export interface PostSummary {
 }
 
 // 태그를 나타내는 인터페이스
-interface Tag {
+export interface Tag {
     tagName: string; // 태그 이름을 나타내는 문자열
 }
 

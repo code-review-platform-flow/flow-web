@@ -2,12 +2,15 @@ import Button from '@/widgets/button/Button';
 import React from 'react';
 import styled from 'styled-components';
 
-interface SubmitButtonProps {}
+// onClick props의 타입을 정의합니다.
+interface SubmitButtonProps {
+    onClick: () => void;
+}
 
-const SubmitButton: React.FC<SubmitButtonProps> = ({}) => {
+const SubmitButton: React.FC<SubmitButtonProps> = ({ onClick }) => {
     return (
         <RightWrapper>
-            <StyledButton $primary size="medium" label="작성완료" onClick={() => console.log('작성완료')} />
+            <Button $primary width="152px" size="medium" label="작성완료" onClick={() => onClick()} />
         </RightWrapper>
     );
 };
@@ -18,8 +21,4 @@ const RightWrapper = styled.div`
     width: 100%;
     display: flex;
     justify-content: end;
-`;
-
-const StyledButton = styled(Button)`
-    width: 152px;
 `;

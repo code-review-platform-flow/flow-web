@@ -1,6 +1,6 @@
 import Container from '@/widgets/container/Container';
 import React, { useEffect, useRef, useState } from 'react';
-import { PosrtWriteTitle } from './Font';
+import { PostWriteTitle } from './Font';
 import styled from 'styled-components';
 import { SizedBox } from '@/widgets/wrapper/SizedBox';
 import Image from 'next/image';
@@ -17,12 +17,14 @@ import NumListIcon from '../../../../public/icons/markDownToolBar/numListIcon.sv
 import QuestionIcon from '../../../../public/icons/markDownToolBar/questionIcon.svg';
 import QuotationIcon from '../../../../public/icons/markDownToolBar/quotationIcon.svg';
 import TableIcon from '../../../../public/icons/markDownToolBar/tableIcon.svg';
+import { contentState } from '../model/postAtoms';
+import { useRecoilState } from 'recoil';
 
 interface MarkDownContainerProps {}
 
 const MarkDownContainer: React.FC<MarkDownContainerProps> = () => {
     const textAreaRef = useRef<HTMLTextAreaElement>(null);
-    const [markdownText, setMarkdownText] = useState<string>('');
+    const [content, setContent] = useRecoilState(contentState);
     const [headerModal, setHeaderModal] = useState<boolean>(false);
     useEffect(() => {
         const textArea = textAreaRef.current;
@@ -48,10 +50,10 @@ const MarkDownContainer: React.FC<MarkDownContainerProps> = () => {
             const textArea = textAreaRef.current;
             const start = textArea.selectionStart;
             const end = textArea.selectionEnd;
-            const before = markdownText.substring(0, start);
-            const after = markdownText.substring(end, markdownText.length);
+            const before = content.substring(0, start);
+            const after = content.substring(end, content.length);
 
-            setMarkdownText(before + text + after);
+            setContent(before + text + after);
 
             setTimeout(() => {
                 textArea.focus();
@@ -69,7 +71,7 @@ const MarkDownContainer: React.FC<MarkDownContainerProps> = () => {
     };
     return (
         <Container size="wide">
-            <PosrtWriteTitle>내용</PosrtWriteTitle>
+            <PostWriteTitle>내용</PostWriteTitle>
             <SizedBox />
             <MarkDownWrapper size="wide" border>
                 <MarkDownToolBar>
@@ -122,15 +124,33 @@ const MarkDownContainer: React.FC<MarkDownContainerProps> = () => {
                 </MarkDownToolBar>
                 {headerModal && (
                     <HeaderModal>
-                        <Header1>Heading 1</Header1>
-                        <Header2>Headeing 2</Header2>
-                        <Header3>Headeing 2</Header3>
+                        <Header1
+                            onClick={() => {
+                                insertText('\n#', 1), handleHeaderModal();
+                            }}
+                        >
+                            Heading 1
+                        </Header1>
+                        <Header2
+                            onClick={() => {
+                                insertText('\n##', 2), handleHeaderModal();
+                            }}
+                        >
+                            Headeing 2
+                        </Header2>
+                        <Header3
+                            onClick={() => {
+                                insertText('\n###', 3), handleHeaderModal();
+                            }}
+                        >
+                            Headeing 3
+                        </Header3>
                     </HeaderModal>
                 )}
                 <MarkDownContent
                     ref={textAreaRef}
-                    value={markdownText}
-                    onChange={(e) => setMarkdownText(e.target.value)}
+                    value={content}
+                    onChange={(e) => setContent(e.target.value)}
                     placeholder="내용을 입력하세요..."
                 />
             </MarkDownWrapper>
@@ -156,15 +176,14 @@ const HeaderModal = styled.div`
 const Header1 = styled.div`
     font-weight: 600;
     font-size: 1.5625em;
+    cursor : pointer;
 `;
 
-const Header2 = styled.div`
-    font-weight: 600;
+const Header2 = styled(Header1)`
     font-size: 1.125em;
 `;
 
-const Header3 = styled.div`
-    font-weight: 600;
+const Header3 = styled(Header1)`
     font-size: 0.8125em;
 `;
 const MarkDownWrapper = styled(Container)`
