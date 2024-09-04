@@ -10,8 +10,10 @@ import { postPost } from './api/postPost';
 import { useRecoilValue } from 'recoil';
 import { categoryState, tagsState, titleState, contentState } from './model/postAtoms';
 import { authDataState } from '@/entities/auth/model';
+import { useRouter } from 'next/navigation';
 
 const PostWritePage: React.FC = () => {
+    const router = useRouter();
     const category = useRecoilValue(categoryState);
     const tags = useRecoilValue(tagsState);
     const title = useRecoilValue(titleState);
@@ -34,8 +36,9 @@ const PostWritePage: React.FC = () => {
                 content,
             };
 
-            await postPost(post);
-
+            const response = await postPost(post);
+            router.push(`/post-detail/${response.postId}`);
+            
             // 성공 시 상태 초기화
             // 이 부분에 리셋 로직 추가 필요
         } catch (error) {

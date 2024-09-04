@@ -6,7 +6,8 @@ const nextConfig = {
             'static.wanted.co.kr',
             'cdn.jumpit.co.kr',
             'grepp-programmers.s3.amazonaws.com',
-            'about.daangn.com'
+            'about.daangn.com',
+            'upload.wikimedia.org'
         ],
     },
     swcMinify: true,

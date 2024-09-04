@@ -1,8 +1,12 @@
 import { Post, PostDetail } from '@/shared/type/post';
 import apiClient from '../../../shared/api/apiClient';
 
-// 특정 게시물 등록
-export const postPost = async (post: Post): Promise<Post> => {
+// postPost 함수가 리턴할 타입 정의
+interface PostResponse {
+    postId: number;
+}
+
+export const postPost = async (post: Post): Promise<PostResponse> => {
     try {
         const response = await apiClient.post(`post`, { json : post }).json();
 
@@ -11,7 +15,7 @@ export const postPost = async (post: Post): Promise<Post> => {
         }
 
         console.log(response);
-        return response as Post;
+        return response as PostResponse;
     } catch (error) {
         console.error('postPost Error:', error);
         throw error;
