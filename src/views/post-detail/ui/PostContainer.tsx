@@ -10,7 +10,7 @@ import ProfileExample from '../../../../public/images/profileImageExample.png';
 import ShareTumbContainer from './ShareTumbContainer';
 import { fetchPostDetail } from '../api/fetchPostDetail';
 import { useQuery } from '@tanstack/react-query';
-import { PostDetail } from '@/shared/type/post/type';
+import { PostDetail } from '@/shared/type/post';
 import filterTime from '@/shared/hook/filterTime';
 import markdownToHtml from './markdownToHtml';
 

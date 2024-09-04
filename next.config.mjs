@@ -6,6 +6,8 @@ const nextConfig = {
             'static.wanted.co.kr',
             'cdn.jumpit.co.kr',
             'grepp-programmers.s3.amazonaws.com',
+            'about.daangn.com',
+            'upload.wikimedia.org'
         ],
     },
     swcMinify: true,
@@ -37,8 +39,3 @@ const nextConfig = {
 
 export default nextConfig;
 
-
-// /** @type {import('next').NextConfig} */
-// const nextConfig = {};
-
-// export default nextConfig;

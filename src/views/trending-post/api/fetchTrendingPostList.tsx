@@ -1,4 +1,4 @@
-import { PostSummary, PostDetail } from '../../../shared/type/post/type';
+import { PostSummary, PostDetail } from '../../../shared/type/post';
 import ky from 'ky';
 import { QueryFunctionContext } from '@tanstack/react-query';
 import { getPostDetail } from '@/shared/api/post/getPostDetail';

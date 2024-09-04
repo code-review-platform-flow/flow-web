@@ -10,7 +10,8 @@ export interface ButtonProps {
     tertiary?: boolean;
     children?: React.ReactNode;
     gap?: string;
-  type?: 'button' | 'submit' | 'reset';
+    type?: 'button' | 'submit' | 'reset';
+    width?: string;
 }
 
 export const Button = ({
@@ -22,9 +23,9 @@ export const Button = ({
     children,
     gap = '0em',
     onClick,
-    type='button',
+    type = 'button',
+    width='',
     ...props
-  
 }: ButtonProps) => {
     return (
         <StyledButton
@@ -35,13 +36,13 @@ export const Button = ({
             gap={gap}
             onClick={onClick}
             type={type}
+            width={width}
             {...props}
         >
             {children}
             {label}
         </StyledButton>
     );
-      
 };
 
 const StyledButton = styled.button<{
@@ -50,6 +51,7 @@ const StyledButton = styled.button<{
     size: 'small' | 'medium' | 'large' | 'wide';
     tertiary: boolean;
     gap: string;
+    width: string;
 }>`
     display: flex;
     justify-content: center;
@@ -62,7 +64,8 @@ const StyledButton = styled.button<{
     font-size: ${({ size }) => (size === 'small' ? '0.75em' : size === 'medium' ? '0.875em' : '0.75em')};
     padding: ${({ size }) =>
         size === 'small' ? '0.625em 1em' : size === 'medium' ? '0.6875em 1.25em' : '0.75em 1.5em'};
-    width: ${({ size }) => (size === 'wide' ? '100%' : 'auto')};
+    width: ${({ size, width }) => (width ? width : size === 'wide' ? '100%' : 'auto')};
+
     gap: ${({ gap }) => gap};
     @media (max-width: 768px) {
         font-size: ${({ size }) => (size === 'small' ? '0.35em' : size === 'medium' ? '0.5em' : '0.75em')};
