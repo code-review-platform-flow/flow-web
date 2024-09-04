@@ -31,7 +31,7 @@ const UserInfo: React.FC<UserInfoProps> = ({ name, imgUrl, department, enterYear
 export default UserInfo;
 
 const ProfileImage = styled(Image)`
-    border-radius : 0.5em;
+    border-radius : 1em;
 `;
 
 const UserName = styled.div`

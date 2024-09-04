@@ -8,7 +8,7 @@ import Image from 'next/image';
 import ProfileImage2 from '../../../../public/images/profileImageExample2.png';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import { User } from '@/entities/user/model/type';
+import { User } from '@/shared/type/type';
 
 interface HallofFameListProps {
     hallOfFameData?: User[];
