@@ -27,7 +27,6 @@ const ShareTumbContainer: React.FC<ShareTumbContainerProps> = ({ mobile = false 
 export default ShareTumbContainer;
 
 const Wrapper = styled.div<{ mobile: boolean }>`
-    position: relative;
     height: 100%;
     width: ${({ mobile }) => (mobile ? 'auto' : '10%')};
     display: ${({ mobile }) => (mobile ? 'none' : 'flex')};

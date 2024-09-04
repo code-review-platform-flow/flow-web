@@ -1,55 +1,54 @@
 import Container from '@/widgets/container/Container';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { SemiTitle, YearDescription, YearTitle } from './Font';
 import { SizedBox } from '@/widgets/wrapper/SizedBox';
-import { RowWrapper } from '@/widgets/wrapper/RowWrapper';
 import styled from 'styled-components';
 import { ColumnWrapper } from '@/widgets/wrapper/ColumnWrapper';
+import { Career, CareerData } from '@/shared/type/user';
+import { getCareer } from '../api/getCareer';
 
-interface UserCareerContainerProps {}
+interface UserCareerContainerProps {
+    careerList: Career[]; // 이력 목록
+    own: boolean;
+}
 
-const UserCareerContainer: React.FC<UserCareerContainerProps> = ({}) => {
-    const user = {
-        name: '홍길동',
-        univName: '가천대',
-        department: '컴퓨터공학과',
-        careerEnterYear: '2022',
-        careerQuitYear: '2024',
-        careerName: 'aitstory',
-        careerProduct: 'T Map 전기차 플렛폼',
-        careerDetailTask: [
-            '전기차 플랫폼 신규 백엔드 (2.0)',
-            'Layer architecture 설계 및 구현',
-            '충전소 충전기 인증 및 충전 프로세스 기능 구현',
-            '쿠폰 프로세스 기능 구현',
-            '결제 프로세스 기능 구현',
-            'Rabbit MQ를 사용하여 결제 기능 구현',
-            '테스트 코드 도입 및 테스트 코드를 사용하여 swagger 자동화 구현',
-        ],
-    };
+const UserCareerContainer: React.FC<UserCareerContainerProps> = ({ careerList, own }) => {
+    const [careerData, setCareerData] = useState<CareerData[]>([]);
+
+    useEffect(() => {
+        const fetchCareerData = async () => {
+            console.log('이력 정보 불러오기');
+            try {
+                const data = await Promise.all(careerList.map((career) => getCareer(career.careerId)));
+                setCareerData(data);
+                console.log(data);
+            } catch (error) {
+                console.error('Career data fetching error:', error);
+            }
+        };
+
+        fetchCareerData();
+    }, [careerList]);
 
     return (
         <Container width="100%">
             <SemiTitle>이력</SemiTitle>
             <SizedBox height="0.5em" />
-
-            <GridWrapper>
-                <YearTitle>
-                    {user.careerEnterYear} ~ {user.careerQuitYear}
-                </YearTitle>
-                <YearDescription>{user.careerName}</YearDescription>
-
-                <CareerCategory>프로덕트</CareerCategory>
-                <ColumnWrapper gap="0.8125em">
-                    <CareerProduct>T Map 전기차 플렛폼</CareerProduct>
-                    <ColumnWrapper gap="0.25em">
-                        {user.careerDetailTask &&
-                            user.careerDetailTask.map((detail, index) => (
-                                <CareerDetailTask key={index}>• {detail}</CareerDetailTask>
-                            ))}
+            {careerData.map((career, index) => (
+                <GridWrapper key={index}>
+                    <YearTitle>
+                        {career.startDate} ~ {career.endDate}
+                    </YearTitle>
+                    <YearDescription>{career.title}</YearDescription>
+                    <CareerCategory>{career.title}</CareerCategory>
+                    <ColumnWrapper gap="0.8125em">
+                        <CareerProduct>{career.title}</CareerProduct>
+                        <ColumnWrapper gap="0.25em">
+                            <CareerDetailTask>{career.description}</CareerDetailTask>
+                        </ColumnWrapper>
                     </ColumnWrapper>
-                </ColumnWrapper>
-            </GridWrapper>
+                </GridWrapper>
+            ))}
         </Container>
     );
 };

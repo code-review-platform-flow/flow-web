@@ -5,7 +5,6 @@ import { ColumnWrapper } from '@/widgets/wrapper/ColumnWrapper';
 import UserSummaryContainer from './ui/UserSummaryContainer';
 import UserSchoolContainer from './ui/UserSchoolContainer';
 import UserCareerContainer from './ui/UserCareerContainer';
-import UserPostContainer from './ui/UserPostContainer';
 import { PageWrapper } from '@/widgets/wrapper/PageWrapper';
 import { SizedBox } from '@/widgets/wrapper/SizedBox';
 import { useSearchParams } from 'next/navigation';
@@ -13,6 +12,8 @@ import { getUserInfo } from './api/getUserInfo';
 import { useRecoilValue } from 'recoil';
 import { authDataState } from '@/entities/auth/model';
 import { UserInfo } from '@/shared/type/user';
+import UserPostList from './ui/UserPostList';
+import styled from 'styled-components';
 
 const UserPage: React.FC = () => {
     const searchParams = useSearchParams();
@@ -27,7 +28,9 @@ const UserPage: React.FC = () => {
 
     useEffect(() => {
         const fetchData = async () => {
+            console.log();
             if (hostEmail && visitorEmail) {
+                console.log('useEffect작동2');
                 try {
                     const data = await getUserInfo(hostEmail, visitorEmail);
                     console.log('유저데이터기본', data);
@@ -35,6 +38,10 @@ const UserPage: React.FC = () => {
                 } catch (error) {
                     console.error('유저 데이터를 가져오는 중 오류가 발생했습니다:', error);
                 }
+            } else if (!hostEmail) {
+                console.log('hostEmail없음');
+            } else if (!hostEmail) {
+                console.log('visitEmail없음');
             }
         };
 
@@ -42,7 +49,6 @@ const UserPage: React.FC = () => {
     }, [hostEmail, visitorEmail]);
     return (
         <PageWrapper padding="5%">
-            {hostEmail}
             <FlexWrapper>
                 {userData && (
                     <>
@@ -50,22 +56,17 @@ const UserPage: React.FC = () => {
                             name={userData.userName}
                             majorName={userData.majorName}
                             studentNumber={userData.studentNumber}
-                            introduce={userData.oneLiner}
+                            oneLiner={userData.oneLiner}
                             profileUrl={userData.profileUrl}
                             followerCount={userData.followerCount}
+                            own={userData.own}
                         />
-                        <SizedBox width="70%" />
-                        <ColumnWrapper gap="1em">
-                            <UserSchoolContainer
-                            // ducationList={userData.educationList}
-                            />
-                            <UserCareerContainer
-                            // careerList={userData.careerIdList}
-                            />
-                            <UserPostContainer
-                            // postList={userData.postIdList}
-                            />
-                        </ColumnWrapper>
+                        <SizedBox width="50%" />
+                        <StyledColumnWrapper width="60%" gap="1em">
+                            <UserSchoolContainer educationList={userData.educationList} own={userData.own} />
+                            <UserCareerContainer careerList={userData.careerList} own={userData.own} />
+                            <UserPostList postList={userData.postIdList} own={userData.own} />
+                        </StyledColumnWrapper>
                     </>
                 )}
             </FlexWrapper>
@@ -74,3 +75,9 @@ const UserPage: React.FC = () => {
 };
 
 export default UserPage;
+
+const StyledColumnWrapper = styled(ColumnWrapper)`
+    @media (max-width: 768px) {
+        width: 100%;
+    }
+`;

@@ -12,7 +12,8 @@ import { fetchPostDetail } from '../api/fetchPostDetail';
 import { useQuery } from '@tanstack/react-query';
 import { PostDetail } from '@/shared/type/post';
 import filterTime from '@/shared/hook/filterTime';
-import markdownToHtml from './markdownToHtml';
+import markdownToHtml from '@/shared/api/post/markdownToHtml';
+import hljs from 'highlight.js';
 
 interface PostContainerProps {
     postId: string;
@@ -40,6 +41,16 @@ const PostContainer: React.FC<PostContainerProps> = ({ postId }) => {
             });
         }
     }, [postDetail?.content]);
+
+    // HTML content가 변경될 때 하이라이트 적용
+    useEffect(() => {
+        if (content) {
+            const codeBlocks = document.querySelectorAll('pre code');
+            codeBlocks.forEach((block) => {
+                hljs.highlightElement(block as HTMLElement);
+            });
+        }
+    }, [content]);
 
     if (isLoading) return <div>Loading...</div>;
     if (error) {
@@ -125,7 +136,29 @@ const UploadTime = styled.div`
 
 const PostContentContainer = styled.div`
     margin-top: 1em;
-    padding : 1em;
+    padding: 1em;
     line-height: 1.5;
     white-space: pre-wrap;
+    pre {
+        background: #f5f5f7;
+        border-box: box-sizing;
+        padding: 0.5em;
+        border-radius: 1em;
+    }
+    pre > code {
+        max-height: 300px; /* 원하는 최대 높이로 설정 */
+        overflow-y: auto; /* 필요시 스크롤바 추가 */
+        white-space: pre-wrap; /* 코드 줄바꿈 허용 */
+        word-wrap: break-word; /* 단어가 너무 길면 줄바꿈 */
+    }
+
+    p > code {
+        box-sizing: border-box;
+        padding: 0.25em;
+        border-radius: 0.25em;
+        color: #f54735;
+        background-color: #b4b4b4;
+        white-space: pre-wrap; /* 코드 줄바꿈 허용 */
+        word-wrap: break-word; /* 단어가 너무 길면 줄바꿈 */
+    }
 `;

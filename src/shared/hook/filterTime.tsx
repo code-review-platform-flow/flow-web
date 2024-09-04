@@ -17,3 +17,4 @@ export default function filterTime(dateString:string) {
         return `${diffInDays}일 전`;
     }
 }
+

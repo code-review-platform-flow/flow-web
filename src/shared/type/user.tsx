@@ -1,14 +1,30 @@
-import { PostSummary } from "./post";
+import { PostSummary } from './post';
 
 // 교육 정보를 나타내는 인터페이스
-interface Education {
+export interface Education {
     educationId: number; // 교육 ID
 }
 
+export interface EducationData {
+    enterYear: string;
+    quitYear: string;
+    univName: string;
+    department: string;
+}
+
 // 경력 정보를 나타내는 인터페이스
-interface Career {
+export interface Career {
     careerId: number; // 경력 ID
 }
+
+// 경력 정보를 나타내는 인터페이스
+export interface CareerData {
+    title: string,
+    description: string,
+    startDate: string,
+    endDate: string;
+}
+
 // 사용자 정보를 나타내는 인터페이스
 export interface UserInfo {
     own: boolean; // 사용자가 자신의 프로필을 소유하고 있는지 여부
@@ -21,13 +37,13 @@ export interface UserInfo {
     followerCount: number; // 팔로워 수
     educationList: Education[]; // 교육 목록
     careerList: Career[]; // 경력 목록
-    postList: PostSummary[]; // 게시물 목록
+    postIdList: PostSummary[]; // 게시물 목록
 }
 
 export interface UserSummary {
-    majorName:string;
+    majorName: string;
     userName: string;
-    studentNumber : string;
-    profileUrl : string;
-    email : string;
+    studentNumber: string;
+    profileUrl: string;
+    email: string;
 }

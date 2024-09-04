@@ -50,7 +50,7 @@ const Header = ({ user, onLogin, onLogout, onCreateAccount }: HeaderProps) => {
         clickModal();
 
         const encodedEmail = Buffer.from(email!).toString('base64');
-        router.push(`/user?${encodedEmail}`);
+        router.push(`/user?email=${encodedEmail}`);
     };
 
     useEffect(() => {

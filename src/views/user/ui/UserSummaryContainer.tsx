@@ -16,18 +16,20 @@ interface UserSummaryContainerProps {
     name: string;
     majorName: string;
     studentNumber: string;
-    introduce: string;
+    oneLiner: string;
     profileUrl: string;
     followerCount: number;
+    own : boolean;
 }
 
 const UserSummaryContainer: React.FC<UserSummaryContainerProps> = ({
     name,
     majorName,
     studentNumber,
-    introduce,
+    oneLiner,
     profileUrl,
     followerCount,
+    own,
 }) => {
     return (
         <UserSummaryContainerWrapper round width="30%">
@@ -62,7 +64,7 @@ const UserSummaryContainer: React.FC<UserSummaryContainerProps> = ({
 
                 <ColumnWrapper gap="0.5em">
                     <IntroduceTitle>소개</IntroduceTitle>
-                    <IntroduceText>{introduce}</IntroduceText>
+                    <IntroduceText>{oneLiner}</IntroduceText>
                 </ColumnWrapper>
             </ColumnWrapper>
         </UserSummaryContainerWrapper>
