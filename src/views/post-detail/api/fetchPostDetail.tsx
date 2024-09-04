@@ -1,4 +1,4 @@
-import { PostDetail } from '@/shared/type/post/type';
+import { PostDetail } from '@/shared/type/post';
 import { getPostDetail } from '@/shared/api/post/getPostDetail';
 
 export const fetchPostDetail = async (postId: string): Promise<PostDetail> => {

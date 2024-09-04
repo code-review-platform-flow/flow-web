@@ -10,7 +10,7 @@ import { UserDepartmentEnterYear } from '@/views/user/ui/Font';
 import PostTag from '@/widgets/post/PostTag';
 import { fetchTrendingPostDetails } from '../api/fetchTrendingPostList';
 import { useQuery } from '@tanstack/react-query';
-import { PostDetail } from '../../../shared/type/post/type'; // PostDetail 타입을 임포트
+import { PostDetail } from '../../../shared/type/post'; // PostDetail 타입을 임포트
 import { useRouter } from 'next/navigation';
 import filterTime from '@/shared/hook/filterTime';
 

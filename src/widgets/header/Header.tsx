@@ -153,9 +153,12 @@ const MyProfileButton = styled.div`
     color: #737373;
     gap: 0.5em;
     margin-left: 0.625em;
+    cursor : pointer;
 `;
 
-const LogOutButton = styled(MyProfileButton)``;
+const LogOutButton = styled(MyProfileButton)`
+    
+`;
 
 const WritePostButton = styled(MyProfileButton)`
     display: none;
@@ -323,7 +326,9 @@ const Icon = styled(Image)`
     }
 `;
 
-const ModalIcon = styled(Image)``;
+const ModalIcon = styled(Image)`
+    
+`;
 const HambergerIcon = styled(Image)`
     display: none;
     cursor: pointer;

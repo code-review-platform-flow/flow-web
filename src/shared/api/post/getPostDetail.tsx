@@ -1,4 +1,4 @@
-import { PostDetail } from "@/shared/type/post/type";
+import { PostDetail } from "@/shared/type/post";
 import ky from "ky";
 
 // 특정 게시물의 상세 정보를 가져오는 함수
