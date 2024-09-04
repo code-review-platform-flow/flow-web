@@ -17,8 +17,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import Container from '../container/Container';
-import { get } from 'http';
-import { getUserSummary } from '@/shared/api/user/getUserSummary';
+import { getUserSummary } from '@/views/user/api/getUserSummary';
 import { useRecoilValue } from 'recoil';
 import { authDataState } from '@/entities/auth/model';
 import { UserSummary } from '@/shared/type/user';
@@ -47,6 +46,12 @@ const Header = ({ user, onLogin, onLogout, onCreateAccount }: HeaderProps) => {
 
     // UserSummary 또는 null을 허용하는 타입으로 초기 상태를 설정합니다.
     const [userSummary, setUserSummary] = useState<UserSummary | null>(null);
+    const handleNavigation = () => {
+        clickModal();
+
+        const encodedEmail = Buffer.from(email!).toString('base64');
+        router.push(`/user?${encodedEmail}`);
+    };
 
     useEffect(() => {
         // 비동기로 사용자 정보 가져오기
@@ -69,7 +74,14 @@ const Header = ({ user, onLogin, onLogout, onCreateAccount }: HeaderProps) => {
             <HeaderContainer>
                 <Row>
                     <LogoContainer>
-                        <StyledLogo onClick={() => {clickModal();router.push('/') } } src={FlowLogo} alt="Flow Logo" />
+                        <StyledLogo
+                            onClick={() => {
+                                clickModal();
+                                router.push('/');
+                            }}
+                            src={FlowLogo}
+                            alt="Flow Logo"
+                        />
                     </LogoContainer>
                     <SearchContainer>
                         <SearchIconWrapper>
@@ -95,12 +107,17 @@ const Header = ({ user, onLogin, onLogout, onCreateAccount }: HeaderProps) => {
                                 </Column>
                             </Row4>
                             <WritePostButton>
-                                <Row onClick={()=>{clickModal(); router.push('/post-write')}}>
+                                <Row
+                                    onClick={() => {
+                                        clickModal();
+                                        router.push('/post-write');
+                                    }}
+                                >
                                     <ModalIcon src={modalPencilIcon} alt="글쓰기 아이콘" />새 포스트
                                 </Row>
                                 <Line />
                             </WritePostButton>
-                            <MyProfileButton>
+                            <MyProfileButton onClick={() => handleNavigation()}>
                                 <ModalIcon src={profileIcon} alt="프로필 아이콘" />내 프로필
                             </MyProfileButton>
                             <LogOutButton

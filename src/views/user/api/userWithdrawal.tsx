@@ -1,10 +1,10 @@
-import ky from 'ky';
+import apiClient from '@/shared/api/apiClient';
 
 // 특정 유저의 학력 수정
 export const userWithdrawal = async (feedback: string): Promise<{}> => {
     try {
-        const response = await ky
-            .post(`${process.env.NEXT_PUBLIC_SERVER_URL}/user/withdrawal`, {
+        const response = await apiClient
+            .post(`user/withdrawal`, {
                 json: { feedback },
             })
             .json();

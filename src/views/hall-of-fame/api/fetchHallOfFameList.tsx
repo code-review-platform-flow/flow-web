@@ -1,4 +1,4 @@
-import { getUserSummary } from '@/shared/api/user/getUserSummary';
+import { getUserSummary } from '@/views/user/api/getUserSummary';
 import { HallOfFameUser } from '../ui/HallOfFameUserContainer';
 import ky from 'ky';
 

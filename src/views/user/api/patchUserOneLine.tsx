@@ -1,10 +1,10 @@
-import ky from 'ky';
+import apiClient from '@/shared/api/apiClient';
 
 //특정 댓글 수정
 export const patchUserOneLines = async (email: string, oneLiner: string): Promise<{}> => {
     try {
-        const response = await ky
-            .patch(`${process.env.NEXT_PUBLIC_SERVER_URL}/user/one-liner`, {
+        const response = await apiClient
+            .patch(`user/one-liner`, {
                 json: {
                     email,
                     oneLiner,

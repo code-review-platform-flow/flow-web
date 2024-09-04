@@ -1,4 +1,4 @@
-import ky from 'ky';
+import apiClient from '@/shared/api/apiClient';
 
 // 특정 유저의 학력 수정
 export const postCareer = async (
@@ -10,8 +10,8 @@ export const postCareer = async (
     endDate: string,
 ): Promise<{}> => {
     try {
-        const response = await ky
-            .post(`${process.env.NEXT_PUBLIC_SERVER_URL}/user/career`, {
+        const response = await apiClient
+            .post(`user/career`, {
                 json: { email, careerId, title, descreption, startDate, endDate },
             })
             .json();
