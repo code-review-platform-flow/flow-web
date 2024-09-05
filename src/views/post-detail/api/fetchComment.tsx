@@ -1,5 +1,5 @@
 import { Comment } from '@/shared/type/post';
-import { getComment } from '@/shared/api/comment/getComment';
+import { getComment } from '@/views/post-detail/api/getComment';
 
 export const fetchComment = async (postId: string): Promise<Comment> => {
     try {

@@ -1,10 +1,10 @@
-import ky from 'ky';
+import apiClient from '@/shared/api/apiClient';
 
 // 특정 게시물의 좋아요 정보를 취소하는 함수
-export const deleteLike = async (postId: number, email: string): Promise<{}> => {
+export const deleteLike = async (postId: string, email: string): Promise<{}> => {
     try {
-        const response = await ky
-            .delete(`${process.env.NEXT_PUBLIC_SERVER_URL}/like/${postId}`, { json: { email } })
+        const response = await apiClient
+            .delete(`like/${postId}`, { json: { email } })
             .json();
 
         if (!response) {
