@@ -3,25 +3,26 @@ import React from 'react';
 
 interface YearTitleProps {
     children?: React.ReactNode;
+    width?: string;
 }
 
-const YearTitle: React.FC<YearTitleProps> = ({ children }) => {
+const YearTitle: React.FC<YearTitleProps> = ({ children, width }) => {
     return (
-        <Title>
+        <Title width={width}>
             <Retangle />
             {children}
         </Title>
     );
 };
 
-const Title = styled.div`
+const Title = styled.div<{ width?: string }>`
     display: flex;
     align-items: center;
     gap: 0.5em;
     color: #999999;
     font-size: 0.8125em;
+    width: ${(props) => props.width};
 `;
-
 const SemiTitle = styled.div`
     font-size: 0.875em;
     font-weight: 600;

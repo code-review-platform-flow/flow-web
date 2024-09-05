@@ -6,10 +6,10 @@ export interface Education {
 }
 
 export interface EducationData {
-    enterYear: string;
-    quitYear: string;
-    univName: string;
-    department: string;
+    educationId : number;
+    startDate: string;
+    endDate: string;
+    schoolName: string;
 }
 
 // 경력 정보를 나타내는 인터페이스

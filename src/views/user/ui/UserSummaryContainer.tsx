@@ -13,6 +13,7 @@ import { formatEnterYear } from '@/shared/hook/formatEnterYear';
 import pencilIcon from '/public/icons/pencilIcon.svg';
 import ModifyIcon from './ModifyIcon';
 import { patchUserOneLines } from '../api/patchUserOneLine';
+import { activeEnter } from '@/shared/hook/activeEnter';
 
 // Props 인터페이스 정의
 interface UserSummaryContainerProps {
@@ -65,11 +66,6 @@ const UserSummaryContainer: React.FC<UserSummaryContainerProps> = ({
         setCurrentOneLiner(event.target.value);
     };
 
-    const activeEnter = (event: React.KeyboardEvent<HTMLInputElement>) => {
-        if (event.key === 'Enter') {
-            toggleEditingMode();
-        }
-    };
 
     return (
         <UserSummaryContainerWrapper round width="30%">
@@ -113,7 +109,7 @@ const UserSummaryContainer: React.FC<UserSummaryContainerProps> = ({
                             type="text"
                             value={currentOneLiner}
                             onChange={handleOneLinderChnage}
-                            onKeyDown={activeEnter}
+                            onKeyDown={(event)=>activeEnter(event,()=>toggleEditingMode())}
                             autoFocus
                         />
                     ) : (

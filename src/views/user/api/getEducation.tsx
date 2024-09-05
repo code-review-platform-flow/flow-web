@@ -13,10 +13,10 @@ export const getEducation = async (educationId: number): Promise<EducationData> 
 
         // API 응답을 EducationData 타입으로 강제 변환 (타입 검증)
         const educationData: EducationData = {
-            enterYear: data.enterYear || '',
-            quitYear: data.quitYear || '',
-            univName: data.univName || '',
-            department: data.department || '',
+            educationId: data.educationId,
+            startDate: data.startDate || '',
+            endDate: data.endDate || '',
+            schoolName: data.schoolName || '',
         };
 
         console.log('학력정보' + educationData);

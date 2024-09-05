@@ -35,6 +35,7 @@ const UserPage: React.FC = () => {
                     const data = await getUserInfo(hostEmail, visitorEmail);
                     console.log('유저데이터기본', data);
                     setUserData(data);
+                    console.log('유저상태저장' + userData);
                 } catch (error) {
                     console.error('유저 데이터를 가져오는 중 오류가 발생했습니다:', error);
                 }
@@ -64,7 +65,7 @@ const UserPage: React.FC = () => {
                         />
                         <SizedBox width="50%" />
                         <StyledColumnWrapper width="60%" gap="1em">
-                            <UserSchoolContainer educationList={userData.educationList} own={userData.own} />
+                            <UserSchoolContainer email={hostEmail} educationList={userData.educationList} own={userData.own} />
                             <UserCareerContainer careerList={userData.careerList} own={userData.own} />
                             <UserPostList postList={userData.postIdList} own={userData.own} />
                         </StyledColumnWrapper>
