@@ -6,7 +6,7 @@ export interface Education {
 }
 
 export interface EducationData {
-    educationId : number | null;
+    educationId: number | null;
     startDate: string;
     endDate: string;
     schoolName: string;
@@ -19,11 +19,11 @@ export interface Career {
 
 // 경력 정보를 나타내는 인터페이스
 export interface CareerData {
-    careerId : number,
-    title: string,
-    description: string,
-    startDate: string,
-    endDate: string;
+    careerId: number | null;
+    title: string;
+    description: string;
+    startDate: string | null;
+    endDate: string | null;
 }
 
 // 사용자 정보를 나타내는 인터페이스
@@ -37,7 +37,7 @@ export interface UserInfo {
     oneLiner: string; // 짧은 자기소개
     followerCount: number; // 팔로워 수
     educationList: Education[]; // 교육 목록
-    careerList: Career[]; // 경력 목록
+    careerIdList: Career[]; // 경력 목록
     postIdList: PostSummary[]; // 게시물 목록
 }
 

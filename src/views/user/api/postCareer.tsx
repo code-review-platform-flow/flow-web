@@ -5,14 +5,14 @@ export const postCareer = async (
     email: string,
     careerId: number,
     title: string,
-    descreption: string,
+    description: string,
     startDate: string,
     endDate: string,
 ): Promise<{}> => {
     try {
         const response = await apiClient
             .post(`user/career`, {
-                json: { email, careerId, title, descreption, startDate, endDate },
+                json: { email, careerId, title, description, startDate, endDate },
             })
             .json();
 
