@@ -3,10 +3,10 @@ import apiClient from '@/shared/api/apiClient';
 // 특정 유저의 학력 수정 또는 추가
 export const postEducation = async (
     email: string,
-    educationId: number, // null 가능하도록 수정
-    schoolName: string,
+    educationId: number | undefined, // null 가능하도록 수정
+    schoolName: string | "",
     startDate: string,
-    endDate: string | null,
+    endDate: string | "",
 ): Promise<{}> => {
     try {
         // 요청할 데이터를 동적으로 구성

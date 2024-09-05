@@ -6,7 +6,7 @@ export interface Education {
 }
 
 export interface EducationData {
-    educationId : number;
+    educationId : number | null;
     startDate: string;
     endDate: string;
     schoolName: string;
@@ -19,6 +19,7 @@ export interface Career {
 
 // 경력 정보를 나타내는 인터페이스
 export interface CareerData {
+    careerId : number,
     title: string,
     description: string,
     startDate: string,

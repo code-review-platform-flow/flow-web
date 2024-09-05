@@ -14,6 +14,7 @@ import pencilIcon from '/public/icons/pencilIcon.svg';
 import ModifyIcon from './ModifyIcon';
 import { patchUserOneLines } from '../api/patchUserOneLine';
 import { activeEnter } from '@/shared/hook/activeEnter';
+import { SizedBox } from '@/widgets/wrapper/SizedBox';
 
 // Props 인터페이스 정의
 interface UserSummaryContainerProps {
@@ -56,6 +57,7 @@ const UserSummaryContainer: React.FC<UserSummaryContainerProps> = ({
             } catch (error) {
                 console.error('닉네임 수정 중 오류 발생:', error);
                 alert('한줄 소개 수정에 실패했습니다: ');
+                setEditOneLiner(false);
                 return;
             }
         }
@@ -65,7 +67,6 @@ const UserSummaryContainer: React.FC<UserSummaryContainerProps> = ({
     const handleOneLinderChnage = (event: BaseSyntheticEvent) => {
         setCurrentOneLiner(event.target.value);
     };
-
 
     return (
         <UserSummaryContainerWrapper round width="30%">
@@ -99,17 +100,21 @@ const UserSummaryContainer: React.FC<UserSummaryContainerProps> = ({
                 </RowWrapper>
 
                 <ColumnWrapper gap="0.5em">
-                    <RowWrapper justifyContent="space-between">
+                    <RowWrapper justifyContent="space-between" alignItems='center'>
                         <IntroduceTitle>소개</IntroduceTitle>
-                        {own && <ModifyIcon onClick={() => toggleEditingMode()} />}
+                        {own &&
+                            (editOneLiner ? (
+                                <Button tertiary size="small" label="저장" onClick={() => toggleEditingMode()} />
+                            ) : (
+                                <ModifyIcon onClick={() => toggleEditingMode()} />
+                            ))}
                     </RowWrapper>
-
                     {editOneLiner ? (
                         <IntroduceTextInput
                             type="text"
                             value={currentOneLiner}
                             onChange={handleOneLinderChnage}
-                            onKeyDown={(event)=>activeEnter(event,()=>toggleEditingMode())}
+                            onKeyDown={(event) => activeEnter(event, () => toggleEditingMode())}
                             autoFocus
                         />
                     ) : (
@@ -150,9 +155,17 @@ const IntroduceTitle = styled.div`
 const IntroduceText = styled.div`
     width: 100%;
     font-size: 0.8125em;
+    padding: 0.5em;
+    padding-left : 0em;
+    box-sizing: border-box;
 `;
 
 const IntroduceTextInput = styled.input`
+    border-radius: 1em;
+    background: #f5f5f7;
+    font-size: 0.8125em;
+    padding: 0.5em;
+    box-sizing: border-box;
     width: 100%;
     border: none;
     font-family: 'Pretendard';
