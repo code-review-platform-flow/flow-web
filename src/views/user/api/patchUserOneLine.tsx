@@ -1,6 +1,6 @@
 import apiClient from '@/shared/api/apiClient';
 
-//특정 댓글 수정
+//특정 한줄소개 수정
 export const patchUserOneLines = async (email: string, oneLiner: string): Promise<{}> => {
     try {
         const response = await apiClient

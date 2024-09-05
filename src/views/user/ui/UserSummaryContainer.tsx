@@ -3,13 +3,16 @@ import Container from '@/widgets/container/Container';
 import { ColumnWrapper } from '@/widgets/wrapper/ColumnWrapper';
 import { RowWrapper } from '@/widgets/wrapper/RowWrapper';
 import Image from 'next/image';
-import React from 'react';
+import React, { BaseSyntheticEvent, useState } from 'react';
 import styled from 'styled-components';
 import SendIcon from '../../../../public/icons/sendIcon.svg';
 import PlusIcon from '../../../../public/icons/plusIcon.svg';
 import { UserDepartmentEnterYear } from './Font';
 import Link from 'next/link';
 import { formatEnterYear } from '@/shared/hook/formatEnterYear';
+import pencilIcon from '/public/icons/pencilIcon.svg';
+import ModifyIcon from './ModifyIcon';
+import { patchUserOneLines } from '../api/patchUserOneLine';
 
 // Props 인터페이스 정의
 interface UserSummaryContainerProps {
@@ -19,7 +22,8 @@ interface UserSummaryContainerProps {
     oneLiner: string;
     profileUrl: string;
     followerCount: number;
-    own : boolean;
+    own: boolean;
+    email: string;
 }
 
 const UserSummaryContainer: React.FC<UserSummaryContainerProps> = ({
@@ -30,7 +34,43 @@ const UserSummaryContainer: React.FC<UserSummaryContainerProps> = ({
     profileUrl,
     followerCount,
     own,
+    email,
 }) => {
+    const [editOneLiner, setEditOneLiner] = useState(false);
+    const [currentOneLiner, setCurrentOneLiner] = useState(oneLiner);
+
+    const toggleEditingMode = async () => {
+        if (editOneLiner) {
+            if (currentOneLiner.trim() === '') {
+                alert('한줄소개를 입력해주세요.');
+                return;
+            }
+
+            try {
+                // 한줄 소개 수정 API 호출
+                const response = await patchUserOneLines(email, currentOneLiner);
+                console.log(response);
+
+                alert('닉네임이 수정되었습니다!');
+            } catch (error) {
+                console.error('닉네임 수정 중 오류 발생:', error);
+                alert('한줄 소개 수정에 실패했습니다: ');
+                return;
+            }
+        }
+        setEditOneLiner(!editOneLiner);
+    };
+
+    const handleOneLinderChnage = (event: BaseSyntheticEvent) => {
+        setCurrentOneLiner(event.target.value);
+    };
+
+    const activeEnter = (event: React.KeyboardEvent<HTMLInputElement>) => {
+        if (event.key === 'Enter') {
+            toggleEditingMode();
+        }
+    };
+
     return (
         <UserSummaryContainerWrapper round width="30%">
             <ColumnWrapper gap="0.75em">
@@ -63,8 +103,22 @@ const UserSummaryContainer: React.FC<UserSummaryContainerProps> = ({
                 </RowWrapper>
 
                 <ColumnWrapper gap="0.5em">
-                    <IntroduceTitle>소개</IntroduceTitle>
-                    <IntroduceText>{oneLiner}</IntroduceText>
+                    <RowWrapper justifyContent="space-between">
+                        <IntroduceTitle>소개</IntroduceTitle>
+                        {own && <ModifyIcon onClick={() => toggleEditingMode()} />}
+                    </RowWrapper>
+
+                    {editOneLiner ? (
+                        <IntroduceTextInput
+                            type="text"
+                            value={currentOneLiner}
+                            onChange={handleOneLinderChnage}
+                            onKeyDown={activeEnter}
+                            autoFocus
+                        />
+                    ) : (
+                        <IntroduceText>{currentOneLiner}</IntroduceText>
+                    )}
                 </ColumnWrapper>
             </ColumnWrapper>
         </UserSummaryContainerWrapper>
@@ -98,9 +152,15 @@ const IntroduceTitle = styled.div`
 `;
 
 const IntroduceText = styled.div`
+    width: 100%;
     font-size: 0.8125em;
 `;
 
-const ButtonWrapper = styled.div`
+const IntroduceTextInput = styled.input`
     width: 100%;
+    border: none;
+    font-family: 'Pretendard';
+    &:focus {
+        outline: none;
+    }
 `;

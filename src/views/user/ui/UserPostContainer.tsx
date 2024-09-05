@@ -140,6 +140,19 @@ const PostContent = styled.div`
     cursor: pointer;
     text-overflow: ellipsis;
 
+    pre {
+        background: #f5f5f7;
+        border-box: box-sizing;
+        padding: 0.5em;
+        border-radius: 1em;
+    }
+    pre > code {
+        max-height: 300px; /* 원하는 최대 높이로 설정 */
+        overflow-y: auto; /* 필요시 스크롤바 추가 */
+        white-space: pre-wrap; /* 코드 줄바꿈 허용 */
+        word-wrap: break-word; /* 단어가 너무 길면 줄바꿈 */
+    }
+
     p > code {
         box-sizing: border-box;
         padding: 0.25em;

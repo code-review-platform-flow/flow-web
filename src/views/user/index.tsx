@@ -53,6 +53,7 @@ const UserPage: React.FC = () => {
                 {userData && (
                     <>
                         <UserSummaryContainer
+                            email={hostEmail}
                             name={userData.userName}
                             majorName={userData.majorName}
                             studentNumber={userData.studentNumber}

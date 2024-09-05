@@ -33,7 +33,7 @@ const LoginPage: React.FC = () => {
     const loginMutation = useLogin({
         onSuccess: (data) => {
             console.log('Login successful:', data);
-
+            
             // 성공 시 토큰을 쿠키에 저장
             setCookie('accessToken', data.accessToken, { path: '/', sameSite: 'strict', secure: true });
 
