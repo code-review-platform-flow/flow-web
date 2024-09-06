@@ -122,7 +122,7 @@ const Header = ({ user, onLogin, onLogout, onCreateAccount }: HeaderProps) => {
                             </MyProfileButton>
                             <LogOutButton
                                 onClick={() => {
-                                    onLogout?.();
+                                    ()=>onLogout?.();
                                     clickModal();
                                 }}
                             >

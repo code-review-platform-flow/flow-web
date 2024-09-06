@@ -97,7 +97,7 @@ const UserCareerContainer: React.FC<UserCareerContainerProps> = ({ careerList, o
                 <SemiTitle>이력</SemiTitle>
                 {own &&
                     (editCareer ? (
-                        <Button tertiary size="small" label="저장" onClick={()=>handleSave()} />
+                        <Button tertiary size="small" label="저장" onClick={() => handleSave()} />
                     ) : (
                         <ModifyIcon onClick={() => handleAddNewEntry()} />
                     ))}

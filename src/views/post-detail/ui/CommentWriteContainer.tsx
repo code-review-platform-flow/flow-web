@@ -6,6 +6,7 @@ import React, { useRef, useEffect, useState } from 'react';
 import CommentSendIcon from '../../../../public/icons/commentSendIcon.svg';
 import styled from 'styled-components';
 import { postComment } from '@/views/post-detail/api/postComment';
+import { useRouter } from 'next/navigation';
 
 interface CommentWriteContainerProps {
     postId: string;
@@ -15,6 +16,7 @@ interface CommentWriteContainerProps {
 const CommentWriteContainer: React.FC<CommentWriteContainerProps> = ({ postId, email }) => {
     const textAreaRef = useRef<HTMLTextAreaElement>(null);
     const [commentContent, setCommentContent] = useState('');
+    const router = useRouter();
 
     useEffect(() => {
         const textArea = textAreaRef.current;
@@ -46,6 +48,8 @@ const CommentWriteContainer: React.FC<CommentWriteContainerProps> = ({ postId, e
         } catch (error) {
             console.error('댓글 등록 중 오류 발생:', error);
             alert('댓글 등록에 실패했습니다. 다시 시도해주세요.');
+        } finally {
+            window.location.reload();
         }
     };
 
@@ -58,7 +62,12 @@ const CommentWriteContainer: React.FC<CommentWriteContainerProps> = ({ postId, e
                     onChange={handleInputChange}
                     placeholder="댓글을 작성하세요"
                 />
-                <Image src={CommentSendIcon} alt="보내기" onClick={()=>submitComment()} style={{ cursor: 'pointer' }} />
+                <Image
+                    src={CommentSendIcon}
+                    alt="보내기"
+                    onClick={() => submitComment()}
+                    style={{ cursor: 'pointer' }}
+                />
             </RowWrapper>
         </Container>
     );

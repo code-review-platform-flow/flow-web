@@ -1,95 +1,119 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Container from '@/widgets/container/Container';
 import UserInfo from '@/widgets/post/UserInfo';
-import ProfileExample from '../../../../public/images/profileImageExample.png';
 import { RowWrapper } from '@/widgets/wrapper/RowWrapper';
 import { ColumnWrapper } from '@/widgets/wrapper/ColumnWrapper';
 import styled from 'styled-components';
 import CommentOpenIcon from '../../../../public/icons/commentOpenIcon.svg';
 import CommentCloseIcon from '../../../../public/icons/commentCloseIcon.svg';
 import Image from 'next/image';
+import { Comment, Reply } from '@/shared/type/post';
+import { getComment } from '../api/getComment';
+import Input from '@/widgets/input/Input';
+import ReplyWriteContainer from './ReplyWriteContainer';
 
-interface CommentContainerProps {}
+interface CommentContainerProps {
+    postId: string;
+    email: string;
+}
 
-const CommentContainer: React.FC<CommentContainerProps> = ({}) => {
-    const [isClosed, setIsClosed] = useState(true);
-    const [isReply, setIsReply] = useState(true);
+const CommentContainer: React.FC<CommentContainerProps> = ({ postId, email }) => {
+    const [isClosed, setIsClosed] = useState<boolean[]>([]);
+    const [newReply, setNewReply] = useState<Reply>();
+    const [commentData, setCommentData] = useState<Comment[]>([]);
 
-    const commentData = {
-        commentId: 1,
-        commentUser: '지민성',
-        commentContent: '심각한 사안이네요 어쩌고 저쩌고',
-        department: '컴퓨터공학과',
-        enterYear: 22,
-        reply: [
-            {
-                replyId: 1,
-                replyUser: '지민성',
-                department: '컴퓨터공학과',
-                enterYear: 22,
-                replyContent: '심각한 사안이네요 어쩌고 저쩌고',
-            },
-            {
-                replyId: 2,
-                replyUser: '지민성',
-                department: '컴퓨터공학과',
-                enterYear: 22,
-                replyContent: '심각한 사안이네요 어쩌고 저쩌고',
-            },
-        ],
-    };
+    useEffect(() => {
+        async function fetchComment() {
+            const response = await getComment(postId);
+            console.log(response);
+            setCommentData(response);
 
-    const toggleReplies = () => {
-        setIsClosed(!isClosed);
+            // 각 댓글에 대한 초기 상태 설정 (모두 닫힘)
+            setIsClosed(new Array(response.length).fill(false));
+        }
+        fetchComment();
+    }, [postId]);
+
+    const toggleReplies = (index: number) => {
+        setIsClosed(
+            (prev) => prev.map((item, i) => (i === index ? !item : item)), // 해당 index의 상태만 토글
+        );
     };
 
     return (
-        <Container width="90%">
-            <ColumnWrapper justifyContent="flex-between">
-                <ColumnWrapper gap="0.75em">
-                    <RowWrapper>
-                        <UserInfo
-                            name={commentData.commentUser}
-                            department={commentData.department}
-                            enterYear={commentData.enterYear.toString()}
-                            imgUrl={ProfileExample}
-                        />
-                    </RowWrapper>
-                    <CommentContent>{commentData.commentContent}</CommentContent>
-                    <RowWrapper gap="0.5em">
-                        <Image
-                            src={isClosed ? CommentOpenIcon : CommentCloseIcon}
-                            alt={isClosed ? '댓글 열기' : '댓글 숨기기'}
-                            onClick={toggleReplies}
-                        />
-                        {isReply && (
-                            <OpenClose>{isClosed ? `${commentData.reply.length}개의 답글` : '숨기기'}</OpenClose>
-                        )}
-                    </RowWrapper>
-                </ColumnWrapper>
-                {!isClosed && (
-                    <ReplyList>
-                        {commentData.reply.map((reply) => (
-                            <ReplyContainer key={reply.replyId}>
-                                <UserInfo
-                                    name={reply.replyUser}
-                                    department={reply.department}
-                                    enterYear={reply.enterYear.toString()}
-                                    imgUrl={ProfileExample}
-                                />
-                                <ReplyContent>{reply.replyContent}</ReplyContent>
-                                <Line />
-                            </ReplyContainer>
-                        ))}
-                    </ReplyList>
-                )}
-            </ColumnWrapper>
-        </Container>
+        <>
+            {commentData &&
+                commentData.map((comment, index) => (
+                    <Container key={comment.commentId} width="90%">
+                        <ColumnWrapper justifyContent="flex-between">
+                            <ColumnWrapper gap="0.75em">
+                                <RowWrapper>
+                                    <UserInfo
+                                        name={comment.userName}
+                                        department={comment.majorName}
+                                        enterYear={comment.studentNumber}
+                                        imgUrl={comment.profileUrl}
+                                    />
+                                </RowWrapper>
+                                <CommentContent>{comment.commentContent}</CommentContent>
+                                <ReplyToggle
+                                    onClick={() => {
+                                        console.log(index);
+                                        toggleReplies(index);
+                                    }}
+                                    gap="0.5em"
+                                >
+                                    {comment.replies.length > 0 ? (
+                                        <Image
+                                            src={isClosed[index] ? CommentCloseIcon : CommentOpenIcon}
+                                            alt="아이콘"
+                                        />
+                                    ) : (
+                                        <Image src={CommentOpenIcon} alt={'답글 작성하기'} />
+                                    )}
+                                    {comment.replies.length > 0 ? (
+                                        <OpenClose>
+                                            {isClosed[index] ? '숨기기' : `${comment.replies.length}개의 답글`}
+                                        </OpenClose>
+                                    ) : (
+                                        <OpenClose>답글 작성하기</OpenClose>
+                                    )}
+                                </ReplyToggle>
+                            </ColumnWrapper>
+                            {isClosed[index] && (
+                                <>
+                                    <ReplyList>
+                                        {' '}
+                                        {/* 답글 리스트 */}
+                                        {comment.replies.length > 0 &&
+                                            comment.replies.map((reply) => (
+                                                <ReplyContainer key={reply.replyId}>
+                                                    <UserInfo
+                                                        name={reply.userName}
+                                                        department={reply.majorName}
+                                                        enterYear={reply.studentNumber.toString()}
+                                                        imgUrl={reply.profileUrl}
+                                                    />
+                                                    <ReplyContent>{reply.replyContent}</ReplyContent>
+                                                    <Line />
+                                                </ReplyContainer>
+                                            ))}
+                                        <ReplyWriteContainer
+                                            postId={postId}
+                                            commentId={comment.commentId}
+                                            email={email}
+                                        />
+                                    </ReplyList>
+                                </>
+                            )}
+                        </ColumnWrapper>
+                    </Container>
+                ))}
+        </>
     );
 };
 
 export default CommentContainer;
-
 const Line = styled.div`
     width: 100%;
     height: 1px;
@@ -126,4 +150,8 @@ const ReplyContainer = styled.div`
 const ReplyContent = styled.div`
     font-size: 1em;
     margin-top: 0.5em;
+`;
+
+const ReplyToggle = styled(RowWrapper)`
+    cursor: pointer;
 `;
