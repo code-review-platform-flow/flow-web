@@ -158,7 +158,7 @@ const Header = ({ user, onLogin, onLogout, onCreateAccount }: HeaderProps) => {
                             <Row3>
                                 <Icon src={boxIcon} alt="박스 아이콘" />
                                 <Icon src={bellIcon} alt="벨 아이콘" />
-                                <HambergerIcon onClick={()=>clickModal} src={hamburgerIcon} alt="햄버거 아이콘" />
+                                <HambergerIcon onClick={()=>clickModal()} src={hamburgerIcon} alt="햄버거 아이콘" />
                             </Row3>
                             <ButtonWrapper>
                                 <Link href="/post-write">
@@ -170,9 +170,10 @@ const Header = ({ user, onLogin, onLogout, onCreateAccount }: HeaderProps) => {
                                 <ProfileImage
                                     width={35}
                                     height={35}
-                                    onClick={()=>clickModal}
+                                    onClick={()=>clickModal()}
                                     src={userSummary?.profileUrl || profileExampleImage}
                                     alt="프로필 이미지"
+                                    
                                 />
                             </ButtonWrapper>
                         </Row2>

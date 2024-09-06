@@ -8,8 +8,14 @@ import Image from 'next/image';
 import PostInfo from '@/widgets/post/PostInfo';
 import PostTag from '@/widgets/post/PostTag';
 import Link from 'next/link';
+import { PostDetail } from '@/shared/type/post';
 
-const RecentPost = () => {
+
+interface RecentPostProps {
+    postData: PostDetail
+}
+
+const RecentPost: React.FC<RecentPostProps> = ({postData}) => {
     const name = '지민성';
     const category = '질문';
     const department = '컴퓨터공학과';
@@ -41,8 +47,8 @@ const RecentPost = () => {
                             </ColumnWrapper>
                         </RowWrapper>
                         <RowWrapper gap="0.75em">
-                            <PostTag tag='Front'/>
-                            <PostTag tag='Front'/>
+                            <PostTag tag="Front" />
+                            <PostTag tag="Front" />
                         </RowWrapper>
                     </ColumnWrapper>
 

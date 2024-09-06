@@ -148,24 +148,6 @@ const PostTitle = styled.div`
     }
 `;
 
-const PostContent = styled.div`
-    color: #707070;
-    font-size: 1em;
-    display: -webkit-box;
-    -webkit-line-clamp: 5;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
-    text-overflow: ellipsis;
-
-    @media (max-width: 768px) {
-        -webkit-line-clamp: 4;
-    }
-
-    @media (max-width: 480px) {
-        -webkit-line-clamp: 2;
-        margin-bottom: 1em;
-    }
-`;
 
 const Line = styled.div`
     width: 100%;

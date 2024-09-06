@@ -12,17 +12,13 @@ import { fetchPostDetail } from '../api/post/fetchPostDetail';
 import { useQuery } from '@tanstack/react-query';
 import { PostDetail } from '@/shared/type/post';
 import filterTime from '@/shared/hook/filterTime';
-import markdownToHtml from '@/shared/api/post/markdownToHtml';
-import hljs from 'highlight.js';
+import MarkDownContent from '@/widgets/post/MarkDownContent';
 
 interface PostContainerProps {
     postId: string;
 }
 
 const PostContainer: React.FC<PostContainerProps> = ({ postId }) => {
-    // 상태 정의: 변환된 HTML 내용을 저장
-    const [content, setContent] = useState<string>('');
-
     // useQuery로 데이터 가져오기
     const {
         data: postDetail,
@@ -32,25 +28,6 @@ const PostContainer: React.FC<PostContainerProps> = ({ postId }) => {
         queryKey: ['postDetail', postId],
         queryFn: () => fetchPostDetail(postId),
     });
-
-    // Markdown을 HTML로 변환하는 비동기 함수 실행
-    useEffect(() => {
-        if (postDetail?.content) {
-            markdownToHtml(postDetail.content).then((htmlContent) => {
-                setContent(htmlContent);
-            });
-        }
-    }, [postDetail?.content]);
-
-    // HTML content가 변경될 때 하이라이트 적용
-    useEffect(() => {
-        if (content) {
-            const codeBlocks = document.querySelectorAll('pre code');
-            codeBlocks.forEach((block) => {
-                hljs.highlightElement(block as HTMLElement);
-            });
-        }
-    }, [content]);
 
     if (isLoading) return <div>Loading...</div>;
     if (error) {
@@ -73,22 +50,19 @@ const PostContainer: React.FC<PostContainerProps> = ({ postId }) => {
                     />
                     <RowWrapper justifyContent="flex-end" alignItems="flex-end">
                         <Tags gap="0.2625em" justifyContent="flex-end">
-                            {postDetail.tags && postDetail.tags.map((tag, index) => (
-                                <PostTag key={index} tag={tag.tagName}/>
-                            ))}
+                            {postDetail.tags &&
+                                postDetail.tags.map((tag, index) => <PostTag key={index} tag={tag.tagName} />)}
                         </Tags>
                         <ShareTumbContainer mobile />
                         <ColumnWrapper width="auto" alignItems="flex-end" gap="0.5em">
-                        {/* TODO : 좋아요 수랑 댓글 수를 postDetail에 포함시켜서 서버에서 받을 필요가 있음 향후 수정*/}
+                            {/* TODO : 좋아요 수랑 댓글 수를 postDetail에 포함시켜서 서버에서 받을 필요가 있음 향후 수정*/}
                             <PostInfo isStatic tumbCount={0} commentCount={0} />
                             <UploadTime>{filterTime(postDetail.createDate)}</UploadTime>
                         </ColumnWrapper>
                     </RowWrapper>
                 </PostUser>
             </ColumnWrapper>
-            <PostContentContainer>
-                <div dangerouslySetInnerHTML={{ __html: content }} />
-            </PostContentContainer>
+            <MarkDownContent maxHeight='100%' fontSize='1em' content={postDetail.content} />
         </Container>
     );
 };
@@ -135,31 +109,3 @@ const UploadTime = styled.div`
     }
 `;
 
-const PostContentContainer = styled.div`
-    margin-top: 1em;
-    padding: 1em;
-    line-height: 1.5;
-    white-space: pre-wrap;
-    pre {
-        background: #f5f5f7;
-        border-box: box-sizing;
-        padding: 0.5em;
-        border-radius: 1em;
-    }
-    pre > code {
-        max-height: 300px; /* 원하는 최대 높이로 설정 */
-        overflow-y: auto; /* 필요시 스크롤바 추가 */
-        white-space: pre-wrap; /* 코드 줄바꿈 허용 */
-        word-wrap: break-word; /* 단어가 너무 길면 줄바꿈 */
-    }
-
-    p > code {
-        box-sizing: border-box;
-        padding: 0.25em;
-        border-radius: 0.25em;
-        color: #f54735;
-        background-color: #b4b4b4;
-        white-space: pre-wrap; /* 코드 줄바꿈 허용 */
-        word-wrap: break-word; /* 단어가 너무 길면 줄바꿈 */
-    }
-`;

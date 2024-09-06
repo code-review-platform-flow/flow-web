@@ -4,13 +4,11 @@ import { ColumnWrapper } from '@/widgets/wrapper/ColumnWrapper';
 import { RowWrapper } from '@/widgets/wrapper/RowWrapper';
 import styled from 'styled-components';
 import Image from 'next/image';
-import PostInfo from '@/widgets/post/PostInfo';
 import PostTag from '@/widgets/post/PostTag';
 import Link from 'next/link';
 import { PostDetail } from '@/shared/type/post';
 import filterTime from '@/shared/hook/filterTime';
 import { formatEnterYear } from '@/shared/hook/formatEnterYear';
-import { SizedBox } from '../wrapper/SizedBox';
 import markdownToHtml from '@/shared/api/post/markdownToHtml';
 import hljs from 'highlight.js';
 
@@ -23,6 +21,7 @@ const SmallPostContainer: React.FC<SmallPostContainerProps> = ({ postData }) => 
 
     // Markdown을 HTML로 변환하는 비동기 함수 실행
     useEffect(() => {
+        
         if (postData?.content) {
             markdownToHtml(postData.content).then((htmlContent) => {
                 setContent(htmlContent); // 변환된 HTML을 상태에 저장

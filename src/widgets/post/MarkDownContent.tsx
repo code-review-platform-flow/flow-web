@@ -40,23 +40,59 @@ export default MarkDownContent;
 // styled-components로 동적 스타일 적용
 const PostContent = styled.div<{ fontSize: string; maxHeight: string }>`
     font-size: ${(props) => props.fontSize};
-    color: #707070;
+    color: #000000;
     margin-bottom: 2em;
     max-height: ${(props) => props.maxHeight};
     overflow-y: hidden;
     text-overflow:  ellipsis;
     max-width: 100%; /* 부모 요소를 넘지 않도록 설정 */
     word-wrap: break-word; /* 긴 단어를 적절히 줄바꿈 */
+    line-height: 3;
+    padding : 1em;
+    box-sizing : border-box;
 
     pre {
         background: #f5f5f7;
         border-box: box-sizing;
         padding: 0.5em;
         border-radius: 1em;
-        max-width: 100%; /* 코드 블록도 부모 너비를 넘지 않도록 설정 */
-        overflow-x: auto; /* 가로 스크롤 허용 */
+        max-width: 100%; 
     }
 
+    pre > code {
+    background: #f5f5f7;
+        max-height: 300px; /* 원하는 최대 높이로 설정 */
+        overflow-y: auto; /* 필요시 스크롤바 추가 */
+        white-space: pre-wrap; /* 코드 줄바꿈 허용 */
+        word-wrap: break-word; /* 단어가 너무 길면 줄바꿈 */
+    }
+
+    p > code {
+        box-sizing: border-box;
+        padding: 0.25em;
+        border-radius: 0.25em;
+        color: #f54735;
+        background-color: #b4b4b4;
+        white-space: pre-wrap; /* 코드 줄바꿈 허용 */
+        word-wrap: break-word; /* 단어가 너무 길면 줄바꿈 */
+
+    img {
+        max-width: 100%; /* 이미지가 부모 요소를 넘지 않도록 설정 */
+        height: auto;
+    }
+`;
+
+const PostContentContainer = styled.div`
+    margin-top: 1em;
+    padding: 1em;
+    line-height: 1.5;
+    white-space: pre-wrap;
+    pre {
+        background: #f5f5f7;
+        border-box: box-sizing;
+        padding: 0.5em;
+        border-radius: 1em;
+    }
     pre > code {
         max-height: 300px; /* 원하는 최대 높이로 설정 */
         overflow-y: auto; /* 필요시 스크롤바 추가 */
@@ -72,10 +108,5 @@ const PostContent = styled.div<{ fontSize: string; maxHeight: string }>`
         background-color: #b4b4b4;
         white-space: pre-wrap; /* 코드 줄바꿈 허용 */
         word-wrap: break-word; /* 단어가 너무 길면 줄바꿈 */
-    }
-
-    img {
-        max-width: 100%; /* 이미지가 부모 요소를 넘지 않도록 설정 */
-        height: auto;
     }
 `;
