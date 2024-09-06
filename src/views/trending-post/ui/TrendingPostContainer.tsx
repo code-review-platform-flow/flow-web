@@ -98,6 +98,7 @@ const PostContainer = styled(Container)`
     min-height: 300px;
 
     @media (max-width: 768px) {
+    max-width: 100%;
         width: 100%;
     }
 `;

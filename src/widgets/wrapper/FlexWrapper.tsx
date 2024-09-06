@@ -17,8 +17,7 @@ const FlexContainer = styled.div<{ gap: string }>`
     align-items: flex-start;
     flex-wrap: wrap;
     gap: ${({ gap }) => gap};
-    row-gap: 1em; 
-    width: fit-content;
+    row-gap: 1em;
     box-sizing: border-box;
     width: 100%;
 
