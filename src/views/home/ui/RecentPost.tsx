@@ -41,8 +41,8 @@ const RecentPost = () => {
                             </ColumnWrapper>
                         </RowWrapper>
                         <RowWrapper gap="0.75em">
-                            <PostTag>React</PostTag>
-                            <PostTag>Front</PostTag>
+                            <PostTag tag='Front'/>
+                            <PostTag tag='Front'/>
                         </RowWrapper>
                     </ColumnWrapper>
 

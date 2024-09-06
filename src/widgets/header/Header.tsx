@@ -38,6 +38,7 @@ const Header = ({ user, onLogin, onLogout, onCreateAccount }: HeaderProps) => {
     const [showModal, setShowModal] = useState(false);
     const authData = useRecoilValue(authDataState);
     const email = authData?.email;
+    const [searchTerm, setSearchTerm] = useState('');
 
     const clickModal = () => {
         setShowModal(!showModal);
@@ -51,6 +52,21 @@ const Header = ({ user, onLogin, onLogout, onCreateAccount }: HeaderProps) => {
 
         const encodedEmail = Buffer.from(email!).toString('base64');
         router.push(`/user?email=${encodedEmail}`);
+    };
+
+    // 검색어 입력 시 처리 함수
+    const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        setSearchTerm(event.target.value); // 검색어 상태 업데이트
+    };
+
+    // Enter 키 입력 시 검색 페이지로 이동하는 함수
+    const handleKeyPress = (event: React.KeyboardEvent<HTMLInputElement>) => {
+        if (event.key === 'Enter') {
+            if (searchTerm.trim()) {
+                // 검색어가 비어있지 않으면 /search 페이지로 이동하며 쿼리 전달
+                router.push(`/search?query=${encodeURIComponent(searchTerm)}`);
+            }
+        }
     };
 
     useEffect(() => {
@@ -87,7 +103,13 @@ const Header = ({ user, onLogin, onLogout, onCreateAccount }: HeaderProps) => {
                         <SearchIconWrapper>
                             <Image src={searchIcon} alt="검색 아이콘" />
                         </SearchIconWrapper>
-                        <SearchInput placeholder="플로우 검색하기" />
+                        <SearchInput
+                            type="text"
+                            value={searchTerm}
+                            onChange={handleInputChange}
+                            onKeyPress={handleKeyPress} 
+                            placeholder="플로우 검색하기"
+                        />
                     </SearchContainer>
                 </Row>
                 <ButtonContainer>
@@ -122,7 +144,7 @@ const Header = ({ user, onLogin, onLogout, onCreateAccount }: HeaderProps) => {
                             </MyProfileButton>
                             <LogOutButton
                                 onClick={() => {
-                                    ()=>onLogout?.();
+                                    () => onLogout?.();
                                     clickModal();
                                 }}
                             >

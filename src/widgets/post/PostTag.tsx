@@ -2,11 +2,11 @@ import React from 'react';
 import styled from 'styled-components';
 
 interface PostTagProps {
-    children?: React.ReactNode;
+    tag?: string
 }
 
-const PostTag: React.FC<PostTagProps> = ({ children }) => {
-    return <TagContainer>{children}</TagContainer>;
+const PostTag: React.FC<PostTagProps> = ({ tag }) => {
+    return <TagContainer>{tag}</TagContainer>;
 };
 
 export default PostTag;

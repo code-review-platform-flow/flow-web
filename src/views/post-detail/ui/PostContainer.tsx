@@ -73,8 +73,8 @@ const PostContainer: React.FC<PostContainerProps> = ({ postId }) => {
                     />
                     <RowWrapper justifyContent="flex-end" alignItems="flex-end">
                         <Tags gap="0.2625em" justifyContent="flex-end">
-                            {postDetail.tags.map((tag, index) => (
-                                <PostTag key={index}>{tag.tagName}</PostTag>
+                            {postDetail.tags && postDetail.tags.map((tag, index) => (
+                                <PostTag key={index} tag={tag.tagName}/>
                             ))}
                         </Tags>
                         <ShareTumbContainer mobile />
