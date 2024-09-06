@@ -13,7 +13,7 @@ export const getComment = async (postId: string, email: string): Promise<Comment
         if (!response.ok) {
             throw new Error('댓글을 가져오는 중 오류가 발생했습니다.');
         }
-        const data = await response.json();
+        const data:any = await response.json();
         console.log(data);
         return data.comments as Comment[];
     } catch (error) {

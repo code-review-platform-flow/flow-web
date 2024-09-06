@@ -79,6 +79,7 @@ const PostContainer: React.FC<PostContainerProps> = ({ postId }) => {
                         </Tags>
                         <ShareTumbContainer mobile />
                         <ColumnWrapper width="auto" alignItems="flex-end" gap="0.5em">
+                        {/* TODO : 좋아요 수랑 댓글 수를 postDetail에 포함시켜서 서버에서 받을 필요가 있음 향후 수정*/}
                             <PostInfo isStatic tumbCount={0} commentCount={0} />
                             <UploadTime>{filterTime(postDetail.createDate)}</UploadTime>
                         </ColumnWrapper>
