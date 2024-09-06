@@ -1,5 +1,5 @@
 import {  Reply } from '@/shared/type/post';
-import apiClient from '../../../shared/api/apiClient';
+import apiClient from '../../../../shared/api/apiClient';
 
 // 특정 게시물에 답글 등록
 export const postReply = async (

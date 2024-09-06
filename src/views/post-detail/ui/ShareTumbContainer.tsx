@@ -3,9 +3,9 @@ import Image from 'next/image';
 import styled from 'styled-components';
 import TumbIcon from '../../../../public/icons/tumbCountIcon.svg';
 import ShareIcon from '../../../../public/icons/shareIcon.svg';
-import { postLike } from '../api/postLike';
-import { deleteLike } from '../api/deleteLike';
-import { getLike } from '../api/getLike';
+import { postLike } from '../api/like/postLike';
+import { deleteLike } from '../api/like/deleteLike';
+import { getLike } from '../api/like/getLike';
 
 interface ShareTumbContainerProps {
     mobile?: boolean;

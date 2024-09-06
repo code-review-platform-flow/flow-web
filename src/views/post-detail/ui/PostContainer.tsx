@@ -8,7 +8,7 @@ import PostInfo from '@/widgets/post/PostInfo';
 import PostTag from '@/widgets/post/PostTag';
 import ProfileExample from '../../../../public/images/profileImageExample.png';
 import ShareTumbContainer from './ShareTumbContainer';
-import { fetchPostDetail } from '../api/fetchPostDetail';
+import { fetchPostDetail } from '../api/post/fetchPostDetail';
 import { useQuery } from '@tanstack/react-query';
 import { PostDetail } from '@/shared/type/post';
 import filterTime from '@/shared/hook/filterTime';

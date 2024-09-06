@@ -8,9 +8,13 @@ import CommentOpenIcon from '../../../../public/icons/commentOpenIcon.svg';
 import CommentCloseIcon from '../../../../public/icons/commentCloseIcon.svg';
 import Image from 'next/image';
 import { Comment, Reply } from '@/shared/type/post';
-import { getComment } from '../api/getComment';
-import Input from '@/widgets/input/Input';
+import { getComment } from '../api/comment/getComment';
 import ReplyWriteContainer from './ReplyWriteContainer';
+import PencilIcon from '/public/icons/pencilIcon2.svg';
+import CrossIcon from '/public/icons/crossIcon2.svg';
+import { SizedBox } from '@/widgets/wrapper/SizedBox';
+import { deleteReply } from '@/views/post-detail/api/reply/deleteReply';
+import { deleteComment } from '../api/comment/deleteComment';
 
 interface CommentContainerProps {
     postId: string;
@@ -19,12 +23,11 @@ interface CommentContainerProps {
 
 const CommentContainer: React.FC<CommentContainerProps> = ({ postId, email }) => {
     const [isClosed, setIsClosed] = useState<boolean[]>([]);
-    const [newReply, setNewReply] = useState<Reply>();
     const [commentData, setCommentData] = useState<Comment[]>([]);
 
     useEffect(() => {
         async function fetchComment() {
-            const response = await getComment(postId);
+            const response = await getComment(postId, email);
             console.log(response);
             setCommentData(response);
 
@@ -40,6 +43,21 @@ const CommentContainer: React.FC<CommentContainerProps> = ({ postId, email }) =>
         );
     };
 
+    const handleDelete = async (postId: string, commentId: number, replyId: number | null, email: string) => {
+        try {
+            if (replyId) {
+                await deleteReply(postId, commentId, replyId, email);
+                alert('답글을 삭제되었습니다');
+            } else {
+                await deleteComment(postId, commentId, email);
+                alert('댓글을 삭제되었습니다');
+            }
+        } catch (error) {
+            console.log(error);
+        } finally {
+            window.location.reload();
+        }
+    };
     return (
         <>
             {commentData &&
@@ -47,13 +65,24 @@ const CommentContainer: React.FC<CommentContainerProps> = ({ postId, email }) =>
                     <Container key={comment.commentId} width="90%">
                         <ColumnWrapper justifyContent="flex-between">
                             <ColumnWrapper gap="0.75em">
-                                <RowWrapper>
+                                <RowWrapper justifyContent="space-between">
                                     <UserInfo
                                         name={comment.userName}
                                         department={comment.majorName}
                                         enterYear={comment.studentNumber}
                                         imgUrl={comment.profileUrl}
                                     />
+                                    {comment.own && (
+                                        <>
+                                            <ModifyDeleteIcon src={PencilIcon} alt="수정" />
+                                            <SizedBox width="0.5em" />{' '}
+                                            <ModifyDeleteIcon
+                                                src={CrossIcon}
+                                                alt="삭제"
+                                                onClick={() => handleDelete(postId, comment.commentId, null, email)}
+                                            />
+                                        </>
+                                    )}
                                 </RowWrapper>
                                 <CommentContent>{comment.commentContent}</CommentContent>
                                 <ReplyToggle
@@ -64,12 +93,12 @@ const CommentContainer: React.FC<CommentContainerProps> = ({ postId, email }) =>
                                     gap="0.5em"
                                 >
                                     {comment.replies.length > 0 ? (
-                                        <Image
+                                        <ModifyDeleteIcon
                                             src={isClosed[index] ? CommentCloseIcon : CommentOpenIcon}
                                             alt="아이콘"
                                         />
                                     ) : (
-                                        <Image src={CommentOpenIcon} alt={'답글 작성하기'} />
+                                        <ModifyDeleteIcon src={CommentOpenIcon} alt={'답글 작성하기'} />
                                     )}
                                     {comment.replies.length > 0 ? (
                                         <OpenClose>
@@ -88,12 +117,32 @@ const CommentContainer: React.FC<CommentContainerProps> = ({ postId, email }) =>
                                         {comment.replies.length > 0 &&
                                             comment.replies.map((reply) => (
                                                 <ReplyContainer key={reply.replyId}>
-                                                    <UserInfo
-                                                        name={reply.userName}
-                                                        department={reply.majorName}
-                                                        enterYear={reply.studentNumber.toString()}
-                                                        imgUrl={reply.profileUrl}
-                                                    />
+                                                    <RowWrapper>
+                                                        <UserInfo
+                                                            name={reply.userName}
+                                                            department={reply.majorName}
+                                                            enterYear={reply.studentNumber.toString()}
+                                                            imgUrl={reply.profileUrl}
+                                                        />
+                                                        {reply.own && (
+                                                            <>
+                                                                <ModifyDeleteIcon src={PencilIcon} alt="수정" />
+                                                                <SizedBox width="0.5em" />{' '}
+                                                                <ModifyDeleteIcon
+                                                                    src={CrossIcon}
+                                                                    alt="삭제"
+                                                                    onClick={() =>
+                                                                        handleDelete(
+                                                                            postId,
+                                                                            comment.commentId,
+                                                                            reply.replyId,
+                                                                            email,
+                                                                        )
+                                                                    }
+                                                                />
+                                                            </>
+                                                        )}
+                                                    </RowWrapper>
                                                     <ReplyContent>{reply.replyContent}</ReplyContent>
                                                     <Line />
                                                 </ReplyContainer>
@@ -114,6 +163,10 @@ const CommentContainer: React.FC<CommentContainerProps> = ({ postId, email }) =>
 };
 
 export default CommentContainer;
+
+const ModifyDeleteIcon = styled(Image)`
+    cursor: pointer;
+`;
 const Line = styled.div`
     width: 100%;
     height: 1px;

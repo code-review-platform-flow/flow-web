@@ -3,7 +3,7 @@ import Image from 'next/image';
 import React, { useRef, useEffect, useState } from 'react';
 import ReplySendIcon from '../../../../public/icons/commentSendIcon.svg';
 import styled from 'styled-components';
-import { postReply } from '../api/postReply';
+import { postReply } from '../api/reply/postReply';
 import { useRouter } from 'next/navigation';
 
 interface ReplyWriteContainerrProps {

@@ -1,5 +1,5 @@
 import apiClient from '@/shared/api/apiClient';
-import { Like } from '../model/type';
+import { Like } from '../../model/type';
 
 // 특정 게시물의 좋아요 정보를 가져오는 함수
 export const getLike = async (postId: string): Promise<Like> => {

@@ -1,10 +1,10 @@
-import ky from 'ky';
+import apiClient from '../../../../shared/api/apiClient';
 
 //특정 답글 삭제
-export const deleteReply = async (postId: number, commentId: number, replyId:number, email: string): Promise<{}> => {
+export const deleteReply = async (postId: string, commentId: number, replyId:number, email: string): Promise<{}> => {
     try {
-        const response = await ky
-            .delete(`${process.env.NEXT_PUBLIC_SERVER_URL}/comment/${postId}/${commentId}/reply/${replyId}`, {
+        const response = await apiClient
+            .delete(`comment/${postId}/${commentId}/reply/${replyId}`, {
                 json: { email },
             })
             .json();

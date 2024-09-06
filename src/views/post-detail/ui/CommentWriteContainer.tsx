@@ -5,7 +5,7 @@ import Image from 'next/image';
 import React, { useRef, useEffect, useState } from 'react';
 import CommentSendIcon from '../../../../public/icons/commentSendIcon.svg';
 import styled from 'styled-components';
-import { postComment } from '@/views/post-detail/api/postComment';
+import { postComment } from '@/views/post-detail/api/comment/postComment';
 import { useRouter } from 'next/navigation';
 
 interface CommentWriteContainerProps {

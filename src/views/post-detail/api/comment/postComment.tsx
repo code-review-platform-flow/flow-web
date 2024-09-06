@@ -1,5 +1,5 @@
 import { Comment } from '@/shared/type/post';
-import apiClient from '../../../shared/api/apiClient';
+import apiClient from '../../../../shared/api/apiClient';
 
 // 특정 게시물에 댓글 등록
 export const postComment = async (postId: string, email: string, commentContent: string): Promise<Comment> => {
