@@ -15,20 +15,6 @@ interface TrendingPostListProps {
     trendingPostList?: PostDetail[];
 }
 
-// postId: number;
-// title: string;
-// content: string;
-// userName: string;
-// profileUrl: string;
-// majorName: string;
-// studentNumber: string;
-// categoryName: string;
-// tags: {
-//     tagName: string;
-// }[];
-// createDate: string;
-
-
 const TrendingPostList: React.FC<TrendingPostListProps> = ({ trendingPostList = [] }) => {
     const router = useRouter();
 
@@ -37,20 +23,20 @@ const TrendingPostList: React.FC<TrendingPostListProps> = ({ trendingPostList = 
             <Medium>️🔥 트렌딩 포스트</Medium>
             <Container size="small" width="100%" height="100%">
                 <ColumnWrapper gap="1.25em">
-                    {trendingPostList && trendingPostList.map((item, index) => (
-                        <UserInfo key={index}>
+                    {trendingPostList && trendingPostList.map((post, index) => (
+                        <UserInfo key={index} onClick={()=>router.push(`/post-detail/${post.postId}`)}>
                             <Rank>{index+1}</Rank>
                             <ColumnWrapper gap="0.25em">
                                 <RowWrapper>
                                     <ProfileImage
-                                        src={item.profileUrl}
-                                        alt={`Profile image of ${item.userName}`}
+                                        src={post.profileUrl}
+                                        alt={`Profile image of ${post.userName}`}
                                         width={50}
                                         height={50}
                                     />
-                                    <Username>{item.userName}</Username>
+                                    <Username>{post.userName}</Username>
                                 </RowWrapper>
-                                <PostTitle>{item.title}</PostTitle>
+                                <PostTitle>{post.title}</PostTitle>
                             </ColumnWrapper>
                         </UserInfo>
                     ))}
@@ -66,6 +52,7 @@ const TrendingPostList: React.FC<TrendingPostListProps> = ({ trendingPostList = 
 export default TrendingPostList;
 
 const UserInfo = styled.div`
+    cursor : pointer;
     display: flex;
     align-items: start;
     margin-bottom: 0.5em;

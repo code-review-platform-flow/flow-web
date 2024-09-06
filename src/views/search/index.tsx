@@ -4,9 +4,8 @@ import debounce from 'lodash/debounce';
 import { fetchSearchResults } from './api/fetchSearchResults';
 import { Post, PostDetail } from '@/shared/type/post';
 import { PageWrapper } from '@/widgets/wrapper/PageWrapper';
-import {  useSearchParams } from 'next/navigation';
+import { useSearchParams } from 'next/navigation';
 import { getPostDetail } from '@/shared/api/post/getPostDetail';
-import PostContainer from '../post-detail/ui/PostContainer';
 import SmallPostContainer from '@/widgets/postContainer/SmallPostContainer';
 import { ColumnWrapper } from '@/widgets/wrapper/ColumnWrapper';
 
@@ -22,7 +21,7 @@ export default function SearchPage() {
             if (searchTerm) {
                 setLoading(true); // 검색 시작 시 로딩 상태 활성화
                 const postList = await fetchSearchResults(searchTerm); // API 호출
-                const data = await Promise.all(postList.map((post:any) => getPostDetail(post)));
+                const data = await Promise.all(postList.map((post: any) => getPostDetail(post)));
                 setPostData(data);
                 setLoading(false); // 검색 완료 시 로딩 상태 비활성화
             } else {
@@ -31,7 +30,6 @@ export default function SearchPage() {
         }, 500), // 500ms 지연
         [],
     );
-
 
     // 키워드가 변경될 때마다 디바운스된 함수 호출
     useEffect(() => {
@@ -43,17 +41,15 @@ export default function SearchPage() {
         };
     }, [keyword, debouncedSearch]);
 
-
     return (
-        <PageWrapper padding='25%'>
+        <PageWrapper padding="25%">
             {loading ? (
-                //로딩중 표시 나중에 로딩 구현 
-                <p>검색 중...</p>
+                <></>
             ) : (
-                <ColumnWrapper gap='2em'>
+                <ColumnWrapper gap="2em">
                     {postData ? (
-                        postData.map((post,index) => (
-                            <SmallPostContainer postData={post} key={index}/>// PostDetail 타입에 맞춰 수정 필요
+                        postData.map((post, index) => (
+                            <SmallPostContainer postData={post} key={index} /> // PostDetail 타입에 맞춰 수정 필요
                         ))
                     ) : (
                         <p>결과없음</p>
