@@ -9,12 +9,15 @@ import CommentCloseIcon from '../../../../public/icons/commentCloseIcon.svg';
 import Image from 'next/image';
 import { Comment, Reply } from '@/shared/type/post';
 import { getComment } from '../api/comment/getComment';
-import ReplyWriteContainer from './ReplyWriteContainer';
+import ReplyWriteContainer, { ReplyTextArea } from './ReplyWriteContainer';
 import PencilIcon from '/public/icons/pencilIcon2.svg';
 import CrossIcon from '/public/icons/crossIcon2.svg';
 import { SizedBox } from '@/widgets/wrapper/SizedBox';
 import { deleteReply } from '@/views/post-detail/api/reply/deleteReply';
 import { deleteComment } from '../api/comment/deleteComment';
+import { patchReply } from '../api/reply/patchReply';
+import { patchComment } from '../api/comment/patchComment';
+import Button from '@/widgets/button/Button';
 
 interface CommentContainerProps {
     postId: string;
@@ -24,23 +27,32 @@ interface CommentContainerProps {
 const CommentContainer: React.FC<CommentContainerProps> = ({ postId, email }) => {
     const [isClosed, setIsClosed] = useState<boolean[]>([]);
     const [commentData, setCommentData] = useState<Comment[]>([]);
+    const [isEditingComment, setIsEditingComment] = useState<boolean[]>([]);
+    const [isEditingReply, setIsEditingReply] = useState<{ [key: number]: boolean }>({});
+    const [editedComment, setEditedComment] = useState<string[]>([]);
+    const [editedReply, setEditedReply] = useState<{ [key: number]: string }>({});
 
     useEffect(() => {
         async function fetchComment() {
             const response = await getComment(postId, email);
-            console.log(response);
             setCommentData(response);
-
-            // 각 댓글에 대한 초기 상태 설정 (모두 닫힘)
             setIsClosed(new Array(response.length).fill(false));
+            setIsEditingComment(new Array(response.length).fill(false));
+            setEditedComment(response.map((comment) => comment.commentContent));
         }
         fetchComment();
     }, [postId]);
 
     const toggleReplies = (index: number) => {
-        setIsClosed(
-            (prev) => prev.map((item, i) => (i === index ? !item : item)), // 해당 index의 상태만 토글
-        );
+        setIsClosed((prev) => prev.map((item, i) => (i === index ? !item : item)));
+    };
+
+    const handleEditComment = (index: number) => {
+        setIsEditingComment((prev) => prev.map((item, i) => (i === index ? !item : item)));
+    };
+
+    const handleEditReply = (commentId: number, replyId: number) => {
+        setIsEditingReply((prev) => ({ ...prev, [replyId]: !prev[replyId] }));
     };
 
     const handleDelete = async (postId: string, commentId: number, replyId: number | null, email: string) => {
@@ -58,6 +70,35 @@ const CommentContainer: React.FC<CommentContainerProps> = ({ postId, email }) =>
             window.location.reload();
         }
     };
+
+    const handleModifyReply = async (
+        postId: string,
+        email: string,
+        commentId: number,
+        replyId: number,
+        replyContent: string,
+    ) => {
+        try {
+            await patchReply(postId, commentId, replyId, email, replyContent);
+            alert('답글이 수정되었습니다');
+        } catch (error) {
+            console.log(error);
+        } finally {
+            window.location.reload();
+        }
+    };
+
+    const handleModifyComment = async (postId: string, commentId: number, email: string, commentContent: string) => {
+        try {
+            await patchComment(postId, commentId, email, commentContent);
+            alert('댓글이 수정되었습니다');
+        } catch (error) {
+            console.log(error);
+        } finally {
+            window.location.reload();
+        }
+    };
+
     return (
         <>
             {commentData &&
@@ -74,31 +115,60 @@ const CommentContainer: React.FC<CommentContainerProps> = ({ postId, email }) =>
                                     />
                                     {comment.own && (
                                         <>
-                                            <ModifyDeleteIcon src={PencilIcon} alt="수정" />
-                                            <SizedBox width="0.5em" />{' '}
-                                            <ModifyDeleteIcon
-                                                src={CrossIcon}
-                                                alt="삭제"
-                                                onClick={() => handleDelete(postId, comment.commentId, null, email)}
-                                            />
+                                            {isEditingComment[index] ? (
+                                                <Button
+                                                    width="15%"
+                                                    tertiary
+                                                    label="완료"
+                                                    onClick={() =>
+                                                        handleModifyComment(
+                                                            postId,
+                                                            comment.commentId,
+                                                            email,
+                                                            comment.commentContent,
+                                                        )
+                                                    }
+                                                />
+                                            ) : (
+                                                <>
+                                                    <ModifyDeleteIcon
+                                                        src={PencilIcon}
+                                                        alt="수정"
+                                                        onClick={() => handleEditComment(index)}
+                                                    />
+                                                    <SizedBox width="0.5em" />
+                                                    <ModifyDeleteIcon
+                                                        src={CrossIcon}
+                                                        alt="삭제"
+                                                        onClick={() =>
+                                                            handleDelete(postId, comment.commentId, null, email)
+                                                        }
+                                                    />
+                                                </>
+                                            )}
                                         </>
                                     )}
                                 </RowWrapper>
-                                <CommentContent>{comment.commentContent}</CommentContent>
-                                <ReplyToggle
-                                    onClick={() => {
-                                        console.log(index);
-                                        toggleReplies(index);
-                                    }}
-                                    gap="0.5em"
-                                >
+                                {isEditingComment[index] ? (
+                                    <TextArea
+                                        value={editedComment[index]}
+                                        onChange={(e) =>
+                                            setEditedComment((prev) =>
+                                                prev.map((content, i) => (i === index ? e.target.value : content)),
+                                            )
+                                        }
+                                    />
+                                ) : (
+                                    <CommentContent>{comment.commentContent}</CommentContent>
+                                )}
+                                <ReplyToggle onClick={() => toggleReplies(index)} gap="0.5em">
                                     {comment.replies.length > 0 ? (
                                         <ModifyDeleteIcon
                                             src={isClosed[index] ? CommentCloseIcon : CommentOpenIcon}
                                             alt="아이콘"
                                         />
                                     ) : (
-                                        <ModifyDeleteIcon src={CommentOpenIcon} alt={'답글 작성하기'} />
+                                        <ModifyDeleteIcon src={CommentOpenIcon} alt="답글 작성하기" />
                                     )}
                                     {comment.replies.length > 0 ? (
                                         <OpenClose>
@@ -112,8 +182,6 @@ const CommentContainer: React.FC<CommentContainerProps> = ({ postId, email }) =>
                             {isClosed[index] && (
                                 <>
                                     <ReplyList>
-                                        {' '}
-                                        {/* 답글 리스트 */}
                                         {comment.replies.length > 0 &&
                                             comment.replies.map((reply) => (
                                                 <ReplyContainer key={reply.replyId}>
@@ -126,24 +194,60 @@ const CommentContainer: React.FC<CommentContainerProps> = ({ postId, email }) =>
                                                         />
                                                         {reply.own && (
                                                             <>
-                                                                <ModifyDeleteIcon src={PencilIcon} alt="수정" />
-                                                                <SizedBox width="0.5em" />{' '}
-                                                                <ModifyDeleteIcon
-                                                                    src={CrossIcon}
-                                                                    alt="삭제"
-                                                                    onClick={() =>
-                                                                        handleDelete(
-                                                                            postId,
-                                                                            comment.commentId,
-                                                                            reply.replyId,
-                                                                            email,
-                                                                        )
-                                                                    }
-                                                                />
+                                                                {isEditingReply[comment.commentId, reply.replyId] ? (
+                                                                    <Button
+                                                                        width="15%"
+                                                                        tertiary
+                                                                        label="완료"
+                                                                        onClick={() =>
+                                                                            handleModifyReply(
+                                                                                postId,
+                                                                                email,
+                                                                                comment.commentId,
+                                                                                reply.replyId,
+                                                                                reply.replyContent,
+                                                                            )
+                                                                        }
+                                                                    />
+                                                                ) : (
+                                                                    <>
+                                                                        <ModifyDeleteIcon
+                                                                            src={PencilIcon}
+                                                                            alt="수정"
+                                                                            onClick={() => handleEditReply(comment.commentId, reply.replyId)}
+                                                                        />
+                                                                        <SizedBox width="0.5em" />
+                                                                        <ModifyDeleteIcon
+                                                                            src={CrossIcon}
+                                                                            alt="삭제"
+                                                                            onClick={() =>
+                                                                                handleDelete(
+                                                                                    postId,
+                                                                                    comment.commentId,
+                                                                                    reply.replyId,
+                                                                                    email,
+                                                                                )
+                                                                            }
+                                                                        />
+                                                                    </>
+                                                                )}
                                                             </>
                                                         )}
                                                     </RowWrapper>
-                                                    <ReplyContent>{reply.replyContent}</ReplyContent>
+                                                    <SizedBox height='2em'/>
+                                                    {isEditingReply[reply.replyId] ? (
+                                                        <TextArea
+                                                            value={editedReply[reply.replyId] || reply.replyContent}
+                                                            onChange={(e) =>
+                                                                setEditedReply((prev) => ({
+                                                                    ...prev,
+                                                                    [reply.replyId]: e.target.value,
+                                                                }))
+                                                            }
+                                                        />
+                                                    ) : (
+                                                        <ReplyContent>{reply.replyContent}</ReplyContent>
+                                                    )}
                                                     <Line />
                                                 </ReplyContainer>
                                             ))}
@@ -164,6 +268,10 @@ const CommentContainer: React.FC<CommentContainerProps> = ({ postId, email }) =>
 
 export default CommentContainer;
 
+const TextArea = styled(ReplyTextArea)`
+    background: #f5f5f7;
+    padding: 1em;
+`;
 const ModifyDeleteIcon = styled(Image)`
     cursor: pointer;
 `;

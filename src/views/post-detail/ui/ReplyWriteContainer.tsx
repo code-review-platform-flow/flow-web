@@ -67,7 +67,7 @@ const ReplyWriteContainer: React.FC<ReplyWriteContainerrProps> = ({ postId, comm
 
 export default ReplyWriteContainer;
 
-const ReplyTextArea = styled.textarea`
+export const ReplyTextArea = styled.textarea`
     resize: none;
     border: none;
     font-size: 1.125em;
