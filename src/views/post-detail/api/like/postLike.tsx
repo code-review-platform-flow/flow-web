@@ -1,10 +1,10 @@
-import ky from 'ky';
+import apiClient from '@/shared/api/apiClient';
 
 // 특정 게시물의 좋아요 정보를 보내는 함수
-export const postLike = async (postId: number, email: string): Promise<{}> => {
+export const postLike = async (postId: string, email: string): Promise<{}> => {
     try {
-        const response = await ky
-            .post(`${process.env.NEXT_PUBLIC_SERVER_URL}/like/${postId}`, { json: { email } })
+        const response = await apiClient
+            .post(`like/${postId}`, { json: { email } })
             .json();
 
         if (!response) {

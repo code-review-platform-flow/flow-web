@@ -1,10 +1,9 @@
+import apiClient from '@/shared/api/apiClient';
 import { UserInfo } from '@/shared/type/user';
-import ky from 'ky';
-
-// 특정 게시물의 상세 정보를 가져오는 함수
+// 특정 유저의 상세 정보를 가져오는 함수
 export const getUserInfo = async (hostEmail: string, visitorEmail: string): Promise<UserInfo> => {
     try {
-        const response = await ky.get(`${process.env.NEXT_PUBLIC_SERVER_URL}/user`, {
+        const response = await apiClient.get(`user`, {
             searchParams: {
                 hostEmail,
                 visitorEmail,

@@ -9,7 +9,7 @@ import TrendingPostContainer from './ui/TrendingPostContainer';
 const TrendingPostPage: React.FC = () => {
     return (
 
-        <PageWrapper padding="15%">
+        <PageWrapper>
             <BackButton label="️🔥 트렌딩 포스트" />
             <FlexWrapper>
                 <TrendingPostContainer />

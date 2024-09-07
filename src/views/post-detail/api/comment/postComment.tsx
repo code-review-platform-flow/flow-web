@@ -1,11 +1,11 @@
 import { Comment } from '@/shared/type/post';
-import ky from 'ky';
+import apiClient from '../../../../shared/api/apiClient';
 
 // 특정 게시물에 댓글 등록
-export const postComment = async (postId: number, email: string, commentContent: string): Promise<Comment> => {
+export const postComment = async (postId: string, email: string, commentContent: string): Promise<Comment> => {
     try {
-        const response = await ky
-            .post(`${process.env.NEXT_PUBLIC_SERVER_URL}/comment/${postId}`, { json: { email, commentContent } })
+        const response = await apiClient
+            .post(`comment/${postId}`, { json: { email, commentContent } })
             .json<Comment>();
 
         if (!response) {

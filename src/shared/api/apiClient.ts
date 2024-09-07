@@ -1,6 +1,7 @@
 import ky from 'ky-universal';
 import { getCookie } from 'cookies-next'; // cookies-next에서 getCookie import
 
+
 const apiClient = ky.create({
     prefixUrl: process.env.NEXT_PUBLIC_SERVER_URL,
     timeout: 10000,

@@ -1,10 +1,10 @@
-import ky from 'ky';
+import apiClient from '@/shared/api/apiClient';
 
 //특정 댓글 삭제
-export const deleteComment = async (postId: number, commentId: number, email: string): Promise<{}> => {
+export const deleteComment = async (postId: string, commentId: number, email: string): Promise<{}> => {
     try {
-        const response = await ky
-            .delete(`${process.env.NEXT_PUBLIC_SERVER_URL}/comment/${postId}/${commentId}`, {
+        const response = await apiClient
+            .delete(`comment/${postId}/${commentId}`, {
                 json: { email },
             })
             .json();

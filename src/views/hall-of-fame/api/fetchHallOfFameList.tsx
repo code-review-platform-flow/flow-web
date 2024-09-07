@@ -1,4 +1,4 @@
-import { userSummaryInfoAPI } from '@/entities/user/userSummaryInfoAPI';
+import { getUserSummary } from '@/views/user/api/getUserSummary';
 import { HallOfFameUser } from '../ui/HallOfFameUserContainer';
 import ky from 'ky';
 
@@ -26,7 +26,7 @@ export const fetchHallOfFameListDetail = async (count:number = 9): Promise<any[]
         // 각 사용자의 이메일로 사용자 정보를 비동기적으로 가져옴
         const userSummaries = await Promise.all(
             userList.map(async (user) => {
-                const userDetails = await userSummaryInfoAPI(user.email);
+                const userDetails = await getUserSummary(user.email);
                 return userDetails;
             })
         );

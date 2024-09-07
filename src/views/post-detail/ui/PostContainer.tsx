@@ -8,20 +8,17 @@ import PostInfo from '@/widgets/post/PostInfo';
 import PostTag from '@/widgets/post/PostTag';
 import ProfileExample from '../../../../public/images/profileImageExample.png';
 import ShareTumbContainer from './ShareTumbContainer';
-import { fetchPostDetail } from '../api/fetchPostDetail';
+import { fetchPostDetail } from '../api/post/fetchPostDetail';
 import { useQuery } from '@tanstack/react-query';
 import { PostDetail } from '@/shared/type/post';
 import filterTime from '@/shared/hook/filterTime';
-import markdownToHtml from './markdownToHtml';
+import MarkDownContent from '@/widgets/post/MarkDownContent';
 
 interface PostContainerProps {
     postId: string;
 }
 
 const PostContainer: React.FC<PostContainerProps> = ({ postId }) => {
-    // 상태 정의: 변환된 HTML 내용을 저장
-    const [content, setContent] = useState<string>('');
-
     // useQuery로 데이터 가져오기
     const {
         data: postDetail,
@@ -31,15 +28,6 @@ const PostContainer: React.FC<PostContainerProps> = ({ postId }) => {
         queryKey: ['postDetail', postId],
         queryFn: () => fetchPostDetail(postId),
     });
-
-    // Markdown을 HTML로 변환하는 비동기 함수 실행
-    useEffect(() => {
-        if (postDetail?.content) {
-            markdownToHtml(postDetail.content).then((htmlContent) => {
-                setContent(htmlContent);
-            });
-        }
-    }, [postDetail?.content]);
 
     if (isLoading) return <div>Loading...</div>;
     if (error) {
@@ -62,21 +50,19 @@ const PostContainer: React.FC<PostContainerProps> = ({ postId }) => {
                     />
                     <RowWrapper justifyContent="flex-end" alignItems="flex-end">
                         <Tags gap="0.2625em" justifyContent="flex-end">
-                            {postDetail.tags.map((tag, index) => (
-                                <PostTag key={index}>{tag.tagName}</PostTag>
-                            ))}
+                            {postDetail.tags &&
+                                postDetail.tags.map((tag, index) => <PostTag key={index} tag={tag.tagName} />)}
                         </Tags>
                         <ShareTumbContainer mobile />
                         <ColumnWrapper width="auto" alignItems="flex-end" gap="0.5em">
+                            {/* TODO : 좋아요 수랑 댓글 수를 postDetail에 포함시켜서 서버에서 받을 필요가 있음 향후 수정*/}
                             <PostInfo isStatic tumbCount={0} commentCount={0} />
                             <UploadTime>{filterTime(postDetail.createDate)}</UploadTime>
                         </ColumnWrapper>
                     </RowWrapper>
                 </PostUser>
             </ColumnWrapper>
-            <PostContentContainer>
-                <div dangerouslySetInnerHTML={{ __html: content }} />
-            </PostContentContainer>
+            <MarkDownContent maxHeight='100%' fontSize='1em' content={postDetail.content} />
         </Container>
     );
 };
@@ -123,9 +109,3 @@ const UploadTime = styled.div`
     }
 `;
 
-const PostContentContainer = styled.div`
-    margin-top: 1em;
-    padding : 1em;
-    line-height: 1.5;
-    white-space: pre-wrap;
-`;

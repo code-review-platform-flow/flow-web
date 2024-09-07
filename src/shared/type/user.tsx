@@ -1,16 +1,29 @@
+import { PostSummary } from './post';
+
 // 교육 정보를 나타내는 인터페이스
-interface Education {
+export interface Education {
     educationId: number; // 교육 ID
 }
 
+export interface EducationData {
+    educationId: number | null;
+    startDate: string;
+    endDate: string;
+    schoolName: string;
+}
+
 // 경력 정보를 나타내는 인터페이스
-interface Career {
+export interface Career {
     careerId: number; // 경력 ID
 }
 
-// 게시물 정보를 나타내는 인터페이스
-interface PostSummary {
-    postId: number; // 게시물 ID
+// 경력 정보를 나타내는 인터페이스
+export interface CareerData {
+    careerId: number | null;
+    title: string;
+    description: string;
+    startDate: string | null;
+    endDate: string | null;
 }
 
 // 사용자 정보를 나타내는 인터페이스
@@ -24,6 +37,14 @@ export interface UserInfo {
     oneLiner: string; // 짧은 자기소개
     followerCount: number; // 팔로워 수
     educationList: Education[]; // 교육 목록
-    careerList: Career[]; // 경력 목록
-    postList: PostSummary[]; // 게시물 목록
+    careerIdList: Career[]; // 경력 목록
+    postIdList: PostSummary[]; // 게시물 목록
+}
+
+export interface UserSummary {
+    majorName: string;
+    userName: string;
+    studentNumber: string;
+    profileUrl: string;
+    email: string;
 }

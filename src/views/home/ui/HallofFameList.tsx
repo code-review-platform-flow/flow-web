@@ -8,10 +8,10 @@ import Image from 'next/image';
 import ProfileImage2 from '../../../../public/images/profileImageExample2.png';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import { User } from '@/entities/user/model/type';
+import { UserSummary } from '@/shared/type/user';
 
 interface HallofFameListProps {
-    hallOfFameData?: User[];
+    hallOfFameData?: UserSummary[];
 }
 
 // userName: string;

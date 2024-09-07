@@ -13,6 +13,7 @@ import { useQuery } from '@tanstack/react-query';
 import { PostDetail } from '../../../shared/type/post'; // PostDetail 타입을 임포트
 import { useRouter } from 'next/navigation';
 import filterTime from '@/shared/hook/filterTime';
+import MarkDownContent from '@/widgets/post/MarkDownContent';
 
 interface TrendingPostContainerProps {}
 
@@ -46,14 +47,14 @@ const TrendingPostContainer: React.FC<TrendingPostContainerProps> = ({}) => {
                     <StyledColumnWrapper justifyContent="space-between">
                         <ColumnWrapper gap="0.5em">
                             <PostTitle>{post.title}</PostTitle>
-                            <PostContent>{post.content}</PostContent>
+                            <MarkDownContent fontSize='0.5em' content={post.content} maxHeight='15em'/>
                         </ColumnWrapper>
 
                         <ColumnWrapper gap="0.8125em">
                             <RowWrapper justifyContent="space-between">
                                 <Tags gap="0.2625em">
                                     {post.tags.map((tag, index) => (
-                                        <PostTag key={index}>{tag.tagName}</PostTag>
+                                        <PostTag key={index} tag={tag.tagName}/>
                                     ))}
                                 </Tags>
                                 <UploadTime>{filterTime(post.createDate)}</UploadTime>
@@ -97,6 +98,7 @@ const PostContainer = styled(Container)`
     min-height: 300px;
 
     @media (max-width: 768px) {
+    max-width: 100%;
         width: 100%;
     }
 `;
@@ -146,24 +148,6 @@ const PostTitle = styled.div`
     }
 `;
 
-const PostContent = styled.div`
-    color: #707070;
-    font-size: 1em;
-    display: -webkit-box;
-    -webkit-line-clamp: 5;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
-    text-overflow: ellipsis;
-
-    @media (max-width: 768px) {
-        -webkit-line-clamp: 4;
-    }
-
-    @media (max-width: 480px) {
-        -webkit-line-clamp: 2;
-        margin-bottom: 1em;
-    }
-`;
 
 const Line = styled.div`
     width: 100%;

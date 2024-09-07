@@ -44,7 +44,6 @@ export interface Reply {
 
 // Comment 타입 정의
 export interface Comment {
-    comments: Array<{
         own: boolean; // 댓글의 소유 여부
         commentId: number; // 댓글 ID
         profileUrl: string; // 프로필 이미지 URL
@@ -53,5 +52,5 @@ export interface Comment {
         studentNumber: string; // 학번
         commentContent: string; // 댓글 내용
         replies: Reply[]; // Reply 타입의 배열
-    }>;
 }
+

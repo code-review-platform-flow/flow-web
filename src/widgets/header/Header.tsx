@@ -1,5 +1,5 @@
 'use client';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { Button } from '../button/Button';
 import FlowLogo from '../../../public/logos/flowHeaderLogo.svg';
@@ -17,6 +17,10 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import Container from '../container/Container';
+import { getUserSummary } from '@/views/user/api/getUserSummary';
+import { useRecoilValue } from 'recoil';
+import { authDataState } from '@/entities/auth/model';
+import { UserSummary } from '@/shared/type/user';
 
 type User = {
     email?: string;
@@ -32,48 +36,114 @@ export interface HeaderProps {
 const Header = ({ user, onLogin, onLogout, onCreateAccount }: HeaderProps) => {
     const router = useRouter();
     const [showModal, setShowModal] = useState(false);
+    const authData = useRecoilValue(authDataState);
+    const email = authData?.email;
+    const [searchTerm, setSearchTerm] = useState('');
 
     const clickModal = () => {
         setShowModal(!showModal);
         console.log('Modal visibility toggled:', !showModal);
     };
 
+    // UserSummary 또는 null을 허용하는 타입으로 초기 상태를 설정합니다.
+    const [userSummary, setUserSummary] = useState<UserSummary | null>(null);
+    const handleNavigation = () => {
+        clickModal();
+
+        const encodedEmail = Buffer.from(email!).toString('base64');
+        router.push(`/user?email=${encodedEmail}`);
+    };
+
+    // 검색어 입력 시 처리 함수
+    const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        setSearchTerm(event.target.value); // 검색어 상태 업데이트
+    };
+
+    // Enter 키 입력 시 검색 페이지로 이동하는 함수
+    const handleKeyPress = (event: React.KeyboardEvent<HTMLInputElement>) => {
+        if (event.key === 'Enter') {
+            if (searchTerm.trim()) {
+                // 검색어가 비어있지 않으면 /search 페이지로 이동하며 쿼리 전달
+                router.push(`/search?query=${encodeURIComponent(searchTerm)}`);
+            }
+        }
+    };
+
+    useEffect(() => {
+        // 비동기로 사용자 정보 가져오기
+        if (email) {
+            const fetchUserSummary = async () => {
+                try {
+                    const response = await getUserSummary(email);
+                    setUserSummary(response); // 이 줄에서 오류가 해결됩니다.
+                } catch (error) {
+                    console.error('사용자 정보를 가져오는 중 오류 발생:', error);
+                }
+            };
+
+            fetchUserSummary();
+        }
+    }, [email]);
+
     return (
         <>
             <HeaderContainer>
                 <Row>
                     <LogoContainer>
-                        <StyledLogo onClick={() => router.push('/')} src={FlowLogo} alt="Flow Logo" />
+                        <StyledLogo
+                            onClick={() => {
+                                router.push('/');
+                            }}
+                            src={FlowLogo}
+                            alt="Flow Logo"
+                        />
                     </LogoContainer>
                     <SearchContainer>
                         <SearchIconWrapper>
                             <Image src={searchIcon} alt="검색 아이콘" />
                         </SearchIconWrapper>
-                        <SearchInput placeholder="플로우 검색하기" />
+                        <SearchInput
+                            type="text"
+                            value={searchTerm}
+                            onChange={handleInputChange}
+                            onKeyPress={handleKeyPress} 
+                            placeholder="플로우 검색하기"
+                        />
                     </SearchContainer>
                 </Row>
                 <ButtonContainer>
                     {showModal && (
                         <ModalWrapper border zIndex={100}>
-                            <Row>
-                                <ProfileImage src={profileExampleImage} alt="프로필 이미지" />
+                            <Row4>
+                                <ProfileImage
+                                    width={35}
+                                    height={35}
+                                    src={userSummary?.profileUrl || profileExampleImage}
+                                    alt="프로필 이미지"
+                                />
                                 <Column>
-                                    <UserName>지민성</UserName>
-                                    <UserEmail>@iamjms4237</UserEmail>
+                                    {/* 사용자 이름과 이메일 표시 */}
+                                    <UserName>{userSummary?.userName || '사용자 이름'}</UserName>
+                                    <UserEmail>@{email || '사용자 이메일'}</UserEmail>
                                 </Column>
-                            </Row>
+                            </Row4>
                             <WritePostButton>
-                                <Row>
+                                <Row
+                                    onClick={() => {
+                                        clickModal();
+                                        router.push('/post-write');
+                                    }}
+                                >
                                     <ModalIcon src={modalPencilIcon} alt="글쓰기 아이콘" />새 포스트
                                 </Row>
                                 <Line />
                             </WritePostButton>
-                            <MyProfileButton>
+                            <MyProfileButton onClick={() => handleNavigation()}>
                                 <ModalIcon src={profileIcon} alt="프로필 아이콘" />내 프로필
                             </MyProfileButton>
                             <LogOutButton
                                 onClick={() => {
-                                    onLogout?.();
+                                    () => onLogout?.();
                                     clickModal();
                                 }}
                             >
@@ -88,7 +158,7 @@ const Header = ({ user, onLogin, onLogout, onCreateAccount }: HeaderProps) => {
                             <Row3>
                                 <Icon src={boxIcon} alt="박스 아이콘" />
                                 <Icon src={bellIcon} alt="벨 아이콘" />
-                                <HambergerIcon onClick={clickModal} src={hamburgerIcon} alt="햄버거 아이콘" />
+                                <HambergerIcon onClick={()=>clickModal()} src={hamburgerIcon} alt="햄버거 아이콘" />
                             </Row3>
                             <ButtonWrapper>
                                 <Link href="/post-write">
@@ -97,7 +167,14 @@ const Header = ({ user, onLogin, onLogout, onCreateAccount }: HeaderProps) => {
                                 <PencilIconWrapper>
                                     <Image src={pencilIcon} alt="쓰기 아이콘" />
                                 </PencilIconWrapper>
-                                <ProfileImage onClick={clickModal} src={profileExampleImage} alt="프로필 이미지" />
+                                <ProfileImage
+                                    width={35}
+                                    height={35}
+                                    onClick={()=>clickModal()}
+                                    src={userSummary?.profileUrl || profileExampleImage}
+                                    alt="프로필 이미지"
+                                    
+                                />
                             </ButtonWrapper>
                         </Row2>
                     ) : (
@@ -133,7 +210,9 @@ const ModalWrapper = styled(Container)`
     gap: 1em;
 `;
 const Column = styled.div`
-    gap: 0.5em;
+    display: flex;
+    flex-direction: column;
+    gap: 0.25em;
 `;
 
 const UserName = styled.div`
@@ -153,12 +232,10 @@ const MyProfileButton = styled.div`
     color: #737373;
     gap: 0.5em;
     margin-left: 0.625em;
-    cursor : pointer;
+    cursor: pointer;
 `;
 
-const LogOutButton = styled(MyProfileButton)`
-    
-`;
+const LogOutButton = styled(MyProfileButton)``;
 
 const WritePostButton = styled(MyProfileButton)`
     display: none;
@@ -227,6 +304,13 @@ const Row = styled.div`
 
     @media (max-width: 768px) {
     }
+`;
+
+const Row4 = styled.div`
+    width: 100%;
+    display: flex;
+    align-items: center;
+    gap: 0.5em;
 `;
 
 const Row2 = styled.div`
@@ -326,9 +410,8 @@ const Icon = styled(Image)`
     }
 `;
 
-const ModalIcon = styled(Image)`
-    
-`;
+const ModalIcon = styled(Image)``;
+
 const HambergerIcon = styled(Image)`
     display: none;
     cursor: pointer;
@@ -339,8 +422,6 @@ const HambergerIcon = styled(Image)`
 
 const ProfileImage = styled(Image)`
     margin-left: 0.5em;
-    width: 35px;
-    height: 35px;
     border-radius: 100%;
     cursor: pointer;
 
