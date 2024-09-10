@@ -13,6 +13,7 @@ const ClientLayout: React.FC<{ children: React.ReactNode }> = ({ children }) => 
     const [user, setUser] = useState<{ email?: string } | null>(null);
 
     useEffect(() => {
+        console.log(`authData : ${authData}`);
         if (authData) {
             setUser({ email: authData.email });
         } else {

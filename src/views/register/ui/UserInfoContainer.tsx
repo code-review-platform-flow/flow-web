@@ -13,7 +13,7 @@ import {
 } from '@/app/util/register/register';
 import { codeAuth, emailAuth } from '../api/emailAuthAPI';
 import { submitRegister } from '../api/registerAPI';
-
+import { useRouter } from 'next/navigation';
 interface UserInfoContainerProps {
     showError?: boolean;
     registerCheck?: boolean;
@@ -21,6 +21,7 @@ interface UserInfoContainerProps {
 }
 
 const UserInfoContainer: React.FC<UserInfoContainerProps> = ({ showError = false, registerCheck = false, onNext }) => {
+    const router = useRouter();
     const [name, setName] = useRecoilState(nameState);
     const [pw, setPw] = useState('');
     const [pw2, setPw2] = useState('');
@@ -31,7 +32,7 @@ const UserInfoContainer: React.FC<UserInfoContainerProps> = ({ showError = false
     const [schoolName, setSchoolName] = useRecoilState(schoolNameState);
     const [studentNumber, setStudentNumber] = useRecoilState(studentNumberState);
 
-    const [authCode, setAuthCode] = useState<number | null>(null);
+    const [authCode, setAuthCode] = useState<string>('');
 
     const [buttonLabel, setButtonLabel] = useState('이메일 인증하기');
 
@@ -51,6 +52,7 @@ const UserInfoContainer: React.FC<UserInfoContainerProps> = ({ showError = false
 
         try {
             const response = await emailAuth(schoolEmail, schoolName);
+
             if (response.ok) {
                 setIsMailSuccess(true);
                 setButtonLabel('인증 번호 입력 완료');
@@ -94,9 +96,10 @@ const UserInfoContainer: React.FC<UserInfoContainerProps> = ({ showError = false
 
         try {
             const response = await submitRegister(studentNumber, schoolName, schoolEmail, pw, name, majorName);
-            console.log(response)
+            console.log(response);
             if (response.ok) {
                 console.log('회원가입 성공');
+                router.push('/login');
             } else {
                 console.error('회원가입 실패');
             }
@@ -153,8 +156,8 @@ const UserInfoContainer: React.FC<UserInfoContainerProps> = ({ showError = false
                 <Input
                     size="large"
                     placeholder="인증번호 4자리를 입력해주세요"
-                    value={authCode !== null ? authCode.toString() : ''}
-                    onChange={(e) => setAuthCode(Number(e.target.value))}
+                    value={authCode}
+                    onChange={(e) => setAuthCode(e.target.value)}
                 />
             </Column>
 

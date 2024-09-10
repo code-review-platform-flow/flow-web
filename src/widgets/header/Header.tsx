@@ -27,7 +27,7 @@ type User = {
 };
 
 export interface HeaderProps {
-    user?: User;
+    user?: User | null;
     onLogin?: () => void;
     onLogout?: () => void;
     onCreateAccount?: () => void;
@@ -69,6 +69,10 @@ const Header = ({ user, onLogin, onLogout, onCreateAccount }: HeaderProps) => {
         }
     };
 
+    const handleSearchClick = () => {
+        router.push('/search');
+    };
+
     useEffect(() => {
         // 비동기로 사용자 정보 가져오기
         if (email) {
@@ -104,9 +108,9 @@ const Header = ({ user, onLogin, onLogout, onCreateAccount }: HeaderProps) => {
                         </SearchIconWrapper>
                         <SearchInput
                             type="text"
-                            value={searchTerm}
-                            onChange={handleInputChange}
-                            onKeyPress={handleKeyPress} 
+                            // onChange={handleInputChange}
+                            onClick={handleSearchClick}
+                            onKeyPress={handleKeyPress}
                             placeholder="플로우 검색하기"
                         />
                     </SearchContainer>
@@ -143,7 +147,7 @@ const Header = ({ user, onLogin, onLogout, onCreateAccount }: HeaderProps) => {
                             </MyProfileButton>
                             <LogOutButton
                                 onClick={() => {
-                                    () => onLogout?.();
+                                    onLogout?.();
                                     clickModal();
                                 }}
                             >
@@ -158,7 +162,7 @@ const Header = ({ user, onLogin, onLogout, onCreateAccount }: HeaderProps) => {
                             <Row3>
                                 <Icon src={boxIcon} alt="박스 아이콘" />
                                 <Icon src={bellIcon} alt="벨 아이콘" />
-                                <HambergerIcon onClick={()=>clickModal()} src={hamburgerIcon} alt="햄버거 아이콘" />
+                                <HambergerIcon onClick={() => clickModal()} src={hamburgerIcon} alt="햄버거 아이콘" />
                             </Row3>
                             <ButtonWrapper>
                                 <Link href="/post-write">
@@ -170,10 +174,9 @@ const Header = ({ user, onLogin, onLogout, onCreateAccount }: HeaderProps) => {
                                 <ProfileImage
                                     width={35}
                                     height={35}
-                                    onClick={()=>clickModal()}
+                                    onClick={() => clickModal()}
                                     src={userSummary?.profileUrl || profileExampleImage}
                                     alt="프로필 이미지"
-                                    
                                 />
                             </ButtonWrapper>
                         </Row2>

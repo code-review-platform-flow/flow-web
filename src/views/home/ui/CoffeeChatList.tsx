@@ -10,13 +10,34 @@ import { RowWrapper } from '@/widgets/wrapper/RowWrapper';
 import Link from 'next/link';
 
 //커피챗 데이터
-const coffechatData = [
-    { rank: 1, profileImage: ProfileImage2, username: '사용자1' },
-    { rank: 2, profileImage: ProfileImage2, username: '사용자2' },
-    { rank: 3, profileImage: ProfileImage2, username: '사용자3' },
-    { rank: 4, profileImage: ProfileImage2, username: '사용자4' },
-    { rank: 5, profileImage: ProfileImage2, username: '사용자5' },
-];
+const coffechatData = {
+    coffeeChat: [
+        {
+            coffeeId: 2,
+            initiatorUserId: 3,
+            recipientUserId: 4,
+            contents: '안녕하세요~~~1',
+        },
+        {
+            coffeeId: 3,
+            initiatorUserId: 3,
+            recipientUserId: 4,
+            contents: '안녕하세요~~~1',
+        },
+    ],
+    pageable: {
+        pageNumber: 0,
+        pageSize: 2,
+        sort: {
+            empty: true,
+            sorted: false,
+            unsorted: true,
+        },
+        offset: 0,
+        paged: true,
+        unpaged: false,
+    },
+};
 
 const CoffeChatList = () => {
     return (
@@ -24,10 +45,10 @@ const CoffeChatList = () => {
             <Medium>☕️ 커피챗 신청하기</Medium>
             <Container size="small" width="100%" height="100%">
                 <ColumnWrapper gap="0.75em">
-                    {coffechatData.map((item, index) => (
+                    {coffechatData.coffeeChat.map((item, index) => (
                         <UserInfo key={index}>
                             <StyledRowWrapper>
-                                <Rank>{item.rank}</Rank>
+                                <Rank>{index + 1}</Rank>
                                 <ProfileImage
                                     src={item.profileImage}
                                     alt={`Profile image of ${item.username}`}
