@@ -15,6 +15,7 @@ import ModifyIcon from './ModifyIcon';
 import { patchUserOneLines } from '../api/patchUserOneLine';
 import { activeEnter } from '@/shared/hook/activeEnter';
 import { SizedBox } from '@/widgets/wrapper/SizedBox';
+import { useSearchParams } from 'next/navigation';
 
 // Props 인터페이스 정의
 interface UserSummaryContainerProps {
@@ -89,7 +90,7 @@ const UserSummaryContainer: React.FC<UserSummaryContainerProps> = ({
                 </RowWrapper>
 
                 <RowWrapper gap="1em">
-                    <StyledLink href={'/coffeechat'}>
+                    <StyledLink href={`/coffee-chat`}>
                         <Button size="wide" gap="0.4em" tertiary label="커피챗">
                             <Image src={SendIcon} alt="보내기버튼" />
                         </Button>
@@ -100,7 +101,7 @@ const UserSummaryContainer: React.FC<UserSummaryContainerProps> = ({
                 </RowWrapper>
 
                 <ColumnWrapper gap="0.5em">
-                    <RowWrapper justifyContent="space-between" alignItems='center'>
+                    <RowWrapper justifyContent="space-between" alignItems="center">
                         <IntroduceTitle>소개</IntroduceTitle>
                         {own &&
                             (editOneLiner ? (
@@ -156,7 +157,7 @@ const IntroduceText = styled.div`
     width: 100%;
     font-size: 0.8125em;
     padding: 0.5em;
-    padding-left : 0em;
+    padding-left: 0em;
     box-sizing: border-box;
 `;
 

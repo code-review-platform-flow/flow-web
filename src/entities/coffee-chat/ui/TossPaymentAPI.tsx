@@ -7,9 +7,10 @@ import { useRecoilState } from 'recoil';
 import { orderDataState } from '@/entities/order/model/atoms';
 
 interface TossPaymentAPIProps {
+    sender: string;
+    receiver: string;
     contents: string;
 }
-
 interface OrderData {
     orderId: number;
     customerKey: string;
@@ -37,7 +38,7 @@ interface CardPaymentRequest {
     };
 }
 
-const TossPaymentAPI: React.FC<TossPaymentAPIProps> = ({ contents }) => {
+const TossPaymentAPI: React.FC<TossPaymentAPIProps> = ({ sender, receiver, contents }) => {
     const clientKey = process.env.NEXT_PUBLIC_TOSS_CLIENT_KEY as string;
     const clientUrl = process.env.NEXT_PUBLIC_CLIENT_URL as string;
 
@@ -95,11 +96,11 @@ const TossPaymentAPI: React.FC<TossPaymentAPIProps> = ({ contents }) => {
 
     const handleSendCoffeeChat = useCallback((): void => {
         sendCoffeeChat({
-            sender: 'a1061602@gmail.com',
-            receiver: 'iamjms4237@gachon.ac.kr',
+            sender,
+            receiver,
             contents,
         });
-    }, [contents, sendCoffeeChat]);
+    }, [sender, receiver, contents, sendCoffeeChat]);
 
     const requestPayment = async (order: OrderData): Promise<void> => {
         if (!payment) {
@@ -119,7 +120,7 @@ const TossPaymentAPI: React.FC<TossPaymentAPIProps> = ({ contents }) => {
                     orderName: '커피챗 결제',
                     successUrl: `${clientUrl}/payment/success`,
                     failUrl: `${clientUrl}/fail`,
-                    customerEmail: 'customer123@gmail.com',
+                    customerEmail: sender,
                     customerName: '김토스',
                     customerMobilePhone: '01012341234',
                     card: {

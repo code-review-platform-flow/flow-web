@@ -8,17 +8,55 @@ import { ColumnWrapper } from '@/widgets/wrapper/ColumnWrapper';
 import styled from 'styled-components';
 import TossPaymentAPI from '@/entities/coffee-chat/ui/TossPaymentAPI';
 import Button from '@/widgets/button/Button';
+import { useRecoilValue } from 'recoil';
+import { authDataState } from '@/entities/auth/model';
+import { coffeeChatDataState } from '../model';
+import { sharedEmailState } from '@/views/user/model';
+import { useQuery } from '@tanstack/react-query';
+import { getUserInfo } from '@/views/user/api/getUserInfo';
 
 const CoffeeChatSendContainer: React.FC = () => {
+    const authData = useRecoilValue(authDataState);
+    const coffeeChat = useRecoilValue(coffeeChatDataState);
     const [contents, setContents] = useState('');
+    const { hostEmail, visitorEmail } = useRecoilValue(sharedEmailState);
+
+    const {
+        data: senderData,
+        isLoading: isSenderLoading,
+        error: senderError,
+    } = useQuery({
+        queryKey: ['senderUserInfo', visitorEmail],
+        queryFn: () => getUserInfo(hostEmail, visitorEmail),
+        enabled: !!hostEmail && !!visitorEmail,
+    });
+
+    const {
+        data: receiverData,
+        isLoading: isReceiverLoading,
+        error: receiverError,
+    } = useQuery({
+        queryKey: ['receiverUserInfo', hostEmail],
+        queryFn: () => getUserInfo(hostEmail, visitorEmail),
+        enabled: !!hostEmail && !!visitorEmail,
+    });
+
+    if (isSenderLoading || isReceiverLoading) return <div>로딩 중...</div>;
+    if (senderError) return <div>발신자 정보 로딩 중 오류가 발생했습니다: {senderError.message}</div>;
+    if (receiverError) return <div>수신자 정보 로딩 중 오류가 발생했습니다: {receiverError.message}</div>;
+    if (!senderData || !receiverData) return <div>프로필 데이터를 사용할 수 없습니다</div>;
 
     const coffeeChatData = {
-        senderName: '지민성',
-        receiverName: '박찬영',
-        coffeeChatContent: '',
-        senderImage: ProfileExample,
-        receiverImage: ProfileExample,
+        sender: visitorEmail,
+        receiver: hostEmail,
+        senderName: senderData.userName,
+        receiverName: receiverData.userName,
+        senderImage: '/images/profileImageExample.png',
+        receiverImage: '/images/profileImageExample.png',
+        contents: '',
     };
+
+    console.log(coffeeChatData);
 
     return (
         <Container width="800px" height="600px">
@@ -26,9 +64,9 @@ const CoffeeChatSendContainer: React.FC = () => {
                 <CoffeeChatTitle>{coffeeChatData.senderName}님에게 커피챗 요청하기</CoffeeChatTitle>
 
                 <RowWrapper gap="2.25em" justifyContent="center">
-                    <StyledImage src={coffeeChatData.senderImage} alt="sender" priority />
+                    <StyledImage src={coffeeChatData.senderImage} alt="sender" width={150} height={150} />
                     <Image src={SendIcon} alt="보내기아이콘" />
-                    <StyledImage src={coffeeChatData.receiverImage} alt="receiver" priority />
+                    <StyledImage src={coffeeChatData.receiverImage} alt="receiver" width={150} height={150} />
                 </RowWrapper>
 
                 <StyledColumnWrapper>
@@ -38,7 +76,7 @@ const CoffeeChatSendContainer: React.FC = () => {
                     <CoffeeChatContent value={contents} onChange={(e) => setContents(e.target.value)} placeholder="" />
                 </StyledColumnWrapper>
 
-                <TossPaymentAPI contents={contents} />
+                <TossPaymentAPI sender={coffeeChatData.sender} receiver={coffeeChatData.receiver} contents={contents} />
             </CoffeeChatWrapper>
         </Container>
     );
