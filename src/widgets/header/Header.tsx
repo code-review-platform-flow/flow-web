@@ -19,7 +19,7 @@ import { useRouter } from 'next/navigation';
 import Container from '../container/Container';
 import { getUserSummary } from '@/views/user/api/getUserSummary';
 import { useRecoilValue } from 'recoil';
-import { authDataState } from '@/entities/auth/model';
+import { authDataState } from '@/features/auth/model';
 import { UserSummary } from '@/shared/type/user';
 
 type User = {

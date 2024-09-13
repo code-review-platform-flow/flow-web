@@ -1,7 +1,7 @@
 'use client';
 import { PageWrapper } from '@/widgets/wrapper/PageWrapper';
 import React from 'react';
-import CoffeeChatSendContainer from '@/entities/coffee-chat/ui/CoffeeChatSendContainer';
+import CoffeeChatSendContainer from '@/features/coffee-chat/ui/CoffeeChatSendContainer';
 
 const CoffeeChatPage: React.FC = () => {
     return (

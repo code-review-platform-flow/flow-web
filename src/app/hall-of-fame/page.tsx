@@ -1,3 +1,3 @@
-import HallOfFamePage from '@/views/hall-of-fame';
+import HallOfFamePage from '@/features/hall-of-fame';
 
 export default HallOfFamePage;

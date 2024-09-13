@@ -1,3 +1,3 @@
-import MailBoxPage from '@/views/mailbox';
+import MailBoxPage from '@/features/mailbox';
 
 export default MailBoxPage;

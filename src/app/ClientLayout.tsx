@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState } from 'react';
 import { useRecoilValue, useResetRecoilState } from 'recoil';
-import { authDataState } from '@/entities/auth/model';
+import { authDataState } from '@/features/auth/model';
 import Header from '@/widgets/header/Header';
 import { deleteCookie } from 'cookies-next';
 

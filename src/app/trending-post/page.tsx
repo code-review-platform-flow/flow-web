@@ -1,3 +1,3 @@
-import TrendingPostPage from '@/views/trending-post';
+import TrendingPostPage from '@/features/trending-post';
 
 export default TrendingPostPage;

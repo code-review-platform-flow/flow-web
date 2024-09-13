@@ -1,3 +1,3 @@
-import RegisterPage from '@/views/register';
+import RegisterPage from '@/features/register';
 
 export default RegisterPage;

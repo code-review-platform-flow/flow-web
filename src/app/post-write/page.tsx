@@ -1,3 +1,3 @@
-import PostWritePage from '@/views/post-write';
+import PostWritePage from '@/features/post-write';
 
 export default PostWritePage;

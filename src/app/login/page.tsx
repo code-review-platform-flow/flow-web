@@ -1,3 +1,3 @@
-import LoginPage from '@/views/login';
+import LoginPage from '@/features/login';
 
 export default LoginPage;
