@@ -4,7 +4,7 @@ import TossPaymentButton from './TossPaymentButton';
 import { useSendCoffeeChat } from '@/features/coffee-chat/api/coffeeChatApi';
 import { useCreateOrder } from '@/features/order/api/orderApi';
 import { useRecoilState } from 'recoil';
-import { orderDataState } from '@/entities/order/model/atoms';
+import { orderDataState } from '@/features/order/model/atoms';
 
 interface TossPaymentAPIProps {
     sender: string;

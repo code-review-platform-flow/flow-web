@@ -15,7 +15,7 @@ import { SizedBox } from '@/widgets/wrapper/SizedBox';
 import { authDataState } from '@/features/auth/model';
 import UserPostList from './ui/UserPostList';
 import { getUserInfo } from './api/getUserInfo';
-import { sharedEmailState } from '@/views/user/model';
+import { sharedEmailState } from '@/features/user/model';
 
 const UserPage: React.FC = () => {
     const searchParams = useSearchParams();

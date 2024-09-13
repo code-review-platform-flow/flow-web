@@ -17,7 +17,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import Container from '../container/Container';
-import { getUserSummary } from '@/views/user/api/getUserSummary';
+import { getUserSummary } from '@/features/user/api/getUserSummary';
 import { useRecoilValue } from 'recoil';
 import { authDataState } from '@/features/auth/model';
 import { UserSummary } from '@/shared/type/user';
