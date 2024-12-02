@@ -6,7 +6,6 @@ import { FillWrapper } from '@/widgets/wrapper/FillWrapper';
 import LoginContainer from './ui/LoginContainer';
 import Input from '@/widgets/input/Input';
 import Button from '@/widgets/button/Button';
-import LoginSessionCheck from './ui/LoginSessionCheck';
 import FindPw from './ui/FindPw';
 import RegisterButton from './ui/RegisterButton';
 import styled from 'styled-components';
@@ -33,9 +32,10 @@ const LoginPage: React.FC = () => {
     const loginMutation = useLogin({
         onSuccess: (data) => {
             console.log('Login successful:', data);
-            
+
             // 성공 시 토큰을 쿠키에 저장
             setCookie('accessToken', data.accessToken, { path: '/', sameSite: 'strict', secure: true });
+            setCookie('refreshToken', data.refreshToken, { path: '/', sameSite: 'strict', secure: true });
 
             // 이메일을 Recoil 상태에 저장
             setAuthData({ email, role: data.role, accessToken: data.accessToken, refreshToken: data.refreshToken });

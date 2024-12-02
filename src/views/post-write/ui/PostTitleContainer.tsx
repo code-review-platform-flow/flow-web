@@ -5,6 +5,7 @@ import { SizedBox } from '@/widgets/wrapper/SizedBox';
 import Input from '@/widgets/input/Input';
 import { useRecoilState } from 'recoil';
 import { titleState } from '../model/postAtoms';
+import styled from 'styled-components';
 
 const PostTitleContainer: React.FC = ({}) => {
     const [title, setTitle] = useRecoilState(titleState);
@@ -16,7 +17,7 @@ const PostTitleContainer: React.FC = ({}) => {
         <Container size="wide">
             <PostWriteTitle>제목</PostWriteTitle>
             <SizedBox />
-            <Input
+            <StyledInput
                 value={title}
                 size="large"
                 backgroundColor="none"
@@ -30,3 +31,7 @@ const PostTitleContainer: React.FC = ({}) => {
 };
 
 export default PostTitleContainer;
+
+const StyledInput = styled(Input)`
+    padding: 1.125em;
+`;

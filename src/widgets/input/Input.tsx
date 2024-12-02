@@ -47,7 +47,7 @@ const StyledInput = styled.input<{
     box-sizing: border-box;
     background-color: ${({ backgroundColor }) => backgroundColor || '#F9F9F9'};
     color: #000000;
-    padding: 0.55em 2.55em 0.55em 0.55em; // 왼쪽 패딩 조정
+    padding: 0.55em 2.55em 0.55em 0.55em;
     font-size: 0.8125em;
     font-weight: 400;
     font-family: 'Pretendard';

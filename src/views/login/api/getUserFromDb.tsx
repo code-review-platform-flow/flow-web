@@ -1,4 +1,4 @@
-import apiClient from "@/shared/api/apiClient";
+import apiClient from '@/shared/api/apiClient';
 
 // User 타입 정의
 interface User {
