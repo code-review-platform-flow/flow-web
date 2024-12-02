@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import Container from '@/widgets/container/Container';
 import UserInfo from '@/widgets/post/UserInfo';
@@ -16,9 +16,10 @@ import MarkDownContent from '@/widgets/post/MarkDownContent';
 
 interface PostContainerProps {
     postId: string;
+    email: string;
 }
 
-const PostContainer: React.FC<PostContainerProps> = ({ postId }) => {
+const PostContainer: React.FC<PostContainerProps> = ({ postId, email }) => {
     const {
         data: postDetail,
         isLoading,
@@ -52,7 +53,7 @@ const PostContainer: React.FC<PostContainerProps> = ({ postId }) => {
                             {postDetail.tags &&
                                 postDetail.tags.map((tag, index) => <PostTag key={index} tag={tag.tagName} />)}
                         </Tags>
-                        <ShareTumbContainer mobile />
+                        <ShareTumbContainer mobile postId={postId} email={email} />
                         <ColumnWrapper width="auto" alignItems="flex-end" gap="0.5em">
                             <PostInfo
                                 isStatic

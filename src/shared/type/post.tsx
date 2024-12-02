@@ -31,6 +31,7 @@ export interface PostDetail {
     commentsAndRepliesCount: number; //전체 댓글 답글 수
     tags: Tag[]; // 게시물에 포함된 태그 목록
     createDate: string; // 게시물 생성 날짜 (ISO 형식)
+    clicked: boolean;
 }
 
 // Reply 타입 정의

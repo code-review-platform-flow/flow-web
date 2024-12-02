@@ -21,9 +21,9 @@ const PostDetailPage: React.FC<PostDetailProps> = ({ postId }) => {
     return (
         <PageWrapper gap="0.875em">
             <RowWrapper>
-                <ShareTumbContainer postId={postId} email={email!} />
+                <ShareTumbContainer postId={postId} email={email} />
                 <ColumnWrapper gap="1.5em">
-                    <PostContainer postId={postId} />
+                    <PostContainer postId={postId} email={email} />
                     <CommentContainer postId={postId} email={email} />
                     {email && <CommentWriteContainer postId={postId} email={email} />}
                 </ColumnWrapper>

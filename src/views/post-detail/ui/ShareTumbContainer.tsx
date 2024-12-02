@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import Image from 'next/image';
 import styled from 'styled-components';
 import TumbIcon from '../../../../public/icons/tumbCountIcon.svg';
+import TumbColorIcon from '../../../../public/icons/tumbCountColorIcon.svg';
 import ShareIcon from '../../../../public/icons/shareIcon.svg';
 import { postLike } from '../api/like/postLike';
 import { deleteLike } from '../api/like/deleteLike';
@@ -9,8 +10,8 @@ import { getLike } from '../api/like/getLike';
 
 interface ShareTumbContainerProps {
     mobile?: boolean;
-    postId?: string;
-    email?: string;
+    postId: string;
+    email: string;
 }
 
 const ShareTumbContainer: React.FC<ShareTumbContainerProps> = ({ mobile = false, postId, email }) => {
@@ -19,18 +20,17 @@ const ShareTumbContainer: React.FC<ShareTumbContainerProps> = ({ mobile = false,
     const handleLike = () => {
         console.log(currentCliked);
         if (currentCliked) {
-            deleteLike(postId!, email!);
+            deleteLike(postId, email!);
             setCurrentCliked(false);
         } else {
-            postLike(postId!, email!);
+            postLike(postId, email!);
             setCurrentCliked(true);
         }
     };
 
     const copyUrl = () => {
-        const url = `${process.env.NEXT_PUBLIC_CLIENT_URL}/post-detail/${postId}`;
+        const url = `${process.env.NEXT_PUBLIC_SERVER_URL}/post-detail/${postId}`;
         window.navigator.clipboard.writeText(url).then(() => {
-            // 복사가 완료되면 호출된다.
             alert('링크 복사 완료');
         });
     };
@@ -40,7 +40,7 @@ const ShareTumbContainer: React.FC<ShareTumbContainerProps> = ({ mobile = false,
 
     const fetchClicked = async () => {
         try {
-            const response = await getLike(postId!);
+            const response = await getLike(postId, email);
             setCurrentCliked(response.clicked);
         } catch (error) {
             console.error('Education data fetching error:', error);
@@ -50,12 +50,11 @@ const ShareTumbContainer: React.FC<ShareTumbContainerProps> = ({ mobile = false,
         <Wrapper mobile={mobile}>
             <StyledContainer mobile={mobile}>
                 <TumbShareButton onClick={() => handleLike()}>
-                    <ResponsiveImage
-                        src={TumbIcon}
-                        alt="tumb"
-                        mobile={mobile}
-                        style={currentCliked ? { color: '#004E96' } : {}}
-                    />
+                    {currentCliked ? (
+                        <ResponsiveImage src={TumbColorIcon} alt="tumb" mobile={mobile} />
+                    ) : (
+                        <ResponsiveImage src={TumbIcon} alt="tumb" mobile={mobile} />
+                    )}
                 </TumbShareButton>
                 <TumbShareButton>
                     <ResponsiveImage onClick={() => copyUrl()} src={ShareIcon} alt="share" mobile={mobile} />
