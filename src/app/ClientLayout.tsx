@@ -21,7 +21,8 @@ const ClientLayout: React.FC<{ children: React.ReactNode }> = ({ children }) => 
     }, [authData]);
 
     const onLogout = () => {
-        deleteCookie('accessToken');
+        deleteCookie('authData');
+        localStorage.removeItem('authData');
         resetAuthData();
     };
 

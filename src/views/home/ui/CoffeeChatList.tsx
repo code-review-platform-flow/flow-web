@@ -5,17 +5,17 @@ import { Medium } from './Font';
 import Container from '@/widgets/container/Container';
 import Button from '@/widgets/button/Button';
 import Image from 'next/image';
-import ProfileImage2 from '../../../../public/images/profileImageExample2.png';
+import profileImageUrl from '../../../../public/images/profileImageExample.png';
 import { RowWrapper } from '@/widgets/wrapper/RowWrapper';
 import Link from 'next/link';
 
 //커피챗 데이터
 const coffechatData = [
-    { rank: 1, profileImage: ProfileImage2, username: '사용자1' },
-    { rank: 2, profileImage: ProfileImage2, username: '사용자2' },
-    { rank: 3, profileImage: ProfileImage2, username: '사용자3' },
-    { rank: 4, profileImage: ProfileImage2, username: '사용자4' },
-    { rank: 5, profileImage: ProfileImage2, username: '사용자5' },
+    { rank: 1, profileImage: profileImageUrl, username: '사용자1' },
+    { rank: 2, profileImage: profileImageUrl, username: '사용자2' },
+    { rank: 3, profileImage: profileImageUrl, username: '사용자3' },
+    { rank: 4, profileImage: profileImageUrl, username: '사용자4' },
+    { rank: 5, profileImage: profileImageUrl, username: '사용자5' },
 ];
 
 const CoffeChatList = () => {

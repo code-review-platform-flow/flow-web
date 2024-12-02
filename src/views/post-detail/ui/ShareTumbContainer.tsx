@@ -28,7 +28,7 @@ const ShareTumbContainer: React.FC<ShareTumbContainerProps> = ({ mobile = false,
     };
 
     const copyUrl = () => {
-        const url = `${process.env.NEXT_PUBLIC_SERVER_URL}/post-detail/${postId}`;
+        const url = `${process.env.NEXT_PUBLIC_CLIENT_URL}/post-detail/${postId}`;
         window.navigator.clipboard.writeText(url).then(() => {
             // 복사가 완료되면 호출된다.
             alert('링크 복사 완료');

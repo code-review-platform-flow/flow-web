@@ -27,13 +27,12 @@ type User = {
 };
 
 export interface HeaderProps {
-    user?: User;
-    onLogin?: () => void;
-    onLogout?: () => void;
+    user: User;
+    onLogout: () => void;
     onCreateAccount?: () => void;
 }
 
-const Header = ({ user, onLogin, onLogout, onCreateAccount }: HeaderProps) => {
+const Header = ({ user, onLogout, onCreateAccount }: HeaderProps) => {
     const router = useRouter();
     const [showModal, setShowModal] = useState(false);
     const authData = useRecoilValue(authDataState);
@@ -42,10 +41,8 @@ const Header = ({ user, onLogin, onLogout, onCreateAccount }: HeaderProps) => {
 
     const clickModal = () => {
         setShowModal(!showModal);
-        console.log('Modal visibility toggled:', !showModal);
     };
 
-    // UserSummary 또는 null을 허용하는 타입으로 초기 상태를 설정합니다.
     const [userSummary, setUserSummary] = useState<UserSummary | null>(null);
     const handleNavigation = () => {
         clickModal();
@@ -106,7 +103,7 @@ const Header = ({ user, onLogin, onLogout, onCreateAccount }: HeaderProps) => {
                             type="text"
                             value={searchTerm}
                             onChange={handleInputChange}
-                            onKeyPress={handleKeyPress} 
+                            onKeyPress={handleKeyPress}
                             placeholder="플로우 검색하기"
                         />
                     </SearchContainer>
@@ -122,7 +119,6 @@ const Header = ({ user, onLogin, onLogout, onCreateAccount }: HeaderProps) => {
                                     alt="프로필 이미지"
                                 />
                                 <Column>
-                                    {/* 사용자 이름과 이메일 표시 */}
                                     <UserName>{userSummary?.userName || '사용자 이름'}</UserName>
                                     <UserEmail>@{email || '사용자 이메일'}</UserEmail>
                                 </Column>
@@ -143,7 +139,7 @@ const Header = ({ user, onLogin, onLogout, onCreateAccount }: HeaderProps) => {
                             </MyProfileButton>
                             <LogOutButton
                                 onClick={() => {
-                                    () => onLogout?.();
+                                    () => onLogout();
                                     clickModal();
                                 }}
                             >
@@ -158,7 +154,7 @@ const Header = ({ user, onLogin, onLogout, onCreateAccount }: HeaderProps) => {
                             <Row3>
                                 <Icon src={boxIcon} alt="박스 아이콘" />
                                 <Icon src={bellIcon} alt="벨 아이콘" />
-                                <HambergerIcon onClick={()=>clickModal()} src={hamburgerIcon} alt="햄버거 아이콘" />
+                                <HambergerIcon onClick={() => clickModal()} src={hamburgerIcon} alt="햄버거 아이콘" />
                             </Row3>
                             <ButtonWrapper>
                                 <Link href="/post-write">
@@ -170,10 +166,9 @@ const Header = ({ user, onLogin, onLogout, onCreateAccount }: HeaderProps) => {
                                 <ProfileImage
                                     width={35}
                                     height={35}
-                                    onClick={()=>clickModal()}
+                                    onClick={() => clickModal()}
                                     src={userSummary?.profileUrl || profileExampleImage}
                                     alt="프로필 이미지"
-                                    
                                 />
                             </ButtonWrapper>
                         </Row2>

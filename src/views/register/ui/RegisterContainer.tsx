@@ -9,7 +9,7 @@ interface RegisterContainerProps {
 
 const RegisterContainer: React.FC<RegisterContainerProps> = ({ children }) => {
     return (
-        <StyledContainer border={true} size="wide" width="50%" zIndex={10}>
+        <StyledContainer border={true} size="wide" width="40%" zIndex={10}>
             <RegisterTitle>
                 <Logo />
                 회원가입

@@ -8,7 +8,7 @@ interface PostResponse {
 
 export const postPost = async (post: Post): Promise<PostResponse> => {
     try {
-        const response = await apiClient.post(`post`, { json : post }).json();
+        const response = await apiClient.post(`post`, { json: post }).json();
 
         if (!response) {
             throw new Error('게시글 작성 중 오류가 발생했습니다.');

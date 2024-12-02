@@ -14,13 +14,13 @@ import {
 import { codeAuth, emailAuth } from '../api/emailAuthAPI';
 import { submitRegister } from '../api/registerAPI';
 
-interface UserInfoContainerProps {
+interface RegsiterFormProps {
     showError?: boolean;
     registerCheck?: boolean;
     onNext: (isValid: boolean) => void;
 }
 
-const UserInfoContainer: React.FC<UserInfoContainerProps> = ({ showError = false, registerCheck = false, onNext }) => {
+const RegsiterForm: React.FC<RegsiterFormProps> = ({ showError = false, registerCheck = false, onNext }) => {
     const [name, setName] = useRecoilState(nameState);
     const [pw, setPw] = useState('');
     const [pw2, setPw2] = useState('');
@@ -50,8 +50,10 @@ const UserInfoContainer: React.FC<UserInfoContainerProps> = ({ showError = false
         }
 
         try {
-            const response = await emailAuth(schoolEmail, schoolName);
-            if (response.ok) {
+            const {
+                apiResponse: { success },
+            } = await emailAuth(schoolEmail, schoolName);
+            if (success) {
                 setIsMailSuccess(true);
                 setButtonLabel('인증 번호 입력 완료');
             } else {
@@ -69,8 +71,10 @@ const UserInfoContainer: React.FC<UserInfoContainerProps> = ({ showError = false
         }
 
         try {
-            const response = await codeAuth(schoolEmail, schoolName, authCode);
-            if (response.ok) {
+            const {
+                apiResponse: { success },
+            } = await codeAuth(schoolEmail, schoolName, authCode);
+            if (success) {
                 setIsMailSuccess(false);
                 setIsMailCheckSuccess(true);
             } else {
@@ -88,13 +92,13 @@ const UserInfoContainer: React.FC<UserInfoContainerProps> = ({ showError = false
     };
 
     const handleNext = async () => {
-        // const isValid = validateForm();
-        // onNext(isValid);
-        // if (!isValid) return;
+        const isValid = validateForm();
+        onNext(isValid);
+        if (!isValid) return;
 
         try {
             const response = await submitRegister(studentNumber, schoolName, schoolEmail, pw, name, majorName);
-            console.log(response)
+            console.log(response);
             if (response.ok) {
                 console.log('회원가입 성공');
             } else {
@@ -201,7 +205,7 @@ const UserInfoContainer: React.FC<UserInfoContainerProps> = ({ showError = false
     );
 };
 
-export default UserInfoContainer;
+export default RegsiterForm;
 
 const Column = styled.div`
     display: flex;
