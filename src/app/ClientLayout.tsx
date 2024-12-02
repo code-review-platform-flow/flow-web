@@ -27,7 +27,7 @@ const ClientLayout: React.FC<{ children: React.ReactNode }> = ({ children }) => 
 
     return (
         <>
-            <Header user={user} onLogout={onLogout} />
+            <Header user={user!} onLogout={onLogout} />
             {children}
         </>
     );
