@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import Container from '@/widgets/container/Container';
 import UserInfo from '@/widgets/post/UserInfo';
@@ -19,7 +19,6 @@ interface PostContainerProps {
 }
 
 const PostContainer: React.FC<PostContainerProps> = ({ postId }) => {
-    // useQuery로 데이터 가져오기
     const {
         data: postDetail,
         isLoading,
@@ -55,14 +54,17 @@ const PostContainer: React.FC<PostContainerProps> = ({ postId }) => {
                         </Tags>
                         <ShareTumbContainer mobile />
                         <ColumnWrapper width="auto" alignItems="flex-end" gap="0.5em">
-                            {/* TODO : 좋아요 수랑 댓글 수를 postDetail에 포함시켜서 서버에서 받을 필요가 있음 향후 수정*/}
-                            <PostInfo isStatic tumbCount={0} commentCount={0} />
+                            <PostInfo
+                                isStatic
+                                tumbCount={postDetail.likeCount}
+                                commentCount={postDetail.commentsAndRepliesCount}
+                            />
                             <UploadTime>{filterTime(postDetail.createDate)}</UploadTime>
                         </ColumnWrapper>
                     </RowWrapper>
                 </PostUser>
             </ColumnWrapper>
-            <MarkDownContent maxHeight='100%' fontSize='1em' content={postDetail.content} />
+            <MarkDownContent maxHeight="100%" fontSize="1em" content={postDetail.content} />
         </Container>
     );
 };
@@ -108,4 +110,3 @@ const UploadTime = styled.div`
         font-size: 0.6em;
     }
 `;
-
