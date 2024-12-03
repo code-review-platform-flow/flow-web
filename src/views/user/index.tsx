@@ -67,7 +67,7 @@ const UserPage: React.FC = () => {
                         <StyledColumnWrapper width="60%" gap="1em">
                             <UserSchoolContainer
                                 email={hostEmail}
-                                educationList={userData.educationList}
+                                educationList={userData.educationIdList}
                                 own={userData.own}
                             />
                             <UserCareerContainer

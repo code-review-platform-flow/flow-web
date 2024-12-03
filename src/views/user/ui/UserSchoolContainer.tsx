@@ -24,15 +24,15 @@ const UserSchoolContainer: React.FC<UserSchoolContainerProps> = ({ educationList
     const [isNewEntry, setIsNewEntry] = useState(false);
 
     useEffect(() => {
-        fetchEducationData();
+        fetchEducationData(educationList);
     }, [educationList]);
 
-    const fetchEducationData = async () => {
+    const fetchEducationData = async (educationList: Education[]) => {
         try {
             const data = await Promise.all(
                 educationList.map(async (education) => {
                     const educationData = await getEducation(education.educationId);
-                    return { ...educationData, educationId: education.educationId }; // 기존 데이터에 educationId 추가
+                    return { ...educationData, educationId: education.educationId };
                 }),
             );
             setEducationData(data);
@@ -71,13 +71,15 @@ const UserSchoolContainer: React.FC<UserSchoolContainerProps> = ({ educationList
 
     const handleDelete = (index: number) => {
         setEducationData((prev) =>
-            prev.map(
-                (education, i) =>
-                    i === index
-                        ? { ...education, schoolName: '', 
-                            // startDate: '', endDate: '' 서버 API 추가 후 수정
-                         } // 해당 인덱스의 항목을 초기화
-                        : education, // 다른 항목은 그대로 유지
+            prev.map((education, i) =>
+                i === index
+                    ? {
+                          ...education,
+                          schoolName: '',
+                          startDate: '',
+                          endDate: '',
+                      }
+                    : education,
             ),
         );
     };
@@ -85,7 +87,7 @@ const UserSchoolContainer: React.FC<UserSchoolContainerProps> = ({ educationList
     const handleAddNewEntry = () => {
         setEducationData((prev) => [
             ...prev,
-            { educationId: null, schoolName: '', startDate: '', endDate: '' } as EducationData, // educationId를 null로 설정
+            { educationId: null, schoolName: '', startDate: '', endDate: '' } as EducationData,
         ]);
         setIsNewEntry(true);
     };

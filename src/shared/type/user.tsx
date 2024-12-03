@@ -36,7 +36,7 @@ export interface UserInfo {
     studentNumber: string; // 학번
     oneLiner: string; // 짧은 자기소개
     followerCount: number; // 팔로워 수
-    educationList: Education[]; // 교육 목록
+    educationIdList: Education[]; // 교육 목록
     careerIdList: Career[]; // 경력 목록
     postIdList: PostSummary[]; // 게시물 목록
 }

@@ -75,7 +75,9 @@ const UserCareerContainer: React.FC<UserCareerContainerProps> = ({ careerList, o
                     ? {
                           ...career,
                           description: '',
-                          // title: '', startDate: null, endDate: null
+                          title: '',
+                          startDate: null,
+                          endDate: null,
                       }
                     : career,
             ),
