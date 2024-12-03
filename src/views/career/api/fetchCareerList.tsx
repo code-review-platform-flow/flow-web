@@ -1,7 +1,5 @@
 import { CareerDetail } from '../model/type';
 import ky from 'ky';
-import { QueryFunctionContext } from '@tanstack/react-query';
-
 
 const fetchCareerList = async (): Promise<CareerDetail[]> => {
     try {
@@ -17,13 +15,11 @@ const fetchCareerList = async (): Promise<CareerDetail[]> => {
         console.log('job itmes:', data.jobIdList);
 
         return data.jobIdList;
-
     } catch (error) {
         console.error('fetchCareerList Error:', error);
         throw error; // 예외를 다시 던져서 호출자에게 알림
     }
 };
-
 
 const getCareerDetail = async (jobId: number): Promise<CareerDetail> => {
     try {
@@ -35,18 +31,16 @@ const getCareerDetail = async (jobId: number): Promise<CareerDetail> => {
         const data = await response.json();
         console.log(data);
         return data as CareerDetail;
-
     } catch (error) {
         console.error(`getCareerDetail Error for jobId ${jobId}:`, error);
-        throw error; 
+        throw error;
     }
 };
-
 
 export const fetchCareerListDetail = async (): Promise<CareerDetail[]> => {
     try {
         const careerItems = await fetchCareerList();
-        console.log(careerItems)
+        console.log(careerItems);
         if (!careerItems || careerItems.length === 0) {
             throw new Error('경력 목록이 비어 있습니다.');
         }
@@ -54,7 +48,7 @@ export const fetchCareerListDetail = async (): Promise<CareerDetail[]> => {
         const careerDetailsPromises = careerItems.map((career) => getCareerDetail(career.jobId));
         const careerDetails = await Promise.all(careerDetailsPromises);
 
-        console.log('All Career Details:', careerDetails); 
+        console.log('All Career Details:', careerDetails);
 
         return careerDetails;
     } catch (error) {

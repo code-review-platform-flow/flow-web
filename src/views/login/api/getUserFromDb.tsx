@@ -16,7 +16,7 @@ async function getUserFromDb(email: string, password: string): Promise<User | nu
             password,
         };
 
-        const userData = await apiClient.post(`/auth/login`, { json: body }).json<User>(); // 서버에서 반환하는 데이터의 타입을 명확히 지정
+        const userData = await apiClient.post(`auth/login`, { json: body }).json<User>(); // 서버에서 반환하는 데이터의 타입을 명확히 지정
 
         return userData; // 사용자 데이터 반환
     } catch (error) {

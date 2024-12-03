@@ -4,14 +4,14 @@ import apiClient from '@/shared/api/apiClient';
 export const postEducation = async (
     email: string,
     educationId: number | undefined, // null 가능하도록 수정
-    schoolName: string | "",
+    schoolName: string | '',
     startDate: string,
-    endDate: string | "",
+    endDate: string | '',
 ): Promise<{}> => {
     try {
         // 요청할 데이터를 동적으로 구성
         const requestData: any = { educationId, email, schoolName, startDate, endDate };
-        console.log(requestData)
+        console.log(requestData);
         // educationId가 존재하면 수정 모드로 추가
         if (educationId !== null) {
             requestData.educationId = educationId;
@@ -19,7 +19,7 @@ export const postEducation = async (
 
         const response = await apiClient
             .post(`user/education`, {
-                json: requestData, 
+                json: requestData,
             })
             .json();
 

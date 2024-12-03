@@ -22,8 +22,8 @@ interface UserPostContainerProps {
     title: string;
     content: string;
     majorName: string;
-    // commentCount={postDetail.commentCount}
-    // tumbCount={postDetail.tumbCount}
+    commentCount: number;
+    likeCount: number;
     profileUrl: string;
     studentNumber: string;
 }
@@ -37,6 +37,8 @@ const UserPostContainer: React.FC<UserPostContainerProps> = ({
     majorName,
     profileUrl,
     studentNumber,
+    likeCount,
+    commentCount,
 }) => {
     const router = useRouter();
 
@@ -83,7 +85,7 @@ const UserPostContainer: React.FC<UserPostContainerProps> = ({
                     <PostContainer onClick={() => router.push(`/post-detail/${id}`)} round>
                         <PostTitle>{title}</PostTitle>
                         <PostContent dangerouslySetInnerHTML={{ __html: htmlContent }} />
-                        <PostInfo commentCount={1} tumbCount={1} />
+                        <PostInfo commentCount={commentCount} tumbCount={likeCount} />
                     </PostContainer>
                 </PostUserContainer>
             </RowWrapper>

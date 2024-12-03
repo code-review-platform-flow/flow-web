@@ -32,6 +32,8 @@ const UserPostList: React.FC<UserPostListProps> = ({ postList, own }) => {
         <PostListWrapper>
             {postData.map((postDetail, index) => (
                 <UserPostContainer
+                    commentCount={postDetail.commentsAndRepliesCount}
+                    likeCount={postDetail.likeCount}
                     id={postDetail.postId}
                     key={index}
                     createDate={postDetail.createDate}
@@ -39,8 +41,6 @@ const UserPostList: React.FC<UserPostListProps> = ({ postList, own }) => {
                     title={postDetail.title}
                     content={postDetail.content}
                     majorName={postDetail.majorName}
-                    // commentCount={postDetail.commentCount}
-                    // tumbCount={postDetail.tumbCount}
                     profileUrl={postDetail.profileUrl}
                     studentNumber={postDetail.studentNumber}
                 />
@@ -52,5 +52,5 @@ const UserPostList: React.FC<UserPostListProps> = ({ postList, own }) => {
 export default UserPostList;
 
 const PostListWrapper = styled.div`
-    width : 100%;
-`
+    width: 100%;
+`;
