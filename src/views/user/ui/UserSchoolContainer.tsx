@@ -53,7 +53,7 @@ const UserSchoolContainer: React.FC<UserSchoolContainerProps> = ({ educationList
             for (const education of educationData) {
                 await postEducation(
                     email,
-                    education.educationId!,
+                    education.educationId,
                     education.schoolName,
                     education.startDate,
                     education.endDate,
