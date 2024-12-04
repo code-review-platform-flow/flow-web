@@ -19,6 +19,7 @@ export interface Post {
 
 // 특정 게시물의 상세 정보를 나타내는 타입 정의
 export interface PostDetail {
+    own: boolean; //자신의 글인지 판단 여부
     postId: number; // 게시물의 고유 ID
     title: string; // 게시물 제목
     content: string; // 게시물 내용

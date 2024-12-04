@@ -9,7 +9,6 @@ import CommentWriteContainer from './ui/CommentWriteContainer';
 import { ColumnWrapper } from '@/widgets/wrapper/ColumnWrapper';
 import { useRecoilValue } from 'recoil';
 import { authDataState } from '@/entities/auth/model';
-import EditContainer from './ui/EditContainer';
 
 interface PostDetailProps {
     postId: string;
@@ -28,7 +27,6 @@ const PostDetailPage: React.FC<PostDetailProps> = ({ postId }) => {
                     <CommentContainer postId={postId} email={email} />
                     {email && <CommentWriteContainer postId={postId} email={email} />}
                 </ColumnWrapper>
-                <EditContainer postId={postId} email={email} />
             </RowWrapper>
         </PageWrapper>
     );

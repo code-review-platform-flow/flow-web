@@ -10,13 +10,10 @@ import PlusIcon from '../../../../public/icons/plusIcon.svg';
 import { UserDepartmentEnterYear } from './Font';
 import Link from 'next/link';
 import { formatEnterYear } from '@/shared/hook/formatEnterYear';
-import pencilIcon from '/public/icons/pencilIcon.svg';
 import ModifyIcon from './ModifyIcon';
 import { patchUserOneLines } from '../api/patchUserOneLine';
 import { activeEnter } from '@/shared/hook/activeEnter';
-import { SizedBox } from '@/widgets/wrapper/SizedBox';
 
-// Props 인터페이스 정의
 interface UserSummaryContainerProps {
     name: string;
     majorName: string;
@@ -53,10 +50,10 @@ const UserSummaryContainer: React.FC<UserSummaryContainerProps> = ({
                 const response = await patchUserOneLines(email, currentOneLiner);
                 console.log(response);
 
-                alert('닉네임이 수정되었습니다!');
+                alert('소개글이 수정되었습니다!');
             } catch (error) {
-                console.error('닉네임 수정 중 오류 발생:', error);
-                alert('한줄 소개 수정에 실패했습니다: ');
+                console.error('소개글 수정 중 오류 발생:', error);
+                alert('소개글 수정에 실패했습니다: ');
                 setEditOneLiner(false);
                 return;
             }
@@ -100,7 +97,7 @@ const UserSummaryContainer: React.FC<UserSummaryContainerProps> = ({
                 </RowWrapper>
 
                 <ColumnWrapper gap="0.5em">
-                    <RowWrapper justifyContent="space-between" alignItems='center'>
+                    <RowWrapper justifyContent="space-between" alignItems="center">
                         <IntroduceTitle>소개</IntroduceTitle>
                         {own &&
                             (editOneLiner ? (
@@ -128,7 +125,6 @@ const UserSummaryContainer: React.FC<UserSummaryContainerProps> = ({
 
 export default UserSummaryContainer;
 
-// 스타일 컴포넌트 정의
 const StyledLink = styled(Link)`
     width: 100%;
 `;
@@ -156,7 +152,7 @@ const IntroduceText = styled.div`
     width: 100%;
     font-size: 0.8125em;
     padding: 0.5em;
-    padding-left : 0em;
+    padding-left: 0em;
     box-sizing: border-box;
 `;
 

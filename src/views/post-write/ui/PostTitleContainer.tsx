@@ -1,5 +1,5 @@
 import Container from '@/widgets/container/Container';
-import React, { useState } from 'react';
+import React, { useEffect } from 'react';
 import { PostWriteTitle } from './Font';
 import { SizedBox } from '@/widgets/wrapper/SizedBox';
 import Input from '@/widgets/input/Input';
@@ -7,8 +7,19 @@ import { useRecoilState } from 'recoil';
 import { titleState } from '../model/postAtoms';
 import styled from 'styled-components';
 
-const PostTitleContainer: React.FC = ({}) => {
+interface PostTitleContainerProps {
+    currentTitle?: string;
+}
+
+const PostTitleContainer: React.FC<PostTitleContainerProps> = ({ currentTitle }) => {
     const [title, setTitle] = useRecoilState(titleState);
+
+    useEffect(() => {
+        if (currentTitle) {
+            setTitle(currentTitle);
+        }
+    }, [currentTitle, setTitle]);
+
     const handleTitleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         setTitle(event.target.value);
     };
@@ -22,7 +33,7 @@ const PostTitleContainer: React.FC = ({}) => {
                 size="large"
                 backgroundColor="none"
                 border
-                placeholder="제목를 입력해주세요!"
+                placeholder="제목을 입력해주세요!"
                 lowround
                 onChange={handleTitleChange}
             />

@@ -35,6 +35,14 @@ const StyledSVG = styled.svg<{ color: string; hoverColor: string }>`
     fill: ${({ color }) => color};
     cursor: pointer;
     transition: fill 0.3s ease;
+    @media (max-width: 768px) {
+        width: 32px;
+        height: 32px;
+    }
+    @media (max-width: 480px) {
+        width: 24px;
+        height: 24px;
+    }
 
     &:hover {
         fill: ${({ hoverColor }) => hoverColor};

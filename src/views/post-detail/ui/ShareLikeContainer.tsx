@@ -3,22 +3,23 @@ import Image from 'next/image';
 import styled from 'styled-components';
 import TumbIcon from '../../../../public/icons/tumbCountIcon.svg';
 import TumbColorIcon from '../../../../public/icons/tumbCountColorIcon.svg';
-import ShareIcon from '../../../../public/icons/shareIcon.svg';
 import { postLike } from '../api/like/postLike';
 import { deleteLike } from '../api/like/deleteLike';
 import { getLike } from '../api/like/getLike';
+import ShareButton from './ShareButton';
+import EditContainer from './EditContainer';
 
 interface ShareLikeContainerProps {
     mobile?: boolean;
     postId: string;
     email: string;
+    own?: boolean;
 }
 
-const ShareLikeContainer: React.FC<ShareLikeContainerProps> = ({ mobile = false, postId, email }) => {
+const ShareLikeContainer: React.FC<ShareLikeContainerProps> = ({ mobile = false, postId, email, own }) => {
     const [currentCliked, setCurrentCliked] = useState(false);
 
     const handleLike = () => {
-        console.log(currentCliked);
         if (currentCliked) {
             deleteLike(postId, email!);
             setCurrentCliked(false);
@@ -57,8 +58,9 @@ const ShareLikeContainer: React.FC<ShareLikeContainerProps> = ({ mobile = false,
                     )}
                 </TumbShareButton>
                 <TumbShareButton>
-                    <ResponsiveImage onClick={() => copyUrl()} src={ShareIcon} alt="share" mobile={mobile} />
+                    <ShareButton onClick={() => copyUrl()} />
                 </TumbShareButton>
+                {mobile && own && <EditContainer mobile postId={postId} email={email} />}
             </StyledContainer>
         </Wrapper>
     );
@@ -89,7 +91,7 @@ const StyledContainer = styled.div<{ mobile: boolean }>`
     top: ${({ mobile }) => (mobile ? '0' : '80px')};
     display: flex;
     flex-direction: ${({ mobile }) => (mobile ? 'row' : 'column')};
-    gap: ${({ mobile }) => (mobile ? '0.5em' : '1em')};
+    gap: ${({ mobile }) => (mobile ? '1em' : '1em')};
 `;
 
 const TumbShareButton = styled.div`
