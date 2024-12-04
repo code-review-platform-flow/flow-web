@@ -21,28 +21,21 @@ const UserPage: React.FC = () => {
     const authData = useRecoilValue(authDataState);
     const visitorEmail = authData?.email.toString();
 
-    // Base64로 인코딩된 이메일을 디코딩합니다.
     const hostEmail = paramsEmail ? Buffer.from(paramsEmail, 'base64').toString('utf-8') : '';
-    // userData를 상태로 관리
+
     const [userData, setUserData] = useState<UserInfo>();
 
     useEffect(() => {
         const fetchData = async () => {
             console.log();
             if (hostEmail && visitorEmail) {
-                console.log('useEffect작동2');
                 try {
                     const data = await getUserInfo(hostEmail, visitorEmail);
-                    console.log('유저데이터기본', data);
                     setUserData(data);
-                    console.log('유저상태저장' + userData);
                 } catch (error) {
                     console.error('유저 데이터를 가져오는 중 오류가 발생했습니다:', error);
                 }
             } else if (!hostEmail) {
-                console.log('hostEmail없음');
-            } else if (!hostEmail) {
-                console.log('visitEmail없음');
             }
         };
 

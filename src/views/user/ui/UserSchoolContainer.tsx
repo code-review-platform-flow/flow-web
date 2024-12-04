@@ -20,6 +20,7 @@ interface UserSchoolContainerProps {
 
 const UserSchoolContainer: React.FC<UserSchoolContainerProps> = ({ educationList, own, email }) => {
     const [educationData, setEducationData] = useState<EducationData[]>([]);
+    const [deletedItems, setDeletedItems] = useState<EducationData[]>([]);
     const [editEducation, setEditEducation] = useState(false);
     const [isNewEntry, setIsNewEntry] = useState(false);
 
@@ -50,7 +51,22 @@ const UserSchoolContainer: React.FC<UserSchoolContainerProps> = ({ educationList
 
     const handleSave = async () => {
         try {
-            for (const education of educationData) {
+            // 유효한 데이터 필터링
+            const validEducationData = educationData.filter((education) => {
+                if (education.educationId) {
+                    return true;
+                } else {
+                    return education.startDate.trim() !== '' && education.schoolName.trim() !== '';
+                }
+            });
+
+            if (validEducationData.length === 0 && deletedItems.length === 0) {
+                alert('유효한 학력 정보가 없습니다.');
+                return;
+            }
+
+            // 유효한 항목 저장
+            for (const education of validEducationData) {
                 await postEducation(
                     email,
                     education.educationId,
@@ -59,29 +75,31 @@ const UserSchoolContainer: React.FC<UserSchoolContainerProps> = ({ educationList
                     education.endDate,
                 );
             }
+
+            for (const deleted of deletedItems) {
+                await postEducation(email, deleted.educationId, '', '', ''); // ID만 보내고 빈 값으로 처리
+            }
+
             alert('학력이 저장되었습니다!');
             setEditEducation(false);
-            setIsNewEntry(false); // 새로운 입력 모드 초기화
+            setIsNewEntry(false);
+            setDeletedItems([]); // 삭제 항목 초기화
+            setEducationData(validEducationData);
+            window.location.reload();
         } catch (error) {
             console.error('학력 저장 중 오류 발생:', error);
             alert('학력 저장에 실패했습니다.');
-            setEditEducation(false);
         }
     };
 
     const handleDelete = (index: number) => {
-        setEducationData((prev) =>
-            prev.map((education, i) =>
-                i === index
-                    ? {
-                          ...education,
-                          schoolName: '',
-                          startDate: '',
-                          endDate: '',
-                      }
-                    : education,
-            ),
-        );
+        setEducationData((prev) => {
+            const itemToDelete = prev[index];
+            if (itemToDelete.educationId) {
+                setDeletedItems((prevDeleted) => [...prevDeleted, itemToDelete]);
+            }
+            return prev.filter((_, i) => i !== index);
+        });
     };
 
     const handleAddNewEntry = () => {
