@@ -7,7 +7,7 @@ import { ColumnWrapper } from '@/widgets/wrapper/ColumnWrapper';
 import PostInfo from '@/widgets/post/PostInfo';
 import PostTag from '@/widgets/post/PostTag';
 import ProfileExample from '../../../../public/images/profileImageExample.png';
-import ShareTumbContainer from './ShareTumbContainer';
+import ShareTumbContainer from './ShareLikeContainer';
 import { fetchPostDetail } from '../api/post/fetchPostDetail';
 import { useQuery } from '@tanstack/react-query';
 import { PostDetail } from '@/shared/type/post';

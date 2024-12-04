@@ -2,13 +2,14 @@
 import { PageWrapper } from '@/widgets/wrapper/PageWrapper';
 import { RowWrapper } from '@/widgets/wrapper/RowWrapper';
 import React from 'react';
-import ShareTumbContainer from './ui/ShareTumbContainer';
+import ShareLikeContainer from './ui/ShareLikeContainer';
 import PostContainer from './ui/PostContainer';
 import CommentContainer from './ui/CommentContainer';
 import CommentWriteContainer from './ui/CommentWriteContainer';
 import { ColumnWrapper } from '@/widgets/wrapper/ColumnWrapper';
 import { useRecoilValue } from 'recoil';
 import { authDataState } from '@/entities/auth/model';
+import EditContainer from './ui/EditContainer';
 
 interface PostDetailProps {
     postId: string;
@@ -21,12 +22,13 @@ const PostDetailPage: React.FC<PostDetailProps> = ({ postId }) => {
     return (
         <PageWrapper gap="0.875em">
             <RowWrapper>
-                <ShareTumbContainer postId={postId} email={email} />
-                <ColumnWrapper gap="1.5em">
+                <ShareLikeContainer postId={postId} email={email} />
+                <ColumnWrapper gap="1.5em" alignItems="center">
                     <PostContainer postId={postId} email={email} />
                     <CommentContainer postId={postId} email={email} />
                     {email && <CommentWriteContainer postId={postId} email={email} />}
                 </ColumnWrapper>
+                <EditContainer postId={postId} email={email} />
             </RowWrapper>
         </PageWrapper>
     );

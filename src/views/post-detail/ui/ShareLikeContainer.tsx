@@ -8,13 +8,13 @@ import { postLike } from '../api/like/postLike';
 import { deleteLike } from '../api/like/deleteLike';
 import { getLike } from '../api/like/getLike';
 
-interface ShareTumbContainerProps {
+interface ShareLikeContainerProps {
     mobile?: boolean;
     postId: string;
     email: string;
 }
 
-const ShareTumbContainer: React.FC<ShareTumbContainerProps> = ({ mobile = false, postId, email }) => {
+const ShareLikeContainer: React.FC<ShareLikeContainerProps> = ({ mobile = false, postId, email }) => {
     const [currentCliked, setCurrentCliked] = useState(false);
 
     const handleLike = () => {
@@ -64,7 +64,7 @@ const ShareTumbContainer: React.FC<ShareTumbContainerProps> = ({ mobile = false,
     );
 };
 
-export default ShareTumbContainer;
+export default ShareLikeContainer;
 
 const Wrapper = styled.div<{ mobile: boolean }>`
     height: 100%;
@@ -76,6 +76,7 @@ const Wrapper = styled.div<{ mobile: boolean }>`
     @media (max-width: 768px) {
         display: ${({ mobile }) => (mobile ? 'flex' : 'none')};
     }
+    justify-content: flex-end;
 `;
 
 const StyledContainer = styled.div<{ mobile: boolean }>`
