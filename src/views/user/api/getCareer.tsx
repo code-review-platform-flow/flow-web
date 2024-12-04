@@ -17,7 +17,6 @@ export const getCareer = async (careerId: number): Promise<CareerData> => {
             throw new Error('유저 이력 정보 데이터를 가져오는 중 오류가 발생했습니다.');
         }
 
-        // API 응답을 CareerData 타입으로 강제 변환 (타입 검증)
         const careerData: CareerData = {
             careerId: data.careerId,
             title: data.title,

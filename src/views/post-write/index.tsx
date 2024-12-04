@@ -31,7 +31,7 @@ const PostWritePage: React.FC = () => {
     const resetTitle = useResetRecoilState(titleState);
     const resetContent = useResetRecoilState(contentState);
 
-    const [loading, setLoading] = useState(false);
+    const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
 
     const handleSubmit = async () => {
@@ -65,25 +65,39 @@ const PostWritePage: React.FC = () => {
 
         const fetchPostData = async () => {
             try {
-                setLoading(true);
                 setError(null);
+                setLoading(true);
 
-                const postData = await getPostDetail(Number(postId));
+                const postData = await getPostDetail(Number(postId), email);
+
+                if (!postData.own) {
+                    setError('수정 권한이 없습니다.');
+                    router.replace('/'); // 권한 없으면 메인 페이지로 리다이렉트
+                    return;
+                }
 
                 setCategory(postData.categoryName);
                 setTags(postData.tags);
                 setTitle(postData.title);
                 setContent(postData.content);
             } catch (err) {
-                console.error('게시물 데이터 로드 중 오류:', err);
                 setError('게시물을 불러오는 데 실패했습니다.');
+                router.replace('/error'); // 에러 시 에러 페이지로 리다이렉트
             } finally {
                 setLoading(false);
             }
         };
 
         fetchPostData();
-    }, [postId, setCategory, setTags, setTitle, setContent]);
+    }, [postId, email, setCategory, setTags, setTitle, setContent, router]);
+
+    if (loading) {
+        return <div>로딩 중...</div>; // 로딩 상태 표시
+    }
+
+    if (error) {
+        return null; // 리다이렉트 처리로 인해 렌더링하지 않음
+    }
 
     return (
         <PageWrapper gap="0.875em">
