@@ -8,6 +8,8 @@ import { UserSummary } from '@/shared/type/user';
 import MailListItem from './MailListItem';
 import Modal from '@/widgets/modal/Modal';
 import CoffeeChatSendContainer from '@/widgets/container/CoffeeChatSendContainer';
+import { useRecoilValue } from 'recoil';
+import { userSummaryState } from '@/entities/auth/model';
 
 interface MailListProps {
     mailData: CoffechatListItem[];
@@ -17,6 +19,7 @@ interface MailListProps {
 
 const MailList: React.FC<MailListProps> = ({ mailData, selected, email }) => {
     const [userSummaries, setUserSummaries] = useState<Record<number, UserSummary>>({});
+    const mySummary = useRecoilValue(userSummaryState);
     const [selectedChat, setSelectedChat] = useState<CoffechatListItem | null>(null);
     const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -99,23 +102,26 @@ const MailList: React.FC<MailListProps> = ({ mailData, selected, email }) => {
             <Modal isOpen={isModalOpen} onClose={handleCloseModal}>
                 {selectedChat && (
                     <CoffeeChatSendContainer
+                        type={selected === 'receiveBox' ? 'received' : 'sent'}
                         senderName={
                             selected === 'receiveBox'
                                 ? userSummaries[selectedChat.initiatorUserId]?.userName || '알 수 없음'
-                                : email
+                                : mySummary!.userName
                         }
                         receiverName={
                             selected === 'receiveBox'
-                                ? email
+                                ? mySummary!.userName
                                 : userSummaries[selectedChat.recipientUserId]?.userName || '알 수 없음'
                         }
                         senderImage={
                             selected === 'receiveBox'
                                 ? userSummaries[selectedChat.initiatorUserId]?.profileUrl || ''
-                                : ''
+                                : mySummary!.profileUrl
                         }
                         receiverImage={
-                            selected === 'sendBox' ? userSummaries[selectedChat.recipientUserId]?.profileUrl || '' : ''
+                            selected === 'sendBox'
+                                ? userSummaries[selectedChat.recipientUserId]?.profileUrl || ''
+                                : mySummary!.profileUrl
                         }
                         content={selectedChat.contents}
                     />
