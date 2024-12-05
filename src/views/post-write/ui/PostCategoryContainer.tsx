@@ -8,11 +8,7 @@ import { SizedBox } from '@/widgets/wrapper/SizedBox';
 import { useRecoilState } from 'recoil';
 import { categoryState } from '../model/postAtoms';
 
-interface PostCategoryContainerProps {
-    currentCategory?: string;
-}
-
-const PostCategoryContainer: React.FC<PostCategoryContainerProps> = ({ currentCategory }) => {
+const PostCategoryContainer: React.FC = ({}) => {
     const [selectedCategory, setSelectedCategory] = useRecoilState(categoryState);
 
     const handleButtonClick = (label: string) => {

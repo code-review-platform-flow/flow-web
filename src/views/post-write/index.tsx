@@ -31,7 +31,7 @@ const PostWritePage: React.FC = () => {
     const resetTitle = useResetRecoilState(titleState);
     const resetContent = useResetRecoilState(contentState);
 
-    const [loading, setLoading] = useState(true);
+    const [loading, setLoading] = useState(false); // 초기 상태 false
     const [error, setError] = useState<string | null>(null);
 
     const handleSubmit = async () => {
@@ -61,7 +61,14 @@ const PostWritePage: React.FC = () => {
     };
 
     useEffect(() => {
-        if (!postId) return;
+        if (!postId) {
+            // postId가 없으면 초기 상태를 리셋하고 리턴
+            resetCategory();
+            resetTags();
+            resetTitle();
+            resetContent();
+            return;
+        }
 
         const fetchPostData = async () => {
             try {
@@ -89,23 +96,35 @@ const PostWritePage: React.FC = () => {
         };
 
         fetchPostData();
-    }, [postId, email, setCategory, setTags, setTitle, setContent, router]);
+    }, [
+        postId,
+        email,
+        setCategory,
+        setTags,
+        setTitle,
+        setContent,
+        router,
+        resetCategory,
+        resetTags,
+        resetTitle,
+        resetContent,
+    ]);
 
     if (loading) {
         return <div>로딩 중...</div>; // 로딩 상태 표시
     }
 
     if (error) {
-        return null; // 리다이렉트 처리로 인해 렌더링하지 않음
+        return <div>{error}</div>; // 에러 메시지 출력
     }
 
     return (
         <PageWrapper gap="0.875em">
-            <PostCategoryContainer currentCategory={category} />
-            <PostTagContainer currentTag={tags} />
-            <PostTitleContainer currentTitle={title} />
-            <MarkDownContainer currentContent={content} />
-            <SubmitButton postId={Number(postId)} onClick={handleSubmit} />
+            <PostCategoryContainer />
+            <PostTagContainer />
+            <PostTitleContainer />
+            <MarkDownContainer />
+            <SubmitButton postId={postId ? Number(postId) : undefined} onClick={handleSubmit} />
         </PageWrapper>
     );
 };

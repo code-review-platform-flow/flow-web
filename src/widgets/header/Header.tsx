@@ -51,9 +51,14 @@ const Header = ({ user, onLogout, onCreateAccount }: HeaderProps) => {
         router.push(`/user?email=${encodedEmail}`);
     };
 
+    const handleNavigationMailBox = () => {
+        const encodedEmail = Buffer.from(email!).toString('base64');
+        router.push(`/mailbox?email=${encodedEmail}`);
+    };
+
     // 검색어 입력 시 처리 함수
     const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setSearchTerm(event.target.value); // 검색어 상태 업데이트
+        setSearchTerm(event.target.value);
     };
 
     // Enter 키 입력 시 검색 페이지로 이동하는 함수
@@ -67,7 +72,6 @@ const Header = ({ user, onLogout, onCreateAccount }: HeaderProps) => {
     };
 
     useEffect(() => {
-        // 비동기로 사용자 정보 가져오기
         if (email) {
             const fetchUserSummary = async () => {
                 try {
@@ -152,7 +156,7 @@ const Header = ({ user, onLogout, onCreateAccount }: HeaderProps) => {
                         // 로그인시
                         <Row2>
                             <Row3>
-                                <Icon src={boxIcon} alt="박스 아이콘" />
+                                <Icon src={boxIcon} alt="박스 아이콘" onClick={handleNavigationMailBox} />
                                 <Icon src={bellIcon} alt="벨 아이콘" />
                                 <HambergerIcon onClick={() => clickModal()} src={hamburgerIcon} alt="햄버거 아이콘" />
                             </Row3>
@@ -399,7 +403,7 @@ const StyledButton = styled(Button)`
 
 const Icon = styled(Image)`
     margin-right: 1em;
-
+    cursor: pointer;
     @media (max-width: 768px) {
         margin-right: 0;
     }

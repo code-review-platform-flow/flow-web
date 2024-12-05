@@ -20,11 +20,7 @@ import TableIcon from '../../../../public/icons/markDownToolBar/tableIcon.svg';
 import { contentState } from '../model/postAtoms';
 import { useRecoilState } from 'recoil';
 
-interface MarkDownContainerProps {
-    currentContent?: string;
-}
-
-const MarkDownContainer: React.FC<MarkDownContainerProps> = ({ currentContent }) => {
+const MarkDownContainer: React.FC = ({}) => {
     const textAreaRef = useRef<HTMLTextAreaElement>(null);
     const [content, setContent] = useRecoilState(contentState);
     const [headerModal, setHeaderModal] = useState<boolean>(false);

@@ -1,67 +1,62 @@
+'use client';
 import Container from '@/widgets/container/Container';
 import { ColumnWrapper } from '@/widgets/wrapper/ColumnWrapper';
-import React, { useState } from 'react';
+import React from 'react';
 import styled from 'styled-components';
-import ProfileExample from '../../../../public/images/profileImageExample.png';
 import { RowWrapper } from '@/widgets/wrapper/RowWrapper';
 import Image from 'next/image';
+import { CoffechatListItem } from '../model/type';
+import { useRecoilState } from 'recoil';
+import { authDataState } from '@/entities/auth/model';
 
-interface MailListProps {}
+interface MailListProps {
+    mailData: CoffechatListItem[]; // 외부에서 데이터 전달
+    selected: 'receiveBox' | 'sendBox'; // 받은 요청 또는 보낸 요청
+}
 
-const MailList: React.FC<MailListProps> = () => {
-    const [selected, setSelected] = useState<'receiveBox' | 'sendBox'>('receiveBox');
-    const mailData = {
-        coffechat: [
-            {
-                coffechatId: 1,
-                sender: 'iam123@gachon.ac.kr',
-                senderName: '지민성',
-                receiver: 'you123@gachon.ac.kr',
-                receiverName: '박찬영',
-                coffeechatText: '안녕하세요~~~1',
-                imgUrl: ProfileExample,
-                part: ['프론트엔드개발', '크로스플랫폼앱개발'],
-                date: 7,
-            },
-            {
-                coffechatId: 2,
-                sender: 'iam123@gachon.ac.kr',
-                senderName: '지민성',
-                receiver: 'you123@gachon.ac.kr',
-                receiverName: '박찬영',
-                coffeechatText: '안녕하세요~~~1',
-                imgUrl: ProfileExample,
-                part: ['프론트엔드개발', '크로스플랫폼앱개발'],
-                date: 5,
-            },
-        ],
-    };
-
-    const filteredData = mailData.coffechat.filter((chat) =>
-        selected === 'receiveBox' ? chat.receiver === 'you123@gachon.ac.kr' : chat.sender === 'iam123@gachon.ac.kr',
+const MailList: React.FC<MailListProps> = ({ mailData, selected }) => {
+    const authData = useRecoilState(authDataState);
+    const filteredData = mailData.filter((chat) =>
+        selected === 'receiveBox' ? chat.initiatorUserId === 5 : chat.recipientUserId === 5,
     );
 
     return (
         <ColumnWrapper gap="1em">
             <Title>{selected === 'receiveBox' ? '받은 요청' : '보낸 요청'}</Title>
-            {filteredData.map((chat) => (
-                <Container key={chat.coffechatId} round>
-                    <RowWrapper gap="1em">
-                        <ProfileImage width={100} height={100} src={chat.imgUrl} alt="profile" />
-                        <ColumnWrapper>
-                            <SubTitle>
-                                {selected === 'receiveBox' ? chat.senderName : chat.receiverName}님이 커피챗을
-                                요청했어요!
-                            </SubTitle>
-                            <Part>{chat.part.join(', ')}</Part>
-                            <RowWrapper>
-                                <Time>{chat.date}일 전</Time>
-                                <State>대기중</State>
-                            </RowWrapper>
-                        </ColumnWrapper>
-                    </RowWrapper>
-                </Container>
-            ))}
+            {filteredData.length === 0 ? (
+                <NoDataMessage>
+                    {selected === 'receiveBox' ? '받은 커피챗이 없습니다.' : '보낸 커피챗이 없습니다'}
+                </NoDataMessage>
+            ) : (
+                filteredData.map((chat) => (
+                    <Container key={chat.coffeeId} round>
+                        <RowWrapper gap="1em">
+                            <ProfileImage
+                                width={100}
+                                height={100}
+                                // src={chat.imgUrl}
+                                src="images/profileImageExample.png"
+                                alt="profile"
+                            />
+                            <ColumnWrapper>
+                                <SubTitle>
+                                    {selected === 'receiveBox'
+                                        ? `${chat.initiatorUserId}님이 커피챗을 요청했어요!`
+                                        : `${chat.recipientUserId}에게 커피챗을 요청했어요!`}
+                                </SubTitle>
+
+                                {/* <Part>{chat.part}</Part> */}
+                                <Part>프론트엔드 개발자입니다.</Part>
+                                <RowWrapper>
+                                    {/* <Time>{chat.date}일 전</Time> */}
+                                    <Time>3일 전</Time>
+                                    <State>대기중</State>
+                                </RowWrapper>
+                            </ColumnWrapper>
+                        </RowWrapper>
+                    </Container>
+                ))
+            )}
         </ColumnWrapper>
     );
 };
@@ -78,7 +73,7 @@ const Title = styled.div`
 `;
 
 const SubTitle = styled.div`
-    font-size: 0.8125em
+    font-size: 0.8125em;
     font-weight: 500;
     margin: 1em 0;
 `;
@@ -110,4 +105,11 @@ const ProfileImage = styled(Image)`
     max-width: 80px;
     border-radius: 50%;
     margin-bottom: 1em;
+`;
+
+const NoDataMessage = styled.div`
+    font-size: 1em;
+    color: #707070;
+    text-align: center;
+    margin-top: 2em;
 `;

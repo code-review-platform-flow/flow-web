@@ -10,11 +10,7 @@ import Container from '@/widgets/container/Container';
 import { PostWriteTitle } from './Font';
 import { SizedBox } from '@/widgets/wrapper/SizedBox';
 
-interface PostTagContainerProps {
-    currentTag?: Tag[];
-}
-
-const PostTagContainer: React.FC<PostTagContainerProps> = ({ currentTag }) => {
+const PostTagContainer: React.FC = ({}) => {
     const [tags, setTags] = useRecoilState(tagsState);
     const [inputValue, setInputValue] = useState('');
 

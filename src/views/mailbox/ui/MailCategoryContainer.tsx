@@ -1,5 +1,5 @@
 import Container from '@/widgets/container/Container';
-import React, { useState } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import SendIcon from '../../../../public/icons/sendIcon2.svg';
 import SendIcon2 from '../../../../public/icons/sendIcon3.svg';
@@ -8,9 +8,12 @@ import BoxIcon2 from '../../../../public/icons/boxIcon3.svg';
 import Image from 'next/image';
 import { ColumnWrapper } from '@/widgets/wrapper/ColumnWrapper';
 
-const MailCategoryContainer: React.FC = () => {
-    const [selectedButton, setSelectedButton] = useState<'receiveBox' | 'sendBox'>('receiveBox');
+interface MailCategoryContainerProps {
+    selectedButton: 'receiveBox' | 'sendBox';
+    setSelectedButton: React.Dispatch<React.SetStateAction<'receiveBox' | 'sendBox'>>;
+}
 
+const MailCategoryContainer: React.FC<MailCategoryContainerProps> = ({ selectedButton, setSelectedButton }) => {
     return (
         <StyledContainer width="15%" height="auto">
             <ColumnWrapper gap="0.25em">

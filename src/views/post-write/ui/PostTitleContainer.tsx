@@ -7,18 +7,8 @@ import { useRecoilState } from 'recoil';
 import { titleState } from '../model/postAtoms';
 import styled from 'styled-components';
 
-interface PostTitleContainerProps {
-    currentTitle?: string;
-}
-
-const PostTitleContainer: React.FC<PostTitleContainerProps> = ({ currentTitle }) => {
+const PostTitleContainer = () => {
     const [title, setTitle] = useRecoilState(titleState);
-
-    useEffect(() => {
-        if (currentTitle) {
-            setTitle(currentTitle);
-        }
-    }, [currentTitle, setTitle]);
 
     const handleTitleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         setTitle(event.target.value);

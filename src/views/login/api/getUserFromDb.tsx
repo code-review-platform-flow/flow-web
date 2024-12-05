@@ -1,28 +1,22 @@
 import apiClient from '@/shared/api/apiClient';
+import { CoffechatListItem } from '@/views/mailbox/model/type';
 
-// User 타입 정의
-interface User {
-    id: number;
-    email: string;
-    name: string;
-    // 필요한 추가 속성들
-}
-
-// getUserFromDb 함수 정의
-async function getUserFromDb(email: string, password: string): Promise<User | null> {
+export const getCoffee = async (
+    page: number,
+    size: number,
+    sort: string,
+    email: string | undefined,
+): Promise<CoffechatListItem[]> => {
     try {
-        const body = {
-            email,
-            password,
-        };
+        const response = await apiClient.get(`/coffee?page=${page}&size=${size}&sort=${sort}&email=${email}`);
 
-        const userData = await apiClient.post(`auth/login`, { json: body }).json<User>(); // 서버에서 반환하는 데이터의 타입을 명확히 지정
+        if (!response.ok) {
+            throw new Error('데이터를 가져오는 중 오류가 발생했습니다.');
+        }
 
-        return userData; // 사용자 데이터 반환
+        return await response.json();
     } catch (error) {
-        console.error('Error in getUserFromDb:', error);
-        return null; // 오류 발생 시 null 반환
+        console.error('getCoffee Error:', error);
+        throw error;
     }
-}
-
-export default getUserFromDb;
+};
