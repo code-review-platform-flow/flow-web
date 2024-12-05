@@ -17,6 +17,7 @@ import { postFollow } from '../api/postFollow';
 import personIconUrl from '../../../../public/icons/personIcon.svg';
 import checkIconUrl from '../../../../public/icons/checkIcon.svg';
 import { deleteFollow } from '../api/deleteFollow';
+import { getFollowerList } from '../api/getFollowerList';
 
 interface UserSummaryContainerProps {
     name: string;
@@ -98,7 +99,15 @@ const UserSummaryContainer: React.FC<UserSummaryContainerProps> = ({
         }
     };
 
-    const handleFollowList = async () => {};
+    const handleFollowList = async () => {
+        try {
+            const response = await getFollowerList(visitorEmail);
+            console.log(response);
+        } catch (error) {
+            console.error('팔로워 리스트 요청 중 오류 발생:', error);
+            alert('팔로우 리스트 요청에 실패했습니다. 다시 시도해주세요.');
+        }
+    };
 
     return (
         <UserSummaryContainerWrapper round width="30%">
