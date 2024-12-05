@@ -6,13 +6,17 @@ import Image from 'next/image';
 import React, { BaseSyntheticEvent, useState } from 'react';
 import styled from 'styled-components';
 import SendIcon from '../../../../public/icons/sendIcon.svg';
-import PlusIcon from '../../../../public/icons/plusIcon.svg';
+import plusIconUrl from '../../../../public/icons/plusIcon.svg';
 import { UserDepartmentEnterYear } from './Font';
 import Link from 'next/link';
 import { formatEnterYear } from '@/shared/hook/formatEnterYear';
 import ModifyIcon from './ModifyIcon';
 import { patchUserOneLines } from '../api/patchUserOneLine';
 import { activeEnter } from '@/shared/hook/activeEnter';
+import { postFollow } from '../api/postFollow';
+import personIconUrl from '../../../../public/icons/personIcon.svg';
+import checkIconUrl from '../../../../public/icons/checkIcon.svg';
+import { deleteFollow } from '../api/deleteFollow';
 
 interface UserSummaryContainerProps {
     name: string;
@@ -22,7 +26,9 @@ interface UserSummaryContainerProps {
     profileUrl: string;
     followerCount: number;
     own: boolean;
+    followHost: boolean;
     email: string;
+    visitorEmail: string;
 }
 
 const UserSummaryContainer: React.FC<UserSummaryContainerProps> = ({
@@ -33,7 +39,9 @@ const UserSummaryContainer: React.FC<UserSummaryContainerProps> = ({
     profileUrl,
     followerCount,
     own,
+    followHost,
     email,
+    visitorEmail,
 }) => {
     const [editOneLiner, setEditOneLiner] = useState(false);
     const [currentOneLiner, setCurrentOneLiner] = useState(oneLiner);
@@ -46,7 +54,6 @@ const UserSummaryContainer: React.FC<UserSummaryContainerProps> = ({
             }
 
             try {
-                // 한줄 소개 수정 API 호출
                 const response = await patchUserOneLines(email, currentOneLiner);
                 console.log(response);
 
@@ -64,6 +71,34 @@ const UserSummaryContainer: React.FC<UserSummaryContainerProps> = ({
     const handleOneLinderChnage = (event: BaseSyntheticEvent) => {
         setCurrentOneLiner(event.target.value);
     };
+
+    const handleFollow = async () => {
+        try {
+            const response = await postFollow(email, visitorEmail);
+            if (response) {
+                alert('팔로우 되었습니다!');
+                window.location.reload();
+            }
+        } catch (error) {
+            console.error('팔로우 요청 중 오류 발생:', error);
+            alert('팔로우에 실패했습니다. 다시 시도해주세요.');
+        }
+    };
+
+    const handleFollowCancle = async () => {
+        try {
+            const response = await deleteFollow(email, visitorEmail);
+            if (response) {
+                alert('팔로우 취소 되었습니다');
+                window.location.reload();
+            }
+        } catch (error) {
+            console.error('팔로우 취소 요청 중 오류 발생:', error);
+            alert('팔로우 취소에 실패했습니다. 다시 시도해주세요.');
+        }
+    };
+
+    const handleFollowList = async () => {};
 
     return (
         <UserSummaryContainerWrapper round width="30%">
@@ -91,9 +126,19 @@ const UserSummaryContainer: React.FC<UserSummaryContainerProps> = ({
                             <Image src={SendIcon} alt="보내기버튼" />
                         </Button>
                     </StyledLink>
-                    <Button size="wide" gap="0.4em" tertiary label="팔로우">
-                        <Image src={PlusIcon} alt="팔로우버튼" />
-                    </Button>
+                    {followHost ? (
+                        <Button onClick={handleFollowCancle} size="wide" gap="0.4em" tertiary label="팔로우 취소하기">
+                            <Image src={checkIconUrl} alt="팔로우 버튼" />
+                        </Button>
+                    ) : own ? (
+                        <Button onClick={handleFollowList} size="wide" gap="0.4em" tertiary label="팔로워 확인하기">
+                            <Image src={personIconUrl} alt="팔로워 확인 버튼" />
+                        </Button>
+                    ) : (
+                        <Button onClick={handleFollow} size="wide" gap="0.4em" tertiary label="팔로우">
+                            <Image src={plusIconUrl} alt="팔로우 버튼" />
+                        </Button>
+                    )}
                 </RowWrapper>
 
                 <ColumnWrapper gap="0.5em">

@@ -47,7 +47,9 @@ const UserPage: React.FC = () => {
                 {userData && (
                     <>
                         <UserSummaryContainer
+                            followHost={userData.followHost}
                             email={hostEmail}
+                            visitorEmail={visitorEmail!}
                             name={userData.userName}
                             majorName={userData.majorName}
                             studentNumber={userData.studentNumber}
