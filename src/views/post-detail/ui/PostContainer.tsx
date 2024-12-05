@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import Container from '@/widgets/container/Container';
 import UserInfo from '@/widgets/post/UserInfo';
@@ -47,6 +47,7 @@ const PostContainer: React.FC<PostContainerProps> = ({ postId, email }) => {
                     <PostUser justifyContent="space-between">
                         <RowWrapper>
                             <UserInfo
+                                email={postDetail.writerEmail}
                                 imgUrl={postDetail.profileUrl || ProfileExample}
                                 department={postDetail.majorName}
                                 name={postDetail.userName}

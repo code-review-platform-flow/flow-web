@@ -23,6 +23,7 @@ export interface PostDetail {
     postId: number; // 게시물의 고유 ID
     title: string; // 게시물 제목
     content: string; // 게시물 내용
+    writerEmail: string;
     userName: string; // 작성자 이름
     profileUrl: string; // 작성자 프로필 이미지 URL
     majorName: string; // 작성자의 전공 이름
