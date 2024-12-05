@@ -1,63 +1,127 @@
 'use client';
-import Container from '@/widgets/container/Container';
+import React, { useEffect, useState } from 'react';
 import { ColumnWrapper } from '@/widgets/wrapper/ColumnWrapper';
-import React from 'react';
 import styled from 'styled-components';
-import { RowWrapper } from '@/widgets/wrapper/RowWrapper';
-import Image from 'next/image';
 import { CoffechatListItem } from '../model/type';
-import { useRecoilState } from 'recoil';
-import { authDataState } from '@/entities/auth/model';
+import { getUserSummary } from '@/shared/api/user/getUserSummary';
+import { UserSummary } from '@/shared/type/user';
+import MailListItem from './MailListItem';
+import Modal from '@/widgets/modal/Modal';
+import CoffeeChatSendContainer from '@/widgets/container/CoffeeChatSendContainer';
 
 interface MailListProps {
-    mailData: CoffechatListItem[]; // 외부에서 데이터 전달
-    selected: 'receiveBox' | 'sendBox'; // 받은 요청 또는 보낸 요청
+    mailData: CoffechatListItem[];
+    selected: 'receiveBox' | 'sendBox';
+    email: string;
 }
 
-const MailList: React.FC<MailListProps> = ({ mailData, selected }) => {
-    const authData = useRecoilState(authDataState);
+const MailList: React.FC<MailListProps> = ({ mailData, selected, email }) => {
+    const [userSummaries, setUserSummaries] = useState<Record<number, UserSummary>>({});
+    const [selectedChat, setSelectedChat] = useState<CoffechatListItem | null>(null);
+    const [isModalOpen, setIsModalOpen] = useState(false);
+
+    useEffect(() => {
+        const fetchUserSummaries = async () => {
+            const userIds = Array.from(
+                new Set(
+                    mailData.map((chat) => (selected === 'receiveBox' ? chat.initiatorUserId : chat.recipientUserId)),
+                ),
+            );
+
+            const summaries: Record<number, UserSummary> = {};
+            for (const userId of userIds) {
+                try {
+                    const userEmail =
+                        mailData.find((chat) =>
+                            selected === 'receiveBox'
+                                ? chat.initiatorUserId === userId
+                                : chat.recipientUserId === userId,
+                        )?.recipientUserEmail || '';
+
+                    if (userEmail) {
+                        summaries[userId] = await getUserSummary(userEmail);
+                    }
+                } catch (error) {
+                    console.error(`Error fetching user summary for userId ${userId}:`, error);
+                }
+            }
+
+            setUserSummaries(summaries);
+        };
+
+        fetchUserSummaries();
+    }, [mailData, selected]);
+
     const filteredData = mailData.filter((chat) =>
-        selected === 'receiveBox' ? chat.initiatorUserId === 5 : chat.recipientUserId === 5,
+        selected === 'receiveBox' ? chat.recipientUserEmail === email : chat.initiatorUserEmail === email,
     );
 
-    return (
-        <ColumnWrapper gap="1em">
-            <Title>{selected === 'receiveBox' ? '받은 요청' : '보낸 요청'}</Title>
-            {filteredData.length === 0 ? (
-                <NoDataMessage>
-                    {selected === 'receiveBox' ? '받은 커피챗이 없습니다.' : '보낸 커피챗이 없습니다'}
-                </NoDataMessage>
-            ) : (
-                filteredData.map((chat) => (
-                    <Container key={chat.coffeeId} round>
-                        <RowWrapper gap="1em">
-                            <ProfileImage
-                                width={100}
-                                height={100}
-                                // src={chat.imgUrl}
-                                src="images/profileImageExample.png"
-                                alt="profile"
-                            />
-                            <ColumnWrapper>
-                                <SubTitle>
-                                    {selected === 'receiveBox'
-                                        ? `${chat.initiatorUserId}님이 커피챗을 요청했어요!`
-                                        : `${chat.recipientUserId}에게 커피챗을 요청했어요!`}
-                                </SubTitle>
+    const handleItemClick = (chat: CoffechatListItem) => {
+        setSelectedChat(chat);
+        setIsModalOpen(true);
+    };
 
-                                {/* <Part>{chat.part}</Part> */}
-                                <Part>프론트엔드 개발자입니다.</Part>
-                                <RowWrapper>
-                                    {/* <Time>{chat.date}일 전</Time> */}
-                                    <Time>3일 전</Time>
-                                    <State>대기중</State>
-                                </RowWrapper>
-                            </ColumnWrapper>
-                        </RowWrapper>
-                    </Container>
-                ))
-            )}
-        </ColumnWrapper>
+    const handleCloseModal = () => {
+        setSelectedChat(null);
+        setIsModalOpen(false);
+    };
+
+    return (
+        <>
+            <ColumnWrapper gap="1em">
+                <Title>{selected === 'receiveBox' ? '받은 요청' : '보낸 요청'}</Title>
+                {filteredData.length === 0 ? (
+                    <NoDataMessage>
+                        {selected === 'receiveBox' ? '받은 커피챗이 없습니다.' : '보낸 커피챗이 없습니다'}
+                    </NoDataMessage>
+                ) : (
+                    filteredData.map((chat) => {
+                        const userId = selected === 'receiveBox' ? chat.initiatorUserId : chat.recipientUserId;
+                        const userSummary = userSummaries[userId] || {
+                            userName: '',
+                            profileUrl: '',
+                            majorName: '',
+                        };
+
+                        return (
+                            <MailListItem
+                                onClick={() => handleItemClick(chat)}
+                                key={chat.coffeeId}
+                                chat={chat}
+                                userSummary={userSummary}
+                                selected={selected}
+                            />
+                        );
+                    })
+                )}
+            </ColumnWrapper>
+
+            <Modal isOpen={isModalOpen} onClose={handleCloseModal}>
+                {selectedChat && (
+                    <CoffeeChatSendContainer
+                        senderName={
+                            selected === 'receiveBox'
+                                ? userSummaries[selectedChat.initiatorUserId]?.userName || '알 수 없음'
+                                : email
+                        }
+                        receiverName={
+                            selected === 'receiveBox'
+                                ? email
+                                : userSummaries[selectedChat.recipientUserId]?.userName || '알 수 없음'
+                        }
+                        senderImage={
+                            selected === 'receiveBox'
+                                ? userSummaries[selectedChat.initiatorUserId]?.profileUrl || ''
+                                : ''
+                        }
+                        receiverImage={
+                            selected === 'sendBox' ? userSummaries[selectedChat.recipientUserId]?.profileUrl || '' : ''
+                        }
+                        content={selectedChat.contents}
+                    />
+                )}
+            </Modal>
+        </>
     );
 };
 
@@ -70,41 +134,6 @@ const Title = styled.div`
     @media (max-width: 768px) {
         font-size: 1.25em;
     }
-`;
-
-const SubTitle = styled.div`
-    font-size: 0.8125em;
-    font-weight: 500;
-    margin: 1em 0;
-`;
-
-const Part = styled.div`
-    font-size: 1em;
-    color: #707070;
-    margin-bottom: 1em;
-`;
-
-const Time = styled.div`
-    font-size: 0.875em;
-    color: #707070;
-`;
-
-const State = styled.div`
-    font-size: 0.875em;
-    color: #004e96;
-    background-color: #ebf1f7;
-    padding: 0.25em;
-    box-sizing: border-box;
-    border-radius: 0.5em;
-    margin-left: 0.5em;
-`;
-
-const ProfileImage = styled(Image)`
-    width: 100%;
-    height: auto;
-    max-width: 80px;
-    border-radius: 50%;
-    margin-bottom: 1em;
 `;
 
 const NoDataMessage = styled.div`

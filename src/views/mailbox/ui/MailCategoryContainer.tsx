@@ -17,7 +17,7 @@ const MailCategoryContainer: React.FC<MailCategoryContainerProps> = ({ selectedB
     return (
         <StyledContainer width="15%" height="auto">
             <ColumnWrapper gap="0.25em">
-                <Title>요청들</Title>
+                <Title>커피챗</Title>
                 <ReceiveSendButton
                     selected={selectedButton === 'receiveBox'}
                     onClick={() => setSelectedButton('receiveBox')}

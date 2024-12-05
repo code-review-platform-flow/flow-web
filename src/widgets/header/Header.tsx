@@ -17,9 +17,9 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import Container from '../container/Container';
-import { getUserSummary } from '@/views/user/api/getUserSummary';
-import { useRecoilValue } from 'recoil';
-import { authDataState } from '@/entities/auth/model';
+import { getUserSummary } from '@/shared/api/user/getUserSummary';
+import { useRecoilState, useRecoilValue } from 'recoil';
+import { authDataState, userSummaryState } from '@/entities/auth/model';
 import { UserSummary } from '@/shared/type/user';
 
 type User = {
@@ -35,6 +35,7 @@ export interface HeaderProps {
 const Header = ({ user, onLogout, onCreateAccount }: HeaderProps) => {
     const router = useRouter();
     const [showModal, setShowModal] = useState(false);
+    const [userSummary, setUserSummary] = useRecoilState(userSummaryState);
     const authData = useRecoilValue(authDataState);
     const email = authData?.email;
     const [searchTerm, setSearchTerm] = useState('');
@@ -42,8 +43,6 @@ const Header = ({ user, onLogout, onCreateAccount }: HeaderProps) => {
     const clickModal = () => {
         setShowModal(!showModal);
     };
-
-    const [userSummary, setUserSummary] = useState<UserSummary | null>(null);
     const handleNavigation = () => {
         clickModal();
 
@@ -76,7 +75,7 @@ const Header = ({ user, onLogout, onCreateAccount }: HeaderProps) => {
             const fetchUserSummary = async () => {
                 try {
                     const response = await getUserSummary(email);
-                    setUserSummary(response); // 이 줄에서 오류가 해결됩니다.
+                    setUserSummary(response);
                 } catch (error) {
                     console.error('사용자 정보를 가져오는 중 오류 발생:', error);
                 }
@@ -84,7 +83,7 @@ const Header = ({ user, onLogout, onCreateAccount }: HeaderProps) => {
 
             fetchUserSummary();
         }
-    }, [email]);
+    }, [email, setUserSummary]);
 
     return (
         <>

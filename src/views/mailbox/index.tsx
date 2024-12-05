@@ -28,7 +28,6 @@ const MailBoxPage: React.FC<MailBoxPageProps> = () => {
     const authData = useRecoilValue(authDataState);
     const decodedEmail = Buffer.from(paramsEmail, 'base64').toString('utf-8');
 
-    // 인증된 이메일이 아닌 경우 리다이렉트
     if (authData?.email !== decodedEmail) {
         redirect('/');
     }
@@ -38,6 +37,7 @@ const MailBoxPage: React.FC<MailBoxPageProps> = () => {
             try {
                 const data = await getCoffee(decodedEmail);
                 setMailData(data);
+                console.log(data);
             } catch (error) {
                 console.error('데이터 가져오기 실패:', error);
             } finally {
@@ -53,7 +53,11 @@ const MailBoxPage: React.FC<MailBoxPageProps> = () => {
             <FlexWrapper>
                 <MailCategoryContainer selectedButton={selectedButton} setSelectedButton={setSelectedButton} />
                 <SizedBox width="40%" />
-                {loading ? <div>로딩 중...</div> : <MailList mailData={mailData} selected={selectedButton} />}
+                {loading ? (
+                    <div>로딩 중...</div>
+                ) : (
+                    <MailList email={decodedEmail} mailData={mailData} selected={selectedButton} />
+                )}
             </FlexWrapper>
         </PageWrapper>
     );

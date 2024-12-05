@@ -1,41 +1,49 @@
 import React, { useState } from 'react';
 import Container from '@/widgets/container/Container';
 import Image from 'next/image';
-import ProfileExample from '../../../../public/images/profileImageExample.png';
-import SendIcon from '../../../../public/icons/coffeeChatSendIcon.svg';
+import profileImageUrl from '../../../public/images/profileImageExample.png';
+import sendIconUrl from '../../../public/icons/coffeeChatSendIcon.svg';
 import { RowWrapper } from '@/widgets/wrapper/RowWrapper';
 import { ColumnWrapper } from '@/widgets/wrapper/ColumnWrapper';
 import styled from 'styled-components';
 import TossPaymentAPI from '@/entities/coffee-chat/ui/TossPaymentAPI';
 import Button from '@/widgets/button/Button';
 
-const CoffeeChatSendContainer: React.FC = () => {
-    const [contents, setContents] = useState('');
+interface CoffeeChatProps {
+    senderName: string;
+    receiverName: string;
+    senderImage: string;
+    receiverImage: string;
+    content?: string;
+}
 
-    const coffeeChatData = {
-        senderName: '지민성',
-        receiverName: '박찬영',
-        coffeeChatContent: '',
-        senderImage: ProfileExample,
-        receiverImage: ProfileExample,
-    };
+const CoffeeChatSendContainer: React.FC<CoffeeChatProps> = ({
+    senderName,
+    receiverName,
+    senderImage = profileImageUrl,
+    receiverImage = profileImageUrl,
+    content = '',
+}) => {
+    const [contents, setContents] = useState(content);
 
     return (
         <Container width="800px" height="600px">
             <CoffeeChatWrapper $alignItems="center">
-                <CoffeeChatTitle>{coffeeChatData.senderName}님에게 커피챗 요청하기</CoffeeChatTitle>
+                <CoffeeChatTitle>{senderName}님에게 커피챗 요청하기</CoffeeChatTitle>
 
                 <RowWrapper gap="2.25em" justifyContent="center">
-                    <StyledImage src={coffeeChatData.senderImage} alt="sender" priority />
-                    <Image src={SendIcon} alt="보내기아이콘" />
-                    <StyledImage src={coffeeChatData.receiverImage} alt="receiver" priority />
+                    <StyledImage src={senderImage} alt="sender" priority width={16} height={16} />
+                    <Image src={sendIconUrl} alt="보내기아이콘" width={16} height={16} />
+                    <StyledImage src={receiverImage} alt="receiver" priority width={16} height={16} />
                 </RowWrapper>
 
                 <StyledColumnWrapper>
-                    <CoffeeChatSemiTitle>
-                        {coffeeChatData.receiverName}님에게 요청 메시지를 남겨보세요*
-                    </CoffeeChatSemiTitle>
-                    <CoffeeChatContent value={contents} onChange={(e) => setContents(e.target.value)} placeholder="" />
+                    <CoffeeChatSemiTitle>{receiverName}님에게 요청 메시지를 남겨보세요*</CoffeeChatSemiTitle>
+                    <CoffeeChatContent
+                        value={contents}
+                        onChange={(e) => setContents(e.target.value)}
+                        placeholder="메시지를 입력하세요"
+                    />
                 </StyledColumnWrapper>
 
                 <TossPaymentAPI contents={contents} />
@@ -45,23 +53,6 @@ const CoffeeChatSendContainer: React.FC = () => {
 };
 
 export default CoffeeChatSendContainer;
-
-// Styled Components
-const CoffeeChatStatus = styled.div`
-    font-size: 1.25em;
-    text-align: center;
-    color: #828282;
-    height: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-top: -2em;
-    @media (max-width: 768px) {
-        font-size: 1em;
-        margin-bottom: 2em;
-        margin-top: 0em;
-    }
-`;
 
 const CoffeeChatWrapper = styled(ColumnWrapper)<{ $alignItems?: string }>`
     height: 100%;
