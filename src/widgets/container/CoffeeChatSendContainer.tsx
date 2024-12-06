@@ -5,7 +5,8 @@ import sendIconUrl from '../../../public/icons/coffeeChatSendIcon.svg';
 import { RowWrapper } from '@/widgets/wrapper/RowWrapper';
 import { ColumnWrapper } from '@/widgets/wrapper/ColumnWrapper';
 import styled from 'styled-components';
-import TossPaymentAPI from '@/entities/coffee-chat/ui/TossPaymentAPI';
+import TossPaymentAPI from '@/views/coffee-chat/ui/TossPaymentAPI';
+import Button from '../button/Button';
 
 interface CoffeeChatProps {
     type: 'received' | 'sent' | 'pay'; // 커피챗 유형
@@ -24,36 +25,47 @@ const CoffeeChatSendContainer: React.FC<CoffeeChatProps> = ({
     receiverImage,
     content = '',
 }) => {
-    const [contents, setContents] = useState(content);
+    const [messageContent, setMessageContent] = useState(content);
+
+    const handleContentChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+        setMessageContent(e.target.value);
+    };
 
     return (
         <Container width="800px" height="600px">
             <CoffeeChatWrapper $alignItems="center">
                 <CoffeeChatTitle>
-                    {type === 'received' ? `${senderName}님이 보낸 커피챗` : `${receiverName}님에게 보낸 커피챗`}
+                    {type === 'pay'
+                        ? `${receiverName}님에게 보낼 커피챗`
+                        : type === 'received'
+                        ? `${senderName}님이 보낸 커피챗`
+                        : `${receiverName}님에게 보낸 커피챗`}
                 </CoffeeChatTitle>
 
                 <RowWrapper gap="2.25em" justifyContent="center">
-                    <StyledImage src={senderImage} alt="sender" priority width={16} height={16} />
+                    <StyledImage src={senderImage} alt="sender" priority width={150} height={150} />
                     <Image src={sendIconUrl} alt="보내기아이콘" width={16} height={16} />
-                    <StyledImage src={receiverImage} alt="receiver" priority width={16} height={16} />
+                    <StyledImage src={receiverImage} alt="receiver" priority width={150} height={150} />
                 </RowWrapper>
 
                 <StyledColumnWrapper>
                     <CoffeeChatSemiTitle>
-                        {type === 'received'
-                            ? `${receiverName}님에게 답장을 남겨보세요*`
+                        {type === 'pay'
+                            ? `${receiverName}님에게 보낼 메시지 내용을 작성해주세요`
+                            : type === 'received'
+                            ? `${receiverName}님에게 답장을 남겨보세요.`
                             : `${receiverName}님에게 보낸 메시지 내용입니다.`}
                     </CoffeeChatSemiTitle>
                     <CoffeeChatContent
-                        value={contents}
-                        onChange={(e) => setContents(e.target.value)}
+                        value={messageContent}
+                        onChange={handleContentChange}
                         placeholder="메시지를 입력하세요"
-                        disabled={type === 'sent'} // 보낸 요청은 내용 수정 불가
+                        disabled={type === 'sent'}
                     />
                 </StyledColumnWrapper>
 
-                {type === 'received' && <TossPaymentAPI contents={contents} />}
+                {type === 'pay' && <TossPaymentAPI contents={messageContent} />}
+                {type === 'received' && <Button label="수락하기" onClick={() => alert('수락되었습니다.')} />}
             </CoffeeChatWrapper>
         </Container>
     );

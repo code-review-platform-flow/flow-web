@@ -5,7 +5,7 @@ import { RowWrapper } from '@/widgets/wrapper/RowWrapper';
 import Image from 'next/image';
 import React, { BaseSyntheticEvent, useState } from 'react';
 import styled from 'styled-components';
-import SendIcon from '../../../../public/icons/sendIcon.svg';
+import sendIconUrl from '../../../../public/icons/sendIcon.svg';
 import plusIconUrl from '../../../../public/icons/plusIcon.svg';
 import { UserDepartmentEnterYear } from './Font';
 import Link from 'next/link';
@@ -18,7 +18,11 @@ import personIconUrl from '../../../../public/icons/personIcon.svg';
 import checkIconUrl from '../../../../public/icons/checkIcon.svg';
 import { deleteFollow } from '../api/deleteFollow';
 import { getFollowerList } from '../api/getFollowerList';
-
+import boxIconUrl from '../../../../public/icons/boxIcon3.svg';
+import { useRouter } from 'next/navigation';
+import { useRecoilState, useRecoilValue } from 'recoil';
+import { userSummaryState } from '@/entities/auth/model';
+import { encodeBase64 } from '@/shared/hook/base64';
 interface UserSummaryContainerProps {
     name: string;
     majorName: string;
@@ -46,6 +50,9 @@ const UserSummaryContainer: React.FC<UserSummaryContainerProps> = ({
 }) => {
     const [editOneLiner, setEditOneLiner] = useState(false);
     const [currentOneLiner, setCurrentOneLiner] = useState(oneLiner);
+
+    const userSummary = useRecoilValue(userSummaryState);
+    const router = useRouter();
 
     const toggleEditingMode = async () => {
         if (editOneLiner) {
@@ -109,6 +116,30 @@ const UserSummaryContainer: React.FC<UserSummaryContainerProps> = ({
         }
     };
 
+    const handleCoffeeChat = () => {
+        if (own) {
+            alert('본인의 페이지에서는 커피챗을 보낼 수 없습니다.');
+            return;
+        }
+
+        const chatData = {
+            sender: {
+                email: visitorEmail,
+                name: userSummary?.userName,
+                photo: userSummary?.profileUrl,
+            },
+            receiver: {
+                email,
+                name,
+                photo: profileUrl,
+            },
+            content: '',
+        };
+
+        const encodedChatData = encodeBase64(chatData);
+        router.push(`/coffee-chat?data=${encodedChatData}`);
+    };
+
     return (
         <UserSummaryContainerWrapper round width="30%">
             <ColumnWrapper gap="0.75em">
@@ -130,11 +161,16 @@ const UserSummaryContainer: React.FC<UserSummaryContainerProps> = ({
                 </RowWrapper>
 
                 <RowWrapper gap="1em">
-                    <StyledLink href={'/coffeechat'}>
-                        <Button size="wide" gap="0.4em" tertiary label="커피챗">
-                            <Image src={SendIcon} alt="보내기버튼" />
+                    {own ? (
+                        <Button onClick={handleCoffeeChat} size="wide" gap="0.4em" tertiary label="커피챗 확인">
+                            <Image src={boxIconUrl} alt="보내기버튼" />
                         </Button>
-                    </StyledLink>
+                    ) : (
+                        <Button onClick={handleCoffeeChat} size="wide" gap="0.4em" tertiary label="커피챗">
+                            <Image src={sendIconUrl} alt="보내기버튼" />
+                        </Button>
+                    )}
+
                     {followHost ? (
                         <Button onClick={handleFollowCancle} size="wide" gap="0.4em" tertiary label="팔로우 취소하기">
                             <Image src={checkIconUrl} alt="팔로우 버튼" />

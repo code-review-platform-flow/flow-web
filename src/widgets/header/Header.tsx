@@ -51,8 +51,7 @@ const Header = ({ user, onLogout, onCreateAccount }: HeaderProps) => {
     };
 
     const handleNavigationMailBox = () => {
-        const encodedEmail = Buffer.from(email!).toString('base64');
-        router.push(`/mailbox?email=${encodedEmail}`);
+        router.push(`/mailbox`);
     };
 
     // 검색어 입력 시 처리 함수

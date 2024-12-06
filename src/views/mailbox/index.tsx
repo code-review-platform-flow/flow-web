@@ -14,28 +14,20 @@ import { CoffechatListItem } from './model/type';
 interface MailBoxPageProps {}
 
 const MailBoxPage: React.FC<MailBoxPageProps> = () => {
-    const searchParams = useSearchParams();
-    const paramsEmail = searchParams.get('email');
     const [mailData, setMailData] = useState<CoffechatListItem[]>([]); // Coffechat 타입 지정
     const [loading, setLoading] = useState(true);
     const [selectedButton, setSelectedButton] = useState<'receiveBox' | 'sendBox'>('receiveBox'); // 상태 관리
 
-    // 이메일이 없을 경우 리다이렉트
-    if (!paramsEmail) {
-        redirect('/');
-    }
-
     const authData = useRecoilValue(authDataState);
-    const decodedEmail = Buffer.from(paramsEmail, 'base64').toString('utf-8');
 
-    if (authData?.email !== decodedEmail) {
+    if (!authData?.email) {
         redirect('/');
     }
 
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const data = await getCoffee(decodedEmail);
+                const data = await getCoffee(authData?.email);
                 setMailData(data);
                 console.log(data);
             } catch (error) {
@@ -56,7 +48,7 @@ const MailBoxPage: React.FC<MailBoxPageProps> = () => {
                 {loading ? (
                     <div>로딩 중...</div>
                 ) : (
-                    <MailList email={decodedEmail} mailData={mailData} selected={selectedButton} />
+                    <MailList email={authData?.email} mailData={mailData} selected={selectedButton} />
                 )}
             </FlexWrapper>
         </PageWrapper>

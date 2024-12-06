@@ -1,14 +1,14 @@
 'use client';
 import { PageWrapper } from '@/widgets/wrapper/PageWrapper';
 import React from 'react';
-import CoffeeChatSendContainer from '@/widgets/container/CoffeeChatSendContainer';
+import PaymentSuccess from './ui/PaymentSuccess';
 
-const CoffeeChatPage: React.FC = () => {
+const PaymentSuccessPage: React.FC = () => {
     return (
         <PageWrapper height="100%" marginTop="0">
-            <CoffeeChatSendContainer />
+            <PaymentSuccess />
         </PageWrapper>
     );
 };
 
-export default CoffeeChatPage;
+export default PaymentSuccessPage;
