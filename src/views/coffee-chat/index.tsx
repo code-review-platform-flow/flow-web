@@ -20,7 +20,9 @@ const CoffeeChatPage: React.FC = () => {
             <CoffeeChatSendContainer
                 type="pay"
                 senderName={chatState.sender.name}
+                senderEmail={chatState.sender.email}
                 receiverName={chatState.receiver.name}
+                receiverEmail={chatState.receiver.email}
                 senderImage={chatState.sender.photo}
                 receiverImage={chatState.receiver.photo}
             />

@@ -5,9 +5,12 @@ import { useSendCoffeeChat } from '../api/coffeeChatApi';
 import { useCreateOrder } from '@/features/order/api/orderApi';
 import { useRecoilState } from 'recoil';
 import { orderDataState } from '@/entities/order/model/atoms';
+import { contentState } from '@/views/post-write/model/postAtoms';
 
 interface TossPaymentAPIProps {
     contents: string;
+    sender: string;
+    receiver: string;
 }
 
 interface OrderData {
@@ -17,90 +20,67 @@ interface OrderData {
 }
 
 interface CardPaymentRequest {
-    method: 'CARD'; // 결제 수단은 반드시 'CARD'여야 합니다.
+    method: 'CARD';
     amount: {
-        currency: 'KRW'; // 통화는 원화(KRW)로 고정됩니다.
-        value: number; // 결제 금액입니다.
+        currency: 'KRW';
+        value: number;
     };
-    orderId: string; // 주문 ID를 나타내는 문자열입니다.
-    orderName: string; // 주문 이름입니다.
-    successUrl: string; // 결제 성공 시 리다이렉트될 URL입니다.
-    failUrl: string; // 결제 실패 시 리다이렉트될 URL입니다.
-    customerEmail?: string; // 구매자의 이메일 주소 (선택 사항).
-    customerName?: string; // 구매자의 이름 (선택 사항).
-    customerMobilePhone?: string; // 구매자의 휴대폰 번호 (선택 사항).
+    orderId: string;
+    orderName: string;
+    successUrl: string;
+    failUrl: string;
+    customerEmail?: string;
+    customerName?: string;
+    customerMobilePhone?: string;
     card: {
-        useEscrow?: boolean; // 에스크로 사용 여부 (선택 사항).
-        flowMode?: 'DEFAULT' | 'DIRECT'; // 결제 흐름 모드 (기본 또는 직접).
-        useCardPoint?: boolean; // 카드 포인트 사용 여부 (선택 사항).
-        useAppCardOnly?: boolean; // 앱 카드만 사용할지 여부 (선택 사항).
+        useEscrow?: boolean;
+        flowMode?: 'DEFAULT' | 'DIRECT';
+        useCardPoint?: boolean;
+        useAppCardOnly?: boolean;
     };
 }
 
-const TossPaymentAPI: React.FC<TossPaymentAPIProps> = ({ contents }) => {
+const TossPaymentAPI: React.FC<TossPaymentAPIProps> = ({ contents, sender, receiver }) => {
     const clientKey = process.env.NEXT_PUBLIC_TOSS_CLIENT_KEY as string;
     const clientUrl = process.env.NEXT_PUBLIC_CLIENT_URL as string;
 
     const [payment, setPayment] = useState<TossPaymentsPayment | null>(null);
-    const [selectedPaymentMethod, setSelectedPaymentMethod] = useState<string>('CARD');
+    const [selectedPaymentMethod] = useState<string>('CARD');
     const [orderData, setOrderData] = useRecoilState<OrderData | null>(orderDataState);
+    // Error Handling
+    const handleError = useCallback((error: any) => {
+        console.error('Error:', error);
+        alert('문제가 발생했습니다. 다시 시도해주세요.');
+    }, []);
 
-    // Use React Query mutation hooks
+    // React Query Hooks
     const { mutate: sendCoffeeChat } = useSendCoffeeChat({
-        onSuccess: (data: { coffeeId: number }) => {
-            console.log('Coffee chat sent successfully:', data);
-            createOrder({ coffeeId: data.coffeeId, totalAmount: 2000 });
-        },
-        onError: (error: any) => {
-            console.error('Error sending coffee chat:', error);
-        },
+        onSuccess: (data) => handleOrderCreation(data.coffeeId),
+        onError: handleError,
     });
 
     const { mutate: createOrder } = useCreateOrder({
-        onSuccess: (data: OrderData) => {
-            console.log('Order created successfully:', data);
-            setOrderData(data);
-            requestPayment(data);
-        },
-        onError: (error: any) => {
-            console.error('Error creating order:', error);
-        },
+        onSuccess: (data) => handlePaymentRequest(data),
+        onError: handleError,
     });
 
+    // Payment Initialization
     const initializePayment = useCallback(async () => {
-        if (!clientKey) {
-            console.error('Error: clientKey is not defined.');
-            return;
-        }
+        if (!clientKey) return handleError('Toss Payments Client Key is missing.');
 
         try {
             const tossPayments = await loadTossPayments(clientKey);
-            if (!tossPayments) {
-                throw new Error('Failed to load Toss Payments SDK');
-            }
+            if (!tossPayments) throw new Error('Failed to load Toss Payments SDK');
 
-            const paymentInstance = tossPayments.payment({
-                customerKey: generateRandomString(),
-            });
-
-            setPayment(paymentInstance);
+            setPayment(tossPayments.payment({ customerKey: generateRandomString() }));
         } catch (error) {
-            console.error('Error fetching payment:', error);
+            handleError(error);
         }
-    }, [clientKey]);
+    }, [clientKey, handleError]);
 
-    const generateRandomString = useCallback((): string => {
-        return window.btoa(Math.random().toString()).slice(0, 20);
-    }, []);
+    const generateRandomString = (): string => window.btoa(Math.random().toString()).slice(0, 20);
 
-    const handleSendCoffeeChat = useCallback((): void => {
-        sendCoffeeChat({
-            sender: 'a1061602@gmail.com',
-            receiver: 'iamjms4237@gachon.ac.kr',
-            contents,
-        });
-    }, [contents, sendCoffeeChat]);
-
+    // Request Payment
     const requestPayment = async (order: OrderData): Promise<void> => {
         if (!payment) {
             console.error('Error: Payment object is not loaded');
@@ -118,7 +98,7 @@ const TossPaymentAPI: React.FC<TossPaymentAPIProps> = ({ contents }) => {
                     orderId: order.tossOrderId,
                     orderName: '커피챗 결제',
                     successUrl: `${clientUrl}/payment/success`,
-                    failUrl: `${clientUrl}/fail`,
+                    failUrl: `${clientUrl}/payment/fail`,
                     customerEmail: 'customer123@gmail.com',
                     customerName: '김토스',
                     customerMobilePhone: '01012341234',
@@ -130,7 +110,14 @@ const TossPaymentAPI: React.FC<TossPaymentAPIProps> = ({ contents }) => {
                     },
                 };
 
-                await payment.requestPayment(cardPaymentRequest);
+                await payment.requestPayment(cardPaymentRequest).catch((error) => {
+                    if (error.code === 'USER_CANCEL') {
+                        console.log('사용자가 결제 창을 닫았습니다.');
+                    } else {
+                        console.error('결제 요청 중 에러:', error);
+                        alert('결제 도중 문제가 발생했습니다. 다시 시도해주세요.');
+                    }
+                });
             } else {
                 console.error('Unsupported payment method');
             }
@@ -139,16 +126,33 @@ const TossPaymentAPI: React.FC<TossPaymentAPIProps> = ({ contents }) => {
         }
     };
 
+    // Send Coffee Chat
+    const handleSendCoffeeChat = (): void => {
+        if (!sender || !receiver || !contentState) {
+            return handleError('Sender, Receiver, or Content is missing.');
+        }
+        sendCoffeeChat({ sender, receiver, contents });
+    };
+
+    const handleOrderCreation = (coffeeId: number): void => {
+        createOrder({ coffeeId, totalAmount: 2000 });
+    };
+
+    const handlePaymentRequest = (data: OrderData): void => {
+        setOrderData(data);
+        requestPayment(data);
+    };
+
     useEffect(() => {
         initializePayment();
     }, [initializePayment]);
 
     if (!clientKey) {
-        return <p>Error: clientKey is not defined.</p>;
+        return <p>결제에 필요한 설정이 누락되었습니다. 관리자에게 문의하세요.</p>;
     }
 
     if (!payment) {
-        return <p>Loading payment...</p>;
+        return <p>결제 환경을 준비 중입니다...</p>;
     }
 
     return <TossPaymentButton onClick={handleSendCoffeeChat} label="결제하기" />;

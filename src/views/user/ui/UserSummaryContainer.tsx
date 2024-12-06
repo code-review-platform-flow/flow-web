@@ -118,7 +118,7 @@ const UserSummaryContainer: React.FC<UserSummaryContainerProps> = ({
 
     const handleCoffeeChat = () => {
         if (own) {
-            alert('본인의 페이지에서는 커피챗을 보낼 수 없습니다.');
+            router.push(`/mailbox`);
             return;
         }
 
@@ -133,7 +133,7 @@ const UserSummaryContainer: React.FC<UserSummaryContainerProps> = ({
                 name,
                 photo: profileUrl,
             },
-            content: '',
+            contents: '',
         };
 
         const encodedChatData = encodeBase64(chatData);

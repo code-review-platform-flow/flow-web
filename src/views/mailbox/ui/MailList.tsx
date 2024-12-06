@@ -123,7 +123,9 @@ const MailList: React.FC<MailListProps> = ({ mailData, selected, email }) => {
                                 ? userSummaries[selectedChat.recipientUserId]?.profileUrl || ''
                                 : mySummary!.profileUrl
                         }
-                        content={selectedChat.contents}
+                        senderEmail={selected === 'receiveBox' ? selectedChat.initiatorUserEmail : email}
+                        receiverEmail={selected === 'receiveBox' ? email : selectedChat.recipientUserEmail}
+                        contents={selectedChat.contents}
                     />
                 )}
             </Modal>

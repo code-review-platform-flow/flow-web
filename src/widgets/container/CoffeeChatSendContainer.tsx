@@ -11,21 +11,25 @@ import Button from '../button/Button';
 interface CoffeeChatProps {
     type: 'received' | 'sent' | 'pay'; // 커피챗 유형
     senderName: string;
+    senderEmail: string;
+    receiverEmail: string;
     receiverName: string;
     senderImage: string;
     receiverImage: string;
-    content?: string;
+    contents?: string;
 }
 
 const CoffeeChatSendContainer: React.FC<CoffeeChatProps> = ({
     type,
     senderName,
+    senderEmail,
     receiverName,
+    receiverEmail,
     senderImage,
     receiverImage,
-    content = '',
+    contents = '',
 }) => {
-    const [messageContent, setMessageContent] = useState(content);
+    const [messageContent, setMessageContent] = useState(contents);
 
     const handleContentChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
         setMessageContent(e.target.value);
@@ -64,7 +68,9 @@ const CoffeeChatSendContainer: React.FC<CoffeeChatProps> = ({
                     />
                 </StyledColumnWrapper>
 
-                {type === 'pay' && <TossPaymentAPI contents={messageContent} />}
+                {type === 'pay' && (
+                    <TossPaymentAPI receiver={receiverEmail} sender={senderEmail} contents={messageContent} />
+                )}
                 {type === 'received' && <Button label="수락하기" onClick={() => alert('수락되었습니다.')} />}
             </CoffeeChatWrapper>
         </Container>
