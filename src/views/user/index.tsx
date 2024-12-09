@@ -14,14 +14,14 @@ import { authDataState } from '@/entities/auth/model';
 import { UserInfo } from '@/shared/type/user';
 import UserPostList from './ui/UserPostList';
 import styled from 'styled-components';
+import { decodeBase64 } from '@/shared/hook/base64';
 
 const UserPage: React.FC = () => {
     const searchParams = useSearchParams();
     const paramsEmail = searchParams.get('email');
     const authData = useRecoilValue(authDataState);
     const visitorEmail = authData?.email.toString();
-
-    const hostEmail = paramsEmail ? Buffer.from(paramsEmail, 'base64').toString('utf-8') : '';
+    const hostEmail: string = decodeBase64(paramsEmail!);
 
     const [userData, setUserData] = useState<UserInfo>();
 

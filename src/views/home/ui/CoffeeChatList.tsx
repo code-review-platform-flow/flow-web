@@ -5,40 +5,69 @@ import { Medium } from './Font';
 import Container from '@/widgets/container/Container';
 import Button from '@/widgets/button/Button';
 import Image from 'next/image';
-import profileImageUrl from '../../../../public/images/profileImageExample.png';
 import { RowWrapper } from '@/widgets/wrapper/RowWrapper';
 import Link from 'next/link';
+import { UserSummary } from '@/shared/type/user';
+import { useRecoilValue } from 'recoil';
+import { userSummaryState } from '@/entities/auth/model';
+import { encodeBase64 } from '@/shared/hook/base64';
+import { useRouter } from 'next/navigation';
 
-//커피챗 데이터
-const coffechatData = [
-    { rank: 1, profileImage: profileImageUrl, username: '사용자1' },
-    { rank: 2, profileImage: profileImageUrl, username: '사용자2' },
-    { rank: 3, profileImage: profileImageUrl, username: '사용자3' },
-    { rank: 4, profileImage: profileImageUrl, username: '사용자4' },
-    { rank: 5, profileImage: profileImageUrl, username: '사용자5' },
-];
+interface CoffeeChatListProps {
+    coffechatData: UserSummary[];
+}
 
-const CoffeChatList = () => {
+const CoffeeChatList: React.FC<CoffeeChatListProps> = ({ coffechatData }) => {
+    const authData = useRecoilValue(userSummaryState);
+    const router = useRouter();
+
+    const handleNavigation = (email: string) => {
+        const encodedEmail = encodeBase64(email);
+        router.push(`/user?email=${encodedEmail}`);
+    };
+
+    const handleCoffeeChat = (email: string, name: string, photo: string) => {
+        const chatData = {
+            sender: {
+                email: authData?.email,
+                name: authData?.userName,
+                photo: authData?.profileUrl,
+            },
+            receiver: {
+                email,
+                name,
+                photo,
+            },
+            contents: '',
+        };
+
+        const encodedChatData = encodeBase64(chatData);
+        router.push(`/coffee-chat?data=${encodedChatData}`);
+    };
+
     return (
         <ColumnWrapper gap="0.75em">
             <Medium>☕️ 커피챗 신청하기</Medium>
             <Container size="small" width="100%" height="100%">
                 <ColumnWrapper gap="0.75em">
                     {coffechatData.map((item, index) => (
-                        <UserInfo key={index}>
+                        <UserInfo onClick={() => handleNavigation(item.email)} key={index}>
                             <StyledRowWrapper>
-                                <Rank>{item.rank}</Rank>
+                                <Rank>{index + 1}</Rank>
                                 <ProfileImage
-                                    src={item.profileImage}
-                                    alt={`Profile image of ${item.username}`}
+                                    src={item.profileUrl}
+                                    alt={`Profile image of ${item.userName}`}
                                     width={50}
                                     height={50}
                                 />
-                                <Username>{item.username}</Username>
+                                <Username>{item.userName}</Username>
                             </StyledRowWrapper>
-                            <Link href={`/user/${index}`}>
-                                <Button tertiary size="small" label="신청" />
-                            </Link>
+                            <Button
+                                onClick={() => handleCoffeeChat(item.email, item.userName, item.profileUrl)}
+                                tertiary
+                                size="small"
+                                label="신청"
+                            />
                         </UserInfo>
                     ))}
                 </ColumnWrapper>
@@ -47,13 +76,14 @@ const CoffeChatList = () => {
     );
 };
 
-export default CoffeChatList;
+export default CoffeeChatList;
 
 const StyledRowWrapper = styled(RowWrapper)`
     width: auto;
 `;
 
 const UserInfo = styled.div`
+    cursor: pointer;
     display: flex;
     align-items: center;
     justify-content: space-between;

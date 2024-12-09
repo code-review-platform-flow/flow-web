@@ -45,7 +45,7 @@ export default function HomePage() {
             </>
             <Swiper>
                 <HallofFameList hallOfFameData={homeData.hallOfFame} />
-                <CoffeeChatList />
+                <CoffeeChatList coffechatData={homeData.hallOfFame} />
                 <TrendingPostList trendingPostList={homeData.posts} />
             </Swiper>
             <>
