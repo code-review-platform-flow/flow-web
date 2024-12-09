@@ -8,21 +8,26 @@ import styled from 'styled-components';
 import sendIconUrl from '../../../../public/icons/sendIcon.svg';
 import plusIconUrl from '../../../../public/icons/plusIcon.svg';
 import { UserDepartmentEnterYear } from './Font';
-import Link from 'next/link';
+
 import { formatEnterYear } from '@/shared/hook/formatEnterYear';
 import ModifyIcon from './ModifyIcon';
 import { patchUserOneLines } from '../api/patchUserOneLine';
 import { activeEnter } from '@/shared/hook/activeEnter';
 import { postFollow } from '../api/postFollow';
-import personIconUrl from '../../../../public/icons/personIcon.svg';
+
 import checkIconUrl from '../../../../public/icons/checkIcon.svg';
 import { deleteFollow } from '../api/deleteFollow';
-import { getFollowerList } from '../api/getFollowerList';
+import personIconUrl from '../../../../public/icons/personIcon.svg';
+
 import boxIconUrl from '../../../../public/icons/boxIcon3.svg';
 import { useRouter } from 'next/navigation';
-import { useRecoilState, useRecoilValue } from 'recoil';
+import { useRecoilValue } from 'recoil';
 import { userSummaryState } from '@/entities/auth/model';
 import { encodeBase64 } from '@/shared/hook/base64';
+import { UserSummary } from '@/shared/type/user';
+import { getFollowerList } from '../api/getFollowerList';
+import FollowListContainer from './FollowListContainer';
+
 interface UserSummaryContainerProps {
     name: string;
     majorName: string;
@@ -54,6 +59,28 @@ const UserSummaryContainer: React.FC<UserSummaryContainerProps> = ({
     const userSummary = useRecoilValue(userSummaryState);
     const router = useRouter();
 
+    const [showFollowList, setShowFollowList] = useState(false);
+
+    const [followers, setFollowers] = useState<UserSummary[]>([]);
+    const [followees, setFollowees] = useState<UserSummary[]>([]);
+
+    const handleFollowListToggle = async () => {
+        if (showFollowList) {
+            setShowFollowList(false);
+        }
+        if (!showFollowList) {
+            try {
+                const { followers: fetchedFollowers, followees: fetchedFollowees } = await getFollowerList(email);
+                setFollowers(fetchedFollowers);
+                setFollowees(fetchedFollowees);
+                setShowFollowList(true);
+            } catch (error) {
+                console.error('팔로우 리스트 요청 중 오류 발생:', error);
+                alert('팔로우 리스트를 불러오는 중 오류가 발생했습니다.');
+            }
+        }
+    };
+
     const toggleEditingMode = async () => {
         if (editOneLiner) {
             if (currentOneLiner.trim() === '') {
@@ -82,7 +109,7 @@ const UserSummaryContainer: React.FC<UserSummaryContainerProps> = ({
 
     const handleFollow = async () => {
         try {
-            const response = await postFollow(email, visitorEmail);
+            const response = await postFollow(visitorEmail, email);
             if (response) {
                 alert('팔로우 되었습니다!');
                 window.location.reload();
@@ -95,7 +122,7 @@ const UserSummaryContainer: React.FC<UserSummaryContainerProps> = ({
 
     const handleFollowCancle = async () => {
         try {
-            const response = await deleteFollow(email, visitorEmail);
+            const response = await deleteFollow(visitorEmail, email);
             if (response) {
                 alert('팔로우 취소 되었습니다');
                 window.location.reload();
@@ -103,16 +130,6 @@ const UserSummaryContainer: React.FC<UserSummaryContainerProps> = ({
         } catch (error) {
             console.error('팔로우 취소 요청 중 오류 발생:', error);
             alert('팔로우 취소에 실패했습니다. 다시 시도해주세요.');
-        }
-    };
-
-    const handleFollowList = async () => {
-        try {
-            const response = await getFollowerList(visitorEmail);
-            console.log(response);
-        } catch (error) {
-            console.error('팔로워 리스트 요청 중 오류 발생:', error);
-            alert('팔로우 리스트 요청에 실패했습니다. 다시 시도해주세요.');
         }
     };
 
@@ -141,7 +158,7 @@ const UserSummaryContainer: React.FC<UserSummaryContainerProps> = ({
     };
 
     return (
-        <UserSummaryContainerWrapper round width="30%">
+        <UserSummaryContainerWrapper round width="100%">
             <ColumnWrapper gap="0.75em">
                 <RowWrapper gap="1em">
                     <Image
@@ -176,7 +193,13 @@ const UserSummaryContainer: React.FC<UserSummaryContainerProps> = ({
                             <Image src={checkIconUrl} alt="팔로우 버튼" />
                         </Button>
                     ) : own ? (
-                        <Button onClick={handleFollowList} size="wide" gap="0.4em" tertiary label="팔로워 확인하기">
+                        <Button
+                            onClick={handleFollowListToggle}
+                            size="wide"
+                            gap="0.4em"
+                            tertiary
+                            label="팔로우 확인하기"
+                        >
                             <Image src={personIconUrl} alt="팔로워 확인 버튼" />
                         </Button>
                     ) : (
@@ -209,23 +232,20 @@ const UserSummaryContainer: React.FC<UserSummaryContainerProps> = ({
                     )}
                 </ColumnWrapper>
             </ColumnWrapper>
+            {showFollowList && (
+                <FollowListContainer
+                    onClose={() => setShowFollowList(false)}
+                    followees={followees}
+                    followers={followers}
+                />
+            )}
         </UserSummaryContainerWrapper>
     );
 };
 
 export default UserSummaryContainer;
 
-const StyledLink = styled(Link)`
-    width: 100%;
-`;
-
-const UserSummaryContainerWrapper = styled(Container)`
-    position: fixed;
-
-    @media (max-width: 768px) {
-        position: static;
-    }
-`;
+const UserSummaryContainerWrapper = styled(Container)``;
 
 const UserName = styled.div`
     font-weight: 500;

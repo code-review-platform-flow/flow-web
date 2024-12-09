@@ -6,14 +6,24 @@ interface ModalProps {
     isOpen: boolean;
     onClose: () => void;
     children: ReactNode;
+    padding?: string;
+    width?: string;
+    maxWidth?: string;
 }
 
-const Modal: React.FC<ModalProps> = ({ isOpen, onClose, children }) => {
+const Modal: React.FC<ModalProps> = ({
+    isOpen,
+    onClose,
+    children,
+    padding = '2em',
+    width = 'auto',
+    maxWidth = '100%',
+}) => {
     if (!isOpen) return null;
 
     return ReactDOM.createPortal(
         <ModalOverlay>
-            <ModalContent>
+            <ModalContent padding={padding} width={width} maxWidth={maxWidth}>
                 <CloseButton onClick={onClose}>✕</CloseButton>
                 {children}
             </ModalContent>
@@ -24,7 +34,6 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose, children }) => {
 
 export default Modal;
 
-// Styled Components
 const ModalOverlay = styled.div`
     position: fixed;
     top: 0;
@@ -38,11 +47,13 @@ const ModalOverlay = styled.div`
     z-index: 1000;
 `;
 
-const ModalContent = styled.div`
+const ModalContent = styled.div<{ padding: string; width: string; maxWidth: string }>`
     position: relative;
-    padding: 2em;
+    padding: ${(props) => props.padding};
     box-sizing: border-box;
-    max-width: 90%;
+    width: ${(props) => props.width};
+    max-width: ${(props) => props.maxWidth};
+    justify-content: center;
 `;
 
 const CloseButton = styled.button`

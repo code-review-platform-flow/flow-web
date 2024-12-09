@@ -69,6 +69,11 @@ const Header = ({ user, onLogout, onCreateAccount }: HeaderProps) => {
         }
     };
 
+    const handleLogout = () => {
+        onLogout();
+        setShowModal(false);
+    };
+
     useEffect(() => {
         if (email) {
             const fetchUserSummary = async () => {
@@ -139,12 +144,7 @@ const Header = ({ user, onLogout, onCreateAccount }: HeaderProps) => {
                             <MyProfileButton onClick={() => handleNavigation()}>
                                 <ModalIcon src={profileIcon} alt="프로필 아이콘" />내 프로필
                             </MyProfileButton>
-                            <LogOutButton
-                                onClick={() => {
-                                    () => onLogout();
-                                    clickModal();
-                                }}
-                            >
+                            <LogOutButton onClick={handleLogout}>
                                 <ModalIcon src={logOutIcon} alt="로그아웃 아이콘" />
                                 로그아웃
                             </LogOutButton>

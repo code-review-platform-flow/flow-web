@@ -11,10 +11,12 @@ import { useSearchParams } from 'next/navigation';
 import { getUserInfo } from './api/getUserInfo';
 import { useRecoilValue } from 'recoil';
 import { authDataState } from '@/entities/auth/model';
-import { UserInfo } from '@/shared/type/user';
+import { UserInfo, UserSummary } from '@/shared/type/user';
 import UserPostList from './ui/UserPostList';
 import styled from 'styled-components';
 import { decodeBase64 } from '@/shared/hook/base64';
+import { getFollowerList } from './api/getFollowerList';
+import FollowList from './ui/FollowListContainer';
 
 const UserPage: React.FC = () => {
     const searchParams = useSearchParams();
@@ -27,15 +29,14 @@ const UserPage: React.FC = () => {
 
     useEffect(() => {
         const fetchData = async () => {
-            console.log();
             if (hostEmail && visitorEmail) {
                 try {
+                    // 유저 정보 가져오기
                     const data = await getUserInfo(hostEmail, visitorEmail);
                     setUserData(data);
                 } catch (error) {
-                    console.error('유저 데이터를 가져오는 중 오류가 발생했습니다:', error);
+                    console.error('데이터를 가져오는 중 오류가 발생했습니다:', error);
                 }
-            } else if (!hostEmail) {
             }
         };
 
@@ -46,18 +47,20 @@ const UserPage: React.FC = () => {
             <FlexWrapper>
                 {userData && (
                     <>
-                        <UserSummaryContainer
-                            followHost={userData.followHost}
-                            email={hostEmail}
-                            visitorEmail={visitorEmail!}
-                            name={userData.userName}
-                            majorName={userData.majorName}
-                            studentNumber={userData.studentNumber}
-                            oneLiner={userData.oneLiner}
-                            profileUrl={userData.profileUrl}
-                            followerCount={userData.followerCount}
-                            own={userData.own}
-                        />
+                        <StyledColumnWrapper2>
+                            <UserSummaryContainer
+                                followHost={userData.followHost}
+                                email={hostEmail}
+                                visitorEmail={visitorEmail!}
+                                name={userData.userName}
+                                majorName={userData.majorName}
+                                studentNumber={userData.studentNumber}
+                                oneLiner={userData.oneLiner}
+                                profileUrl={userData.profileUrl}
+                                followerCount={userData.followerCount}
+                                own={userData.own}
+                            />
+                        </StyledColumnWrapper2>
                         <SizedBox width="50%" />
                         <StyledColumnWrapper width="60%" gap="1em">
                             <UserSchoolContainer
@@ -84,5 +87,15 @@ export default UserPage;
 const StyledColumnWrapper = styled(ColumnWrapper)`
     @media (max-width: 768px) {
         width: 100%;
+    }
+`;
+
+const StyledColumnWrapper2 = styled(ColumnWrapper)`
+    position: fixed;
+    gap: 2em;
+    width: 30%;
+    @media (max-width: 768px) {
+        width: 100%;
+        position: static;
     }
 `;
