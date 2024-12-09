@@ -11,7 +11,6 @@
 // import { PostDetail } from '@/shared/type/post';
 // import SmallPostContainer from '@/widgets/postContainer/SmallPostContainer';
 
-
 // interface RecentPostProps {
 //     postData: PostDetail
 // }
@@ -19,7 +18,7 @@
 // const RecentPost: React.FC<RecentPostProps> = ({postData}) => {
 
 //     return (
-      
+
 //     );
 // };
 

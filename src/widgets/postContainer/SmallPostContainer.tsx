@@ -21,7 +21,6 @@ const SmallPostContainer: React.FC<SmallPostContainerProps> = ({ postData }) => 
 
     // Markdown을 HTML로 변환하는 비동기 함수 실행
     useEffect(() => {
-        
         if (postData?.content) {
             markdownToHtml(postData.content).then((htmlContent) => {
                 setContent(htmlContent); // 변환된 HTML을 상태에 저장
@@ -69,9 +68,10 @@ const SmallPostContainer: React.FC<SmallPostContainerProps> = ({ postData }) => 
                                 </ColumnWrapper>
                             </RowWrapper>
                             <RowWrapper gap="0.75em">
-                                
                                 {postData.tags &&
-                                    postData.tags.map((tag, index) => <PostTag key={index} tag={tag.tagName}></PostTag>)}
+                                    postData.tags.map((tag, index) => (
+                                        <PostTag key={index} tag={tag.tagName}></PostTag>
+                                    ))}
                             </RowWrapper>
                         </ColumnWrapper>
 
