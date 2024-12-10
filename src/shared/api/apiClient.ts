@@ -1,5 +1,4 @@
 import ky from 'ky-universal';
-import { getCookie, setCookie } from 'cookies-next';
 
 const apiClient = ky.create({
     prefixUrl: process.env.NEXT_PUBLIC_SERVER_URL,
@@ -7,7 +6,8 @@ const apiClient = ky.create({
     hooks: {
         beforeRequest: [
             (request) => {
-                const token = getCookie('accessToken') as string;
+                const authData = JSON.parse(localStorage.getItem('authData') || '{}');
+                const token = authData?.accessToken;
                 console.log(`token : ${token}`);
                 if (token) {
                     request.headers.set('Authorization', `Bearer ${token}`);
@@ -18,7 +18,8 @@ const apiClient = ky.create({
             async (request, options, response) => {
                 if (response.status === 401) {
                     try {
-                        const refreshToken = getCookie('refreshToken') as string;
+                        const authData = JSON.parse(localStorage.getItem('authData') || '{}');
+                        const refreshToken = authData?.refreshToken;
                         if (!refreshToken) {
                             console.error('No refresh token found. Redirecting to login...');
                             window.location.href = '/login';
@@ -32,7 +33,8 @@ const apiClient = ky.create({
                             })
                             .json<{ newAccessToken: string }>();
 
-                        setCookie('accessToken', newAccessToken);
+                        const updatedAuthData = { ...authData, accessToken: newAccessToken };
+                        localStorage.setItem('authData', JSON.stringify(updatedAuthData));
 
                         // 원래 요청 재시도
                         request.headers.set('Authorization', `Bearer ${newAccessToken}`);
