@@ -8,6 +8,7 @@ const apiClient = ky.create({
         beforeRequest: [
             (request) => {
                 const token = getCookie('accessToken') as string;
+                console.log(`token : ${token}`);
                 if (token) {
                     request.headers.set('Authorization', `Bearer ${token}`);
                 }
