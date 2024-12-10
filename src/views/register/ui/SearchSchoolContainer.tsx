@@ -6,7 +6,7 @@ import SearchIcon2 from '../../../../public/icons/searchIcon2.svg';
 import styled from 'styled-components';
 import schoolData from '../model/school.json';
 import { useRecoilState } from 'recoil';
-import { enterYearState, schoolNameState } from '@/app/util/register/register';
+import { enterYearState, schoolNameState } from '@/views/register/model/register';
 import Button from '@/widgets/button/Button';
 
 interface SearchSchoolContainerProps {
@@ -15,11 +15,7 @@ interface SearchSchoolContainerProps {
 }
 
 const SearchSchoolContainer: React.FC<SearchSchoolContainerProps> = ({ showError = false, onNext }) => {
-    const [enterYear, setEnterYear] = useRecoilState(enterYearState);
     const [schoolName, setSchoolName] = useRecoilState(schoolNameState);
-    const currentYear = new Date().getFullYear();
-    const startYear = 2000;
-    const years = Array.from({ length: currentYear - startYear + 1 }, (_, i) => startYear + i);
 
     const [searchTerm, setSearchTerm] = useState<string>('');
     const [filteredSchools, setFilteredSchools] = useState<string[]>([]);
@@ -30,42 +26,23 @@ const SearchSchoolContainer: React.FC<SearchSchoolContainerProps> = ({ showError
         setSchoolName(school || '');
     };
 
-    const handleEnterYear = (year: number) => {
-        setEnterYear(year);
-    };
-
     useEffect(() => {
         if (searchTerm === '') {
             setFilteredSchools([]);
         } else {
             const filtered = schoolNames.filter((school) => school.includes(searchTerm));
-            setFilteredSchools(filtered.slice(0, 5)); // 최대 5개의 결과 표시
+            setFilteredSchools(filtered.slice(0, 5));
         }
     }, [schoolNames, searchTerm]);
 
     const handleNext = () => {
-        const isValid = !!enterYear && !!schoolName;
+        const isValid = !!schoolName;
         onNext(isValid);
     };
 
     return (
         <>
             <Title>학교 선택</Title>
-            <Column>
-                <SemiTitle>입학연도</SemiTitle>
-                <StyledSelect
-                    size="large"
-                    firstValue="연도 선택 (학번)"
-                    onChange={(e: React.ChangeEvent<HTMLSelectElement>) => handleEnterYear(parseInt(e.target.value))}
-                >
-                    {years.map((year) => (
-                        <option key={year} value={year}>
-                            {year}
-                        </option>
-                    ))}
-                </StyledSelect>
-                {showError && !enterYear && <ErrorMessage>입학연도를 선택해주세요.</ErrorMessage>}
-            </Column>
 
             <Column2>
                 <SemiTitle>학교</SemiTitle>
@@ -112,6 +89,8 @@ const SearchResults = styled.div`
     border-radius: 4px;
     max-height: 150px;
     overflow-y: auto;
+
+    background-color: #fff;
 `;
 
 const SearchResultItem = styled.div`

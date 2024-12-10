@@ -20,7 +20,6 @@ import Container from '../container/Container';
 import { getUserSummary } from '@/shared/api/user/getUserSummary';
 import { useRecoilState, useRecoilValue } from 'recoil';
 import { authDataState, userSummaryState } from '@/entities/auth/model';
-import { UserSummary } from '@/shared/type/user';
 
 type User = {
     email?: string;
@@ -58,12 +57,10 @@ const Header = ({ user, onLogout, onCreateAccount }: HeaderProps) => {
         router.push(`/alarm`);
     };
 
-    // 검색어 입력 시 처리 함수
     const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         setSearchTerm(event.target.value);
     };
 
-    // Enter 키 입력 시 검색 페이지로 이동하는 함수
     const handleKeyPress = (event: React.KeyboardEvent<HTMLInputElement>) => {
         if (event.key === 'Enter') {
             if (searchTerm.trim()) {

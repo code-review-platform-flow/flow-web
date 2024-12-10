@@ -11,7 +11,6 @@ const ClientLayout: React.FC<{ children: React.ReactNode }> = ({ children }) => 
     const authData = useRecoilValue(authDataState);
     const resetAuthData = useResetRecoilState(authDataState);
     const resetUserData = useResetRecoilState(userSummaryState);
-    const email = authData?.email;
     const [user, setUser] = useState<{ email?: string } | null>(null);
 
     useEffect(() => {
@@ -25,17 +24,16 @@ const ClientLayout: React.FC<{ children: React.ReactNode }> = ({ children }) => 
     const handleLogout = async () => {
         try {
             await apiClient.delete('auth/logout');
-
-            deleteCookie('accessToken');
-            deleteCookie('refreshToken');
-
-            localStorage.removeItem('authData');
+        } catch (error) {
+            console.error('로그아웃 요청 실패:', error);
+        } finally {
             resetAuthData();
             resetUserData();
-
+            localStorage.removeItem('authData');
+            localStorage.removeItem('userSummary');
+            deleteCookie('accessToken');
+            deleteCookie('refreshToken');
             window.location.reload();
-        } catch (error) {
-            console.error('로그아웃 중 오류 발생:', error);
         }
     };
 
