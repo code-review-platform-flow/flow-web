@@ -16,7 +16,6 @@ import { PostDetail } from '@/shared/type/post';
 export default function HomePage() {
     const [newPostDetail, setNewPostDetail] = useState<PostDetail>();
 
-    // useQuery를 컴포넌트 최상위 레벨에서 호출
     const { data: homeData = { careers: [], posts: [], hallOfFame: [], newPost: 0 } } = useQuery({
         queryKey: ['fetchhomeData'],
         queryFn: () => fetchHomeData(),
