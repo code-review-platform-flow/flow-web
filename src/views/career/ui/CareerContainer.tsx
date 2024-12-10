@@ -34,9 +34,16 @@ const CareerContainer: React.FC<CareerContainerProps> = ({}) => {
         <>
             {careerData &&
                 careerData.map((career, index) => (
-                    <StyledContainer onClick={()=>router.push(`${career.redirectUrl}`)} key={index} size="small" width="100%" height="100%" round>
+                    <StyledContainer
+                        onClick={() => router.push(`${career.redirectUrl}`)}
+                        key={index}
+                        size="small"
+                        width="100%"
+                        height="100%"
+                        round
+                    >
                         <StyledRowWrapper2>
-                            <CareerImage width={44} height={44} src={career.imageUrl} alt="공고이미지" />
+                            <CareerImage width={44} height={44} src="/images/dangguenImage.png" alt="공고이미지" />
                             <ColumnWrapper gap="0.25em">
                                 <CareerTitle>{career.title}</CareerTitle>
                                 <CareerCategory>{career.subtitle}</CareerCategory>
