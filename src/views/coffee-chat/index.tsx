@@ -9,7 +9,7 @@ import { CoffeeChatState } from './model/typte';
 const CoffeeChatPage: React.FC = () => {
     const searchParams = useSearchParams();
     const encodedData = searchParams.get('data');
-    const chatState = encodedData ? decodeBase64<CoffeeChatState>(encodedData) : null;
+    const chatState = encodedData ? (decodeBase64(encodedData) as CoffeeChatState) : null;
 
     if (!chatState) {
         return <div>잘못된 접근입니다.</div>;

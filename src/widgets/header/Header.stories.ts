@@ -10,7 +10,6 @@ const meta = {
         layout: 'fullscreen',
     },
     args: {
-        onLogin: fn(),
         onLogout: fn(),
         onCreateAccount: fn(),
     },
@@ -26,5 +25,3 @@ export const LoggedIn: Story = {
         },
     },
 };
-
-export const LoggedOut: Story = {};
