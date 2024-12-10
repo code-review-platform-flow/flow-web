@@ -42,6 +42,7 @@ interface CardPaymentRequest {
 
 const TossPaymentAPI: React.FC<TossPaymentAPIProps> = ({ contents, sender, receiver }) => {
     const clientKey = process.env.NEXT_PUBLIC_TOSS_CLIENT_KEY as string;
+    console.log(clientKey);
     const clientUrl = process.env.NEXT_PUBLIC_CLIENT_URL as string;
 
     const [payment, setPayment] = useState<TossPaymentsPayment | null>(null);
