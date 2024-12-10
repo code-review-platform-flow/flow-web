@@ -2,27 +2,29 @@ import React, { useEffect, useState } from 'react';
 import Image from 'next/image';
 import styled from 'styled-components';
 import TumbIcon from '../../../../public/icons/tumbCountIcon.svg';
-import ShareIcon from '../../../../public/icons/shareIcon.svg';
+import TumbColorIcon from '../../../../public/icons/tumbCountColorIcon.svg';
 import { postLike } from '../api/like/postLike';
 import { deleteLike } from '../api/like/deleteLike';
 import { getLike } from '../api/like/getLike';
+import ShareButton from './ShareButton';
+import EditContainer from './EditContainer';
 
-interface ShareTumbContainerProps {
+interface ShareLikeContainerProps {
     mobile?: boolean;
-    postId?: string;
-    email?: string;
+    postId: string;
+    email: string;
+    own?: boolean;
 }
 
-const ShareTumbContainer: React.FC<ShareTumbContainerProps> = ({ mobile = false, postId, email }) => {
+const ShareLikeContainer: React.FC<ShareLikeContainerProps> = ({ mobile = false, postId, email, own }) => {
     const [currentCliked, setCurrentCliked] = useState(false);
 
     const handleLike = () => {
-        console.log(currentCliked);
         if (currentCliked) {
-            deleteLike(postId!, email!);
+            deleteLike(postId, email!);
             setCurrentCliked(false);
         } else {
-            postLike(postId!, email!);
+            postLike(postId, email!);
             setCurrentCliked(true);
         }
     };
@@ -30,7 +32,6 @@ const ShareTumbContainer: React.FC<ShareTumbContainerProps> = ({ mobile = false,
     const copyUrl = () => {
         const url = `${process.env.NEXT_PUBLIC_SERVER_URL}/post-detail/${postId}`;
         window.navigator.clipboard.writeText(url).then(() => {
-            // 복사가 완료되면 호출된다.
             alert('링크 복사 완료');
         });
     };
@@ -40,7 +41,7 @@ const ShareTumbContainer: React.FC<ShareTumbContainerProps> = ({ mobile = false,
 
     const fetchClicked = async () => {
         try {
-            const response = await getLike(postId!);
+            const response = await getLike(postId, email);
             setCurrentCliked(response.clicked);
         } catch (error) {
             console.error('Education data fetching error:', error);
@@ -50,22 +51,22 @@ const ShareTumbContainer: React.FC<ShareTumbContainerProps> = ({ mobile = false,
         <Wrapper mobile={mobile}>
             <StyledContainer mobile={mobile}>
                 <TumbShareButton onClick={() => handleLike()}>
-                    <ResponsiveImage
-                        src={TumbIcon}
-                        alt="tumb"
-                        mobile={mobile}
-                        style={currentCliked ? { color: '#004E96' } : {}}
-                    />
+                    {currentCliked ? (
+                        <ResponsiveImage src={TumbColorIcon} alt="tumb" mobile={mobile} />
+                    ) : (
+                        <ResponsiveImage src={TumbIcon} alt="tumb" mobile={mobile} />
+                    )}
                 </TumbShareButton>
                 <TumbShareButton>
-                    <ResponsiveImage onClick={() => copyUrl()} src={ShareIcon} alt="share" mobile={mobile} />
+                    <ShareButton onClick={() => copyUrl()} />
                 </TumbShareButton>
+                {mobile && own && <EditContainer mobile postId={postId} email={email} />}
             </StyledContainer>
         </Wrapper>
     );
 };
 
-export default ShareTumbContainer;
+export default ShareLikeContainer;
 
 const Wrapper = styled.div<{ mobile: boolean }>`
     height: 100%;
@@ -77,6 +78,7 @@ const Wrapper = styled.div<{ mobile: boolean }>`
     @media (max-width: 768px) {
         display: ${({ mobile }) => (mobile ? 'flex' : 'none')};
     }
+    justify-content: flex-end;
 `;
 
 const StyledContainer = styled.div<{ mobile: boolean }>`
@@ -89,7 +91,7 @@ const StyledContainer = styled.div<{ mobile: boolean }>`
     top: ${({ mobile }) => (mobile ? '0' : '80px')};
     display: flex;
     flex-direction: ${({ mobile }) => (mobile ? 'row' : 'column')};
-    gap: ${({ mobile }) => (mobile ? '0.5em' : '1em')};
+    gap: ${({ mobile }) => (mobile ? '1em' : '1em')};
 `;
 
 const TumbShareButton = styled.div`

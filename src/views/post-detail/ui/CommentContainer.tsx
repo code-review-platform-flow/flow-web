@@ -194,7 +194,7 @@ const CommentContainer: React.FC<CommentContainerProps> = ({ postId, email }) =>
                                                         />
                                                         {reply.own && (
                                                             <>
-                                                                {isEditingReply[comment.commentId, reply.replyId] ? (
+                                                                {isEditingReply[(comment.commentId, reply.replyId)] ? (
                                                                     <Button
                                                                         width="15%"
                                                                         tertiary
@@ -214,7 +214,12 @@ const CommentContainer: React.FC<CommentContainerProps> = ({ postId, email }) =>
                                                                         <ModifyDeleteIcon
                                                                             src={PencilIcon}
                                                                             alt="수정"
-                                                                            onClick={() => handleEditReply(comment.commentId, reply.replyId)}
+                                                                            onClick={() =>
+                                                                                handleEditReply(
+                                                                                    comment.commentId,
+                                                                                    reply.replyId,
+                                                                                )
+                                                                            }
                                                                         />
                                                                         <SizedBox width="0.5em" />
                                                                         <ModifyDeleteIcon
@@ -234,7 +239,7 @@ const CommentContainer: React.FC<CommentContainerProps> = ({ postId, email }) =>
                                                             </>
                                                         )}
                                                     </RowWrapper>
-                                                    <SizedBox height='2em'/>
+                                                    <SizedBox height="2em" />
                                                     {isEditingReply[reply.replyId] ? (
                                                         <TextArea
                                                             value={editedReply[reply.replyId] || reply.replyContent}

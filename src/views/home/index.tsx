@@ -14,28 +14,29 @@ import { getPostDetail } from '@/shared/api/post/getPostDetail';
 import { PostDetail } from '@/shared/type/post';
 
 export default function HomePage() {
+    const [newPostDetail, setNewPostDetail] = useState<PostDetail>();
+
+    // useQuery를 컴포넌트 최상위 레벨에서 호출
     const { data: homeData = { careers: [], posts: [], hallOfFame: [], newPost: 0 } } = useQuery({
         queryKey: ['fetchhomeData'],
         queryFn: () => fetchHomeData(),
     });
 
-    const [newPostDetail, setNewPostDetail] = useState<PostDetail>();
-
     useEffect(() => {
         const fetchNewPostDetail = async () => {
-            try {
-                const detail = await getPostDetail(homeData.newPost);
-                setNewPostDetail(detail);
-                console.log('새로운포스트',newPostDetail);
-            } catch (error) {
-                console.error('Failed to fetch new post detail:', error);
+            if (homeData.newPost) {
+                try {
+                    const detail = await getPostDetail(homeData.newPost);
+                    setNewPostDetail(detail);
+                } catch (error) {
+                    console.error('Failed to fetch new post detail:', error);
+                }
             }
         };
 
-        if (homeData.newPost) {
-            fetchNewPostDetail();
-        }
+        fetchNewPostDetail();
     }, [homeData.newPost]);
+
     return (
         <PageWrapper padding="15%">
             <>
@@ -44,7 +45,7 @@ export default function HomePage() {
             </>
             <Swiper>
                 <HallofFameList hallOfFameData={homeData.hallOfFame} />
-                <CoffeeChatList />
+                <CoffeeChatList coffechatData={homeData.hallOfFame} />
                 <TrendingPostList trendingPostList={homeData.posts} />
             </Swiper>
             <>

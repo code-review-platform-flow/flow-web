@@ -533,7 +533,7 @@ textarea {
 }
 
 .p-grid {
-    height: 100%;
+    height: auto;
     display: flex;
     flex-wrap: wrap;
     margin-right: -24px;

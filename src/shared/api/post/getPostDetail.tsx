@@ -1,21 +1,20 @@
-import { PostDetail } from "@/shared/type/post";
-import apiClient from "../apiClient";
+import { PostDetail } from '@/shared/type/post';
+import apiClient from '../apiClient';
 
-// 특정 게시물의 상세 정보를 가져오는 함수
-export const getPostDetail = async (postId: number): Promise<PostDetail> => {
+export const getPostDetail = async (postId: number, email?: string): Promise<PostDetail> => {
     try {
-        console.log(1);
-        const response = await apiClient.get(`post/${postId}`);
+        const response = await apiClient.get(`post/${postId}`, {
+            ...(email && { searchParams: { email } }), // email이 있을 때만 searchParams 추가
+        });
 
         if (!response.ok) {
             throw new Error('데이터를 가져오는 중 오류가 발생했습니다.');
         }
         const data = await response.json();
-        console.log('게시글 정보' + data)
+        console.log('게시글 정보:', data);
         return data as PostDetail;
-
     } catch (error) {
         console.error(`getPostDetail Error for postId ${postId}:`, error);
-        throw error; 
+        throw error;
     }
 };

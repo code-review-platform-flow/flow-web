@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { FillWrapper } from '@/widgets/wrapper/FillWrapper';
 import SearchSchoolContainer from './ui/SearchSchoolContainer';
 import SelectDepartmentContainer from './ui/SelectDepartmentContainer';
-import UserInfoContainer from './ui/UserInfoContainer';
+import RegsiterForm from './ui/RegsiterForm';
 import RegisterContainer from './ui/RegisterContainer';
 import { redirect } from 'next/navigation';
 
@@ -26,10 +26,9 @@ const RegisterPage: React.FC = () => {
             setRegisterCheck(true);
         }
 
-        if (register == 2  && registerCheck == true
-        ){
-            console.log('회원가입 성공')
-            redirect('/')
+        if (register == 2 && registerCheck == true) {
+            console.log('회원가입 성공');
+            redirect('/');
         }
     };
 
@@ -43,7 +42,7 @@ const RegisterPage: React.FC = () => {
                     <SelectDepartmentContainer showError={showError} onNext={(isValid) => handleRegister(isValid)} />
                 )}
                 {register === 2 && (
-                    <UserInfoContainer
+                    <RegsiterForm
                         showError={showError}
                         registerCheck={registerCheck}
                         onNext={(isValid) => handleRegister(isValid)}

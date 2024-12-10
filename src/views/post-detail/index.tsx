@@ -2,7 +2,7 @@
 import { PageWrapper } from '@/widgets/wrapper/PageWrapper';
 import { RowWrapper } from '@/widgets/wrapper/RowWrapper';
 import React from 'react';
-import ShareTumbContainer from './ui/ShareTumbContainer';
+import ShareLikeContainer from './ui/ShareLikeContainer';
 import PostContainer from './ui/PostContainer';
 import CommentContainer from './ui/CommentContainer';
 import CommentWriteContainer from './ui/CommentWriteContainer';
@@ -21,9 +21,9 @@ const PostDetailPage: React.FC<PostDetailProps> = ({ postId }) => {
     return (
         <PageWrapper gap="0.875em">
             <RowWrapper>
-                <ShareTumbContainer postId={postId} email={email!} />
-                <ColumnWrapper gap="1.5em">
-                    <PostContainer postId={postId} />
+                <ShareLikeContainer postId={postId} email={email} />
+                <ColumnWrapper gap="1.5em" alignItems="center">
+                    <PostContainer postId={postId} email={email} />
                     <CommentContainer postId={postId} email={email} />
                     {email && <CommentWriteContainer postId={postId} email={email} />}
                 </ColumnWrapper>

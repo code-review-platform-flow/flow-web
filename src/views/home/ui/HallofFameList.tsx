@@ -9,20 +9,18 @@ import ProfileImage2 from '../../../../public/images/profileImageExample2.png';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { UserSummary } from '@/shared/type/user';
+import { encodeBase64 } from '@/shared/hook/base64';
 
 interface HallofFameListProps {
     hallOfFameData?: UserSummary[];
 }
 
-// userName: string;
-// profileUrl: string;
-// majorName: string;
-// studentNumber: number;
-
-
 const HallofFameList: React.FC<HallofFameListProps> = ({ hallOfFameData = [] }) => {
     const router = useRouter();
-
+    const handleNavigation = (email: string) => {
+        const encodedEmail = encodeBase64(email);
+        router.push(`/user?email=${encodedEmail}`);
+    };
     return (
         <ColumnWrapper gap="0.75em">
             <Medium>🏆 명예의 전당</Medium>
@@ -30,7 +28,7 @@ const HallofFameList: React.FC<HallofFameListProps> = ({ hallOfFameData = [] }) 
                 <ColumnWrapper gap="0.75em">
                     {hallOfFameData &&
                         hallOfFameData.map((item, index) => (
-                            <UserInfo key={index}>
+                            <UserInfo onClick={() => handleNavigation(item.email)} key={index}>
                                 <Rank>{index + 1}</Rank>
                                 <ProfileImage
                                     src={item.profileUrl}
@@ -53,10 +51,11 @@ const HallofFameList: React.FC<HallofFameListProps> = ({ hallOfFameData = [] }) 
 export default HallofFameList;
 
 const UserInfo = styled.div`
+    width: 100%;
     display: flex;
     align-items: center;
     margin-bottom: 0.5em;
-
+    cursor: pointer;
     &:last-child {
         margin-bottom: 1.5em;
     }

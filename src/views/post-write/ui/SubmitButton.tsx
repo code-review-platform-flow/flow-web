@@ -5,12 +5,19 @@ import styled from 'styled-components';
 // onClick props의 타입을 정의합니다.
 interface SubmitButtonProps {
     onClick: () => void;
+    postId?: number | undefined;
 }
 
-const SubmitButton: React.FC<SubmitButtonProps> = ({ onClick }) => {
+const SubmitButton: React.FC<SubmitButtonProps> = ({ onClick, postId = null }) => {
     return (
         <RightWrapper>
-            <Button $primary width="152px" size="medium" label="작성완료" onClick={() => onClick()} />
+            <Button
+                $primary
+                width="152px"
+                size="medium"
+                label={postId ? '수정완료' : '작성완료'}
+                onClick={() => onClick()}
+            />
         </RightWrapper>
     );
 };

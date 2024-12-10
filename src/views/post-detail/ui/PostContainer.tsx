@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import Container from '@/widgets/container/Container';
 import UserInfo from '@/widgets/post/UserInfo';
@@ -7,26 +7,28 @@ import { ColumnWrapper } from '@/widgets/wrapper/ColumnWrapper';
 import PostInfo from '@/widgets/post/PostInfo';
 import PostTag from '@/widgets/post/PostTag';
 import ProfileExample from '../../../../public/images/profileImageExample.png';
-import ShareTumbContainer from './ShareTumbContainer';
+import ShareTumbContainer from './ShareLikeContainer';
 import { fetchPostDetail } from '../api/post/fetchPostDetail';
 import { useQuery } from '@tanstack/react-query';
 import { PostDetail } from '@/shared/type/post';
 import filterTime from '@/shared/hook/filterTime';
 import MarkDownContent from '@/widgets/post/MarkDownContent';
+import { SizedBox } from '@/widgets/wrapper/SizedBox';
+import EditContainer from './EditContainer';
 
 interface PostContainerProps {
     postId: string;
+    email: string;
 }
 
-const PostContainer: React.FC<PostContainerProps> = ({ postId }) => {
-    // useQuery로 데이터 가져오기
+const PostContainer: React.FC<PostContainerProps> = ({ postId, email }) => {
     const {
         data: postDetail,
         isLoading,
         error,
     } = useQuery<PostDetail>({
         queryKey: ['postDetail', postId],
-        queryFn: () => fetchPostDetail(postId),
+        queryFn: () => fetchPostDetail(postId, email),
     });
 
     if (isLoading) return <div>Loading...</div>;
@@ -38,37 +40,53 @@ const PostContainer: React.FC<PostContainerProps> = ({ postId }) => {
     if (!postDetail) return <div>데이터를 찾을 수 없습니다.</div>;
 
     return (
-        <Container width="90%" padding="1.5em" key={postDetail.postId}>
-            <ColumnWrapper>
-                <PostTitle>{postDetail.title}</PostTitle>
-                <PostUser justifyContent="space-between">
-                    <UserInfo
-                        imgUrl={postDetail.profileUrl || ProfileExample}
-                        department={postDetail.majorName}
-                        name={postDetail.userName}
-                        enterYear={postDetail.studentNumber}
-                    />
-                    <RowWrapper justifyContent="flex-end" alignItems="flex-end">
-                        <Tags gap="0.2625em" justifyContent="flex-end">
-                            {postDetail.tags &&
-                                postDetail.tags.map((tag, index) => <PostTag key={index} tag={tag.tagName} />)}
-                        </Tags>
-                        <ShareTumbContainer mobile />
-                        <ColumnWrapper width="auto" alignItems="flex-end" gap="0.5em">
-                            {/* TODO : 좋아요 수랑 댓글 수를 postDetail에 포함시켜서 서버에서 받을 필요가 있음 향후 수정*/}
-                            <PostInfo isStatic tumbCount={0} commentCount={0} />
-                            <UploadTime>{filterTime(postDetail.createDate)}</UploadTime>
-                        </ColumnWrapper>
-                    </RowWrapper>
-                </PostUser>
-            </ColumnWrapper>
-            <MarkDownContent maxHeight='100%' fontSize='1em' content={postDetail.content} />
-        </Container>
+        <StyledRowWrapper justifyContent="flex-end">
+            <Container width="100%" padding="1.5em" key={postDetail.postId}>
+                <ColumnWrapper>
+                    <PostTitle>{postDetail.title}</PostTitle>
+                    <PostUser justifyContent="space-between">
+                        <RowWrapper>
+                            <UserInfo
+                                email={postDetail.writerEmail}
+                                imgUrl={postDetail.profileUrl || ProfileExample}
+                                department={postDetail.majorName}
+                                name={postDetail.userName}
+                                enterYear={postDetail.studentNumber}
+                            />
+                            <ShareTumbContainer mobile postId={postId} email={email} own={postDetail.own} />
+                        </RowWrapper>
+                        <SizedBox height="1em" width="1em" />
+                        <RowWrapper justifyContent="flex-end" alignItems="flex-end">
+                            <Tags gap="0.2625em" justifyContent="flex-end">
+                                {postDetail.tags &&
+                                    postDetail.tags.map((tag, index) => <PostTag key={index} tag={tag.tagName} />)}
+                            </Tags>
+
+                            <ColumnWrapper width="auto" alignItems="flex-end" gap="0.5em">
+                                <PostInfo
+                                    isStatic
+                                    tumbCount={postDetail.likeCount}
+                                    commentCount={postDetail.commentsAndRepliesCount}
+                                />
+                                <UploadTime>{filterTime(postDetail.createDate)}</UploadTime>
+                            </ColumnWrapper>
+                        </RowWrapper>
+                    </PostUser>
+                </ColumnWrapper>
+                <MarkDownContent maxHeight="100%" fontSize="1em" content={postDetail.content} />
+            </Container>
+            {postDetail.own && <EditContainer postId={postId} email={email} />}
+        </StyledRowWrapper>
     );
 };
 
 export default PostContainer;
-
+const StyledRowWrapper = styled(RowWrapper)`
+    position: relative;
+    padding: 1em;
+    gap: 1em;
+    width: 100%;
+`;
 const PostUser = styled(RowWrapper)`
     width: 100%;
     @media (max-width: 768px) {
@@ -108,4 +126,3 @@ const UploadTime = styled.div`
         font-size: 0.6em;
     }
 `;
-

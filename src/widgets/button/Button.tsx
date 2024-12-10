@@ -24,7 +24,7 @@ export const Button = ({
     gap = '0em',
     onClick,
     type = 'button',
-    width='',
+    width = '',
     ...props
 }: ButtonProps) => {
     return (
@@ -65,7 +65,7 @@ const StyledButton = styled.button<{
     padding: ${({ size }) =>
         size === 'small' ? '0.625em 1em' : size === 'medium' ? '0.6875em 1.25em' : '0.75em 1.5em'};
     width: ${({ size, width }) => (width ? width : size === 'wide' ? '100%' : 'auto')};
-
+    align-items: center;
     gap: ${({ gap }) => gap};
     @media (max-width: 768px) {
         font-size: ${({ size }) => (size === 'small' ? '0.35em' : size === 'medium' ? '0.5em' : '0.75em')};

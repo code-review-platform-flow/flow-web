@@ -1,7 +1,4 @@
-import Container from '@/widgets/container/Container';
 import React, { useState } from 'react';
-import { PostWriteTitle } from './Font';
-import { SizedBox } from '@/widgets/wrapper/SizedBox';
 import Input from '@/widgets/input/Input';
 import { useRecoilState } from 'recoil';
 import { tagsState } from '../model/postAtoms';
@@ -9,8 +6,11 @@ import styled from 'styled-components';
 import CrossIcon from '/public/icons/crossIcon.svg';
 import Image from 'next/image';
 import { Tag } from '@/shared/type/post';
+import Container from '@/widgets/container/Container';
+import { PostWriteTitle } from './Font';
+import { SizedBox } from '@/widgets/wrapper/SizedBox';
 
-const PostTagContainer: React.FC = () => {
+const PostTagContainer: React.FC = ({}) => {
     const [tags, setTags] = useRecoilState(tagsState);
     const [inputValue, setInputValue] = useState('');
 

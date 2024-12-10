@@ -20,9 +20,7 @@ import TableIcon from '../../../../public/icons/markDownToolBar/tableIcon.svg';
 import { contentState } from '../model/postAtoms';
 import { useRecoilState } from 'recoil';
 
-interface MarkDownContainerProps {}
-
-const MarkDownContainer: React.FC<MarkDownContainerProps> = () => {
+const MarkDownContainer: React.FC = ({}) => {
     const textAreaRef = useRef<HTMLTextAreaElement>(null);
     const [content, setContent] = useRecoilState(contentState);
     const [headerModal, setHeaderModal] = useState<boolean>(false);
@@ -176,7 +174,7 @@ const HeaderModal = styled.div`
 const Header1 = styled.div`
     font-weight: 600;
     font-size: 1.5625em;
-    cursor : pointer;
+    cursor: pointer;
 `;
 
 const Header2 = styled(Header1)`

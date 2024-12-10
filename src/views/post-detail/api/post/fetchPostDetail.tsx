@@ -1,10 +1,10 @@
 import { PostDetail } from '@/shared/type/post';
 import { getPostDetail } from '@/shared/api/post/getPostDetail';
 
-export const fetchPostDetail = async (postId: string): Promise<PostDetail> => {
+export const fetchPostDetail = async (postId: string, email: string): Promise<PostDetail> => {
     try {
         // getPostDetail이 비동기 함수라면 await를 사용해야 합니다.
-        const postDetail = await getPostDetail(Number(postId));
+        const postDetail = await getPostDetail(Number(postId), email);
 
         console.log('All Post Details:', postDetail);
 

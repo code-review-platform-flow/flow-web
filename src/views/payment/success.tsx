@@ -1,14 +1,14 @@
 'use client';
 import { PageWrapper } from '@/widgets/wrapper/PageWrapper';
 import React from 'react';
-import PaymentFail from '@/entities/payment/ui/PaymentFail';
+import PaymentSuccess from './ui/PaymentSuccess';
 
-const PaymentFailPage: React.FC = () => {
+const PaymentSuccessPage: React.FC = () => {
     return (
         <PageWrapper height="100%" marginTop="0">
-            <PaymentFail />
+            <PaymentSuccess />
         </PageWrapper>
     );
 };
 
-export default PaymentFailPage;
+export default PaymentSuccessPage;

@@ -8,18 +8,13 @@ import { SizedBox } from '@/widgets/wrapper/SizedBox';
 import { useRecoilState } from 'recoil';
 import { categoryState } from '../model/postAtoms';
 
-const PostCategoryContainer: React.FC = () => {
-    // 상태를 단일 선택을 위해 문자열로 변경
+const PostCategoryContainer: React.FC = ({}) => {
     const [selectedCategory, setSelectedCategory] = useRecoilState(categoryState);
 
-    // 버튼 클릭 핸들러
     const handleButtonClick = (label: string) => {
-        setSelectedCategory(
-            (prevCategory) => (prevCategory === label ? '' : label), // 이미 선택된 경우 선택 해제, 아니면 새로운 선택
-        );
+        setSelectedCategory((prevCategory) => (prevCategory === label ? '' : label));
     };
 
-    // 선택된 카테고리인지 확인하는 함수
     const isCategorySelected = (label: string): boolean => {
         return selectedCategory === label;
     };

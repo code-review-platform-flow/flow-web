@@ -17,9 +17,9 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import Container from '../container/Container';
-import { getUserSummary } from '@/views/user/api/getUserSummary';
-import { useRecoilValue } from 'recoil';
-import { authDataState } from '@/entities/auth/model';
+import { getUserSummary } from '@/shared/api/user/getUserSummary';
+import { useRecoilState, useRecoilValue } from 'recoil';
+import { authDataState, userSummaryState } from '@/entities/auth/model';
 import { UserSummary } from '@/shared/type/user';
 
 type User = {
@@ -27,26 +27,22 @@ type User = {
 };
 
 export interface HeaderProps {
-    user?: User;
-    onLogin?: () => void;
-    onLogout?: () => void;
+    user: User;
+    onLogout: () => void;
     onCreateAccount?: () => void;
 }
 
-const Header = ({ user, onLogin, onLogout, onCreateAccount }: HeaderProps) => {
+const Header = ({ user, onLogout, onCreateAccount }: HeaderProps) => {
     const router = useRouter();
     const [showModal, setShowModal] = useState(false);
+    const [userSummary, setUserSummary] = useRecoilState(userSummaryState);
     const authData = useRecoilValue(authDataState);
     const email = authData?.email;
     const [searchTerm, setSearchTerm] = useState('');
 
     const clickModal = () => {
         setShowModal(!showModal);
-        console.log('Modal visibility toggled:', !showModal);
     };
-
-    // UserSummary 또는 null을 허용하는 타입으로 초기 상태를 설정합니다.
-    const [userSummary, setUserSummary] = useState<UserSummary | null>(null);
     const handleNavigation = () => {
         clickModal();
 
@@ -54,9 +50,17 @@ const Header = ({ user, onLogin, onLogout, onCreateAccount }: HeaderProps) => {
         router.push(`/user?email=${encodedEmail}`);
     };
 
+    const handleNavigationMailBox = () => {
+        router.push(`/mailbox`);
+    };
+
+    const handleNavigationAlarm = () => {
+        router.push(`/alarm`);
+    };
+
     // 검색어 입력 시 처리 함수
     const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setSearchTerm(event.target.value); // 검색어 상태 업데이트
+        setSearchTerm(event.target.value);
     };
 
     // Enter 키 입력 시 검색 페이지로 이동하는 함수
@@ -69,13 +73,17 @@ const Header = ({ user, onLogin, onLogout, onCreateAccount }: HeaderProps) => {
         }
     };
 
+    const handleLogout = () => {
+        onLogout();
+        setShowModal(false);
+    };
+
     useEffect(() => {
-        // 비동기로 사용자 정보 가져오기
         if (email) {
             const fetchUserSummary = async () => {
                 try {
                     const response = await getUserSummary(email);
-                    setUserSummary(response); // 이 줄에서 오류가 해결됩니다.
+                    setUserSummary(response);
                 } catch (error) {
                     console.error('사용자 정보를 가져오는 중 오류 발생:', error);
                 }
@@ -83,7 +91,7 @@ const Header = ({ user, onLogin, onLogout, onCreateAccount }: HeaderProps) => {
 
             fetchUserSummary();
         }
-    }, [email]);
+    }, [email, setUserSummary]);
 
     return (
         <>
@@ -106,7 +114,7 @@ const Header = ({ user, onLogin, onLogout, onCreateAccount }: HeaderProps) => {
                             type="text"
                             value={searchTerm}
                             onChange={handleInputChange}
-                            onKeyPress={handleKeyPress} 
+                            onKeyPress={handleKeyPress}
                             placeholder="플로우 검색하기"
                         />
                     </SearchContainer>
@@ -122,7 +130,6 @@ const Header = ({ user, onLogin, onLogout, onCreateAccount }: HeaderProps) => {
                                     alt="프로필 이미지"
                                 />
                                 <Column>
-                                    {/* 사용자 이름과 이메일 표시 */}
                                     <UserName>{userSummary?.userName || '사용자 이름'}</UserName>
                                     <UserEmail>@{email || '사용자 이메일'}</UserEmail>
                                 </Column>
@@ -141,12 +148,7 @@ const Header = ({ user, onLogin, onLogout, onCreateAccount }: HeaderProps) => {
                             <MyProfileButton onClick={() => handleNavigation()}>
                                 <ModalIcon src={profileIcon} alt="프로필 아이콘" />내 프로필
                             </MyProfileButton>
-                            <LogOutButton
-                                onClick={() => {
-                                    () => onLogout?.();
-                                    clickModal();
-                                }}
-                            >
+                            <LogOutButton onClick={handleLogout}>
                                 <ModalIcon src={logOutIcon} alt="로그아웃 아이콘" />
                                 로그아웃
                             </LogOutButton>
@@ -156,9 +158,9 @@ const Header = ({ user, onLogin, onLogout, onCreateAccount }: HeaderProps) => {
                         // 로그인시
                         <Row2>
                             <Row3>
-                                <Icon src={boxIcon} alt="박스 아이콘" />
-                                <Icon src={bellIcon} alt="벨 아이콘" />
-                                <HambergerIcon onClick={()=>clickModal()} src={hamburgerIcon} alt="햄버거 아이콘" />
+                                <Icon src={boxIcon} alt="박스 아이콘" onClick={handleNavigationMailBox} />
+                                <Icon src={bellIcon} alt="벨 아이콘" onClick={handleNavigationAlarm} />
+                                <HambergerIcon onClick={() => clickModal()} src={hamburgerIcon} alt="햄버거 아이콘" />
                             </Row3>
                             <ButtonWrapper>
                                 <Link href="/post-write">
@@ -170,10 +172,9 @@ const Header = ({ user, onLogin, onLogout, onCreateAccount }: HeaderProps) => {
                                 <ProfileImage
                                     width={35}
                                     height={35}
-                                    onClick={()=>clickModal()}
+                                    onClick={() => clickModal()}
                                     src={userSummary?.profileUrl || profileExampleImage}
                                     alt="프로필 이미지"
-                                    
                                 />
                             </ButtonWrapper>
                         </Row2>
@@ -404,7 +405,7 @@ const StyledButton = styled(Button)`
 
 const Icon = styled(Image)`
     margin-right: 1em;
-
+    cursor: pointer;
     @media (max-width: 768px) {
         margin-right: 0;
     }
