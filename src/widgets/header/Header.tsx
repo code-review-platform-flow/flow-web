@@ -54,6 +54,10 @@ const Header = ({ user, onLogout, onCreateAccount }: HeaderProps) => {
         router.push(`/mailbox`);
     };
 
+    const handleNavigationAlarm = () => {
+        router.push(`/alarm`);
+    };
+
     // 검색어 입력 시 처리 함수
     const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         setSearchTerm(event.target.value);
@@ -155,7 +159,7 @@ const Header = ({ user, onLogout, onCreateAccount }: HeaderProps) => {
                         <Row2>
                             <Row3>
                                 <Icon src={boxIcon} alt="박스 아이콘" onClick={handleNavigationMailBox} />
-                                <Icon src={bellIcon} alt="벨 아이콘" />
+                                <Icon src={bellIcon} alt="벨 아이콘" onClick={handleNavigationAlarm} />
                                 <HambergerIcon onClick={() => clickModal()} src={hamburgerIcon} alt="햄버거 아이콘" />
                             </Row3>
                             <ButtonWrapper>
