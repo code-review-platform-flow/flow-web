@@ -1,8 +1,8 @@
 'use client';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { FillWrapper } from '@/widgets/wrapper/FillWrapper';
 import SearchSchoolContainer from './ui/SearchSchoolContainer';
-import SelectDepartmentContainer from './ui/SelectDepartmentContainer';
+import SelectDepartmentContainer from './ui/SearchMajorContainer';
 import RegsiterForm from './ui/RegsiterForm';
 import RegisterContainer from './ui/RegisterContainer';
 import { redirect } from 'next/navigation';
@@ -25,12 +25,13 @@ const RegisterPage: React.FC = () => {
         } else {
             setRegisterCheck(true);
         }
-
-        if (register == 2 && registerCheck == true) {
-            console.log('회원가입 성공');
-            redirect('/');
-        }
     };
+
+    useEffect(() => {
+        if (register === 2 && registerCheck) {
+            redirect('/login');
+        }
+    }, [register, registerCheck]);
 
     return (
         <FillWrapper>

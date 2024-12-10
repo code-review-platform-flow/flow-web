@@ -10,9 +10,11 @@ import {
     schoolNameState,
     studentNumberState,
     majorNameState,
-} from '@/app/util/register/register';
+} from '@/views/register/model/register';
 import { codeAuth, emailAuth } from '../api/emailAuthAPI';
 import { submitRegister } from '../api/registerAPI';
+import { enterYearState } from '../model/atoms';
+import { schoolNumberToEnterYear } from '@/shared/hook/schoolNumberToenterYear';
 
 interface RegsiterFormProps {
     showError?: boolean;
@@ -21,6 +23,7 @@ interface RegsiterFormProps {
 }
 
 const RegsiterForm: React.FC<RegsiterFormProps> = ({ showError = false, registerCheck = false, onNext }) => {
+    const [enterYear, setEnterYear] = useRecoilState(enterYearState);
     const [name, setName] = useRecoilState(nameState);
     const [pw, setPw] = useState('');
     const [pw2, setPw2] = useState('');
@@ -109,6 +112,12 @@ const RegsiterForm: React.FC<RegsiterFormProps> = ({ showError = false, register
         }
     };
 
+    const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const value = e.target.value;
+        setStudentNumber(value);
+        const enterYear = schoolNumberToEnterYear(studentNumber);
+        setEnterYear(enterYear!);
+    };
     return (
         <>
             <Title>사용자 정보 입력</Title>
@@ -132,8 +141,9 @@ const RegsiterForm: React.FC<RegsiterFormProps> = ({ showError = false, register
                     size="large"
                     placeholder="학번을 입력해주세요"
                     value={studentNumber}
-                    onChange={(e) => setStudentNumber(e.target.value)}
+                    onChange={handleInputChange}
                 />
+
                 {showError && !studentNumberRegex.test(studentNumber) && (
                     <ErrorMessage>학번을 정확히 입력해주세요</ErrorMessage>
                 )}
