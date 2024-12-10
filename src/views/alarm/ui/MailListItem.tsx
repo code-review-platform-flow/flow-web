@@ -18,7 +18,7 @@ const MailListItem: React.FC<MailListItemProps> = ({ alarm, onClick }) => {
             <RowWrapper onClick={onClick} style={{ cursor: 'pointer' }} gap="1em">
                 <ColumnWrapper>
                     <SubTitle>{alarm.alarmType}</SubTitle>
-                    <Part>{alarm.messege || '한줄 소개가 없습니다.'}</Part>
+                    <Part>{alarm.message}</Part>
                     <RowWrapper>
                         <Time>{filterTime(alarm.createDate)}</Time>
                     </RowWrapper>

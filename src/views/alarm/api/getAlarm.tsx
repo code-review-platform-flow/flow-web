@@ -1,27 +1,19 @@
 import apiClient from '@/shared/api/apiClient';
 import { AlarmListItem } from '../model/type';
 
-interface AlarmResponse {
-    coffeeChat: AlarmListItem[];
-}
-
 export const getAlarm = async (email: string): Promise<AlarmListItem[]> => {
     try {
-        const encodedEmail = encodeURIComponent(email);
-        const response = await apiClient.get(`alarm/${encodedEmail}`);
+        const response = await apiClient.get(`alarm`, { searchParams: { email } });
 
-        if (!response.ok) {
-            throw new Error('알람을 가져오는 중 오류가 발생했습니다.');
-        }
-        const data: AlarmResponse = await response.json();
+        const data = (await response.json()) as { items: AlarmListItem[] };
 
-        if (!Array.isArray(data)) {
+        if (!data || !Array.isArray(data.items)) {
             throw new Error('유효하지 않은 데이터 형식입니다.');
         }
 
-        return data;
+        return data.items;
     } catch (error) {
-        console.error(`getAlarm Error :`, error);
+        console.error(`getAlarm Error:`, error);
         throw error;
     }
 };

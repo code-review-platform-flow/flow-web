@@ -1,6 +1,8 @@
 export interface AlarmListItem {
     alarmId: number;
     alarmType: 'COMMENT' | 'REPLY' | 'LIKE' | 'FOLLOW';
-    messege: string;
+    message: string;
     createDate: string;
+    userId: number;
+    isRead: boolean;
 }
