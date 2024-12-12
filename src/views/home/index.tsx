@@ -12,10 +12,12 @@ import SmallPostContainer from '@/widgets/postContainer/SmallPostContainer';
 import { useEffect, useState } from 'react';
 import { getPostDetail } from '@/shared/api/post/getPostDetail';
 import { PostDetail } from '@/shared/type/post';
+import { useRecoilValue } from 'recoil';
+import { userSummaryState } from '@/entities/auth/model';
 
 export default function HomePage() {
     const [newPostDetail, setNewPostDetail] = useState<PostDetail>();
-
+    const authData = useRecoilValue(userSummaryState);
     const { data: homeData = { careers: [], posts: [], hallOfFame: [], newPost: 0 } } = useQuery({
         queryKey: ['fetchhomeData'],
         queryFn: () => fetchHomeData(),
@@ -39,12 +41,12 @@ export default function HomePage() {
     return (
         <PageWrapper padding="15%">
             <>
-                <WriteContainer />
+                <WriteContainer email={authData?.email} />
                 {newPostDetail && <SmallPostContainer postData={newPostDetail} />}
             </>
             <Swiper>
-                <HallofFameList hallOfFameData={homeData.hallOfFame} />
-                <CoffeeChatList coffechatData={homeData.hallOfFame} />
+                <HallofFameList hallOfFameData={homeData.hallOfFame} email={authData?.email} />
+                <CoffeeChatList coffechatData={homeData.hallOfFame} email={authData?.email} />
                 <TrendingPostList trendingPostList={homeData.posts} />
             </Swiper>
             <>

@@ -16,7 +16,7 @@ interface PostDetailProps {
 
 const PostDetailPage: React.FC<PostDetailProps> = ({ postId }) => {
     const authData = useRecoilValue(authDataState);
-    const email = authData!.email;
+    const email = authData?.email;
 
     return (
         <PageWrapper gap="0.875em">

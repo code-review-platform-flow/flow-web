@@ -13,9 +13,10 @@ import { encodeBase64 } from '@/shared/hook/base64';
 
 interface HallofFameListProps {
     hallOfFameData?: UserSummary[];
+    email?: string | undefined;
 }
 
-const HallofFameList: React.FC<HallofFameListProps> = ({ hallOfFameData = [] }) => {
+const HallofFameList: React.FC<HallofFameListProps> = ({ hallOfFameData = [], email }) => {
     const router = useRouter();
     const handleNavigation = (email: string) => {
         const encodedEmail = encodeBase64(email);

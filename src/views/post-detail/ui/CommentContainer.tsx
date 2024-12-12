@@ -21,7 +21,7 @@ import Button from '@/widgets/button/Button';
 
 interface CommentContainerProps {
     postId: string;
-    email: string;
+    email?: string;
 }
 
 const CommentContainer: React.FC<CommentContainerProps> = ({ postId, email }) => {
@@ -88,14 +88,19 @@ const CommentContainer: React.FC<CommentContainerProps> = ({ postId, email }) =>
         }
     };
 
-    const handleModifyComment = async (postId: string, commentId: number, email: string, commentContent: string) => {
-        try {
-            await patchComment(postId, commentId, email, commentContent);
-            alert('댓글이 수정되었습니다');
-        } catch (error) {
-            console.log(error);
-        } finally {
-            window.location.reload();
+    const handleModifyComment = async (postId: string, commentId: number, email?: string, commentContent?: string) => {
+        if (email && commentContent) {
+            try {
+                await patchComment(postId, commentId, email, commentContent);
+                alert('댓글이 수정되었습니다');
+            } catch (error) {
+                console.log(error);
+            } finally {
+                window.location.reload();
+            }
+        }
+        if (email && commentContent === '') {
+            alert('내용을 입력해주세요!');
         }
     };
 
@@ -113,7 +118,7 @@ const CommentContainer: React.FC<CommentContainerProps> = ({ postId, email }) =>
                                         enterYear={comment.studentNumber}
                                         imgUrl={comment.profileUrl}
                                     />
-                                    {comment.own && (
+                                    {email && comment.own && (
                                         <>
                                             {isEditingComment[index] ? (
                                                 <Button
@@ -192,7 +197,7 @@ const CommentContainer: React.FC<CommentContainerProps> = ({ postId, email }) =>
                                                             enterYear={reply.studentNumber.toString()}
                                                             imgUrl={reply.profileUrl}
                                                         />
-                                                        {reply.own && (
+                                                        {email && reply.own && (
                                                             <>
                                                                 {isEditingReply[(comment.commentId, reply.replyId)] ? (
                                                                     <Button
@@ -256,11 +261,13 @@ const CommentContainer: React.FC<CommentContainerProps> = ({ postId, email }) =>
                                                     <Line />
                                                 </ReplyContainer>
                                             ))}
-                                        <ReplyWriteContainer
-                                            postId={postId}
-                                            commentId={comment.commentId}
-                                            email={email}
-                                        />
+                                        {email && (
+                                            <ReplyWriteContainer
+                                                postId={postId}
+                                                commentId={comment.commentId}
+                                                email={email}
+                                            />
+                                        )}
                                     </ReplyList>
                                 </>
                             )}

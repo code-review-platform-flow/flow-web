@@ -11,12 +11,10 @@ import { useSearchParams } from 'next/navigation';
 import { getUserInfo } from './api/getUserInfo';
 import { useRecoilValue } from 'recoil';
 import { authDataState } from '@/entities/auth/model';
-import { UserInfo, UserSummary } from '@/shared/type/user';
+import { UserInfo } from '@/shared/type/user';
 import UserPostList from './ui/UserPostList';
 import styled from 'styled-components';
 import { decodeBase64 } from '@/shared/hook/base64';
-import { getFollowerList } from './api/getFollowerList';
-import FollowList from './ui/FollowListContainer';
 
 const UserPage: React.FC = () => {
     const searchParams = useSearchParams();
@@ -29,9 +27,8 @@ const UserPage: React.FC = () => {
 
     useEffect(() => {
         const fetchData = async () => {
-            if (hostEmail && visitorEmail) {
+            if (hostEmail) {
                 try {
-                    // 유저 정보 가져오기
                     const data = await getUserInfo(hostEmail, visitorEmail);
                     setUserData(data);
                 } catch (error) {
@@ -51,7 +48,7 @@ const UserPage: React.FC = () => {
                             <UserSummaryContainer
                                 followHost={userData.followHost}
                                 email={hostEmail}
-                                visitorEmail={visitorEmail!}
+                                visitorEmail={visitorEmail}
                                 name={userData.userName}
                                 majorName={userData.majorName}
                                 studentNumber={userData.studentNumber}

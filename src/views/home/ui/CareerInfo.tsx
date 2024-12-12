@@ -3,7 +3,7 @@ import React from 'react';
 import styled from 'styled-components';
 import Container from '@/widgets/container/Container';
 import { AutoSwiper } from './AutoSwiper'; // AutoSwiper 경로에 맞게 수정 필요
-// import Image from 'next/image';
+import Image from 'next/image';
 import { RowWrapper } from '@/widgets/wrapper/RowWrapper';
 import { Medium } from './Font';
 import Button from '@/widgets/button/Button';
@@ -46,7 +46,7 @@ const CareerInfo: React.FC<CareerInfoProps> = ({ careers = [] }) => {
                             round
                         >
                             <StyledRowWrapper2>
-                                {/* <CareerImage  width={44} height={44} src={career.imageUrl} alt="공고이미지" /> */}
+                                <CareerImage width={44} height={44} src={career.imageUrl} alt="공고이미지" />
                                 <ColumnWrapper gap="0.25em">
                                     <CareerTitle>{career.title}</CareerTitle>
                                     <CareerCategory>{career.subtitle}</CareerCategory>
@@ -67,12 +67,12 @@ const StyledRowWrapper = styled(RowWrapper)`
     justify-content: space-between;
     margin-bottom: -1em;
 `;
-// const CareerImage = styled(Image)`
-//     width: 72px;
-//     height: 72px;
-//     border-radius: 1em;
-//     border: 0.5px solid #004e96;
-// `;
+const CareerImage = styled(Image)`
+    width: 72px;
+    height: 72px;
+    border-radius: 1em;
+    border: 0.5px solid #004e96;
+`;
 const CareerCategory = styled.div`
     font-size: 0.8125em;
     color: #333333;

@@ -18,7 +18,7 @@ import EditContainer from './EditContainer';
 
 interface PostContainerProps {
     postId: string;
-    email: string;
+    email?: string;
 }
 
 const PostContainer: React.FC<PostContainerProps> = ({ postId, email }) => {
