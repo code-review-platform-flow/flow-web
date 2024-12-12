@@ -15,9 +15,10 @@ import { useRouter } from 'next/navigation';
 
 interface CoffeeChatListProps {
     coffechatData: UserSummary[];
+    email?: string | undefined;
 }
 
-const CoffeeChatList: React.FC<CoffeeChatListProps> = ({ coffechatData }) => {
+const CoffeeChatList: React.FC<CoffeeChatListProps> = ({ coffechatData, email }) => {
     const authData = useRecoilValue(userSummaryState);
     const router = useRouter();
 
@@ -27,11 +28,17 @@ const CoffeeChatList: React.FC<CoffeeChatListProps> = ({ coffechatData }) => {
     };
 
     const handleCoffeeChat = (email: string, name: string, photo: string) => {
+        if (!authData) {
+            alert('로그인 후 플로우에 참여해요!');
+            router.push('/login');
+            return;
+        }
+
         const chatData = {
             sender: {
-                email: authData?.email,
-                name: authData?.userName,
-                photo: authData?.profileUrl,
+                email: authData.email,
+                name: authData.userName,
+                photo: authData.profileUrl,
             },
             receiver: {
                 email,
@@ -51,8 +58,8 @@ const CoffeeChatList: React.FC<CoffeeChatListProps> = ({ coffechatData }) => {
             <Container size="small" width="100%" height="100%">
                 <ColumnWrapper gap="0.75em">
                     {coffechatData.map((item, index) => (
-                        <UserInfo onClick={() => handleNavigation(item.email)} key={index}>
-                            <StyledRowWrapper>
+                        <UserInfo key={index}>
+                            <StyledRowWrapper onClick={() => handleNavigation(item.email)}>
                                 <Rank>{index + 1}</Rank>
                                 <ProfileImage
                                     src={item.profileUrl}

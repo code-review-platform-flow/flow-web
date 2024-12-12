@@ -38,7 +38,7 @@ interface UserSummaryContainerProps {
     own: boolean;
     followHost: boolean;
     email: string;
-    visitorEmail: string;
+    visitorEmail?: string;
 }
 
 const UserSummaryContainer: React.FC<UserSummaryContainerProps> = ({
@@ -108,6 +108,11 @@ const UserSummaryContainer: React.FC<UserSummaryContainerProps> = ({
     };
 
     const handleFollow = async () => {
+        if (!visitorEmail) {
+            alert('로그인 후 플로우에 참여해요!');
+            return;
+        }
+
         try {
             const response = await postFollow(visitorEmail, email);
             if (response) {
@@ -121,6 +126,10 @@ const UserSummaryContainer: React.FC<UserSummaryContainerProps> = ({
     };
 
     const handleFollowCancle = async () => {
+        if (!visitorEmail) {
+            alert('로그인 후 플로우에 참여해요!');
+            return;
+        }
         try {
             const response = await deleteFollow(visitorEmail, email);
             if (response) {
@@ -134,6 +143,11 @@ const UserSummaryContainer: React.FC<UserSummaryContainerProps> = ({
     };
 
     const handleCoffeeChat = () => {
+        if (!visitorEmail) {
+            alert('로그인 후 플로우에 참여해요!');
+            return;
+        }
+
         if (own) {
             router.push(`/mailbox`);
             return;

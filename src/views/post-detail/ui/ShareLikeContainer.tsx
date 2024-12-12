@@ -12,7 +12,7 @@ import EditContainer from './EditContainer';
 interface ShareLikeContainerProps {
     mobile?: boolean;
     postId: string;
-    email: string;
+    email?: string;
     own?: boolean;
 }
 
@@ -50,13 +50,15 @@ const ShareLikeContainer: React.FC<ShareLikeContainerProps> = ({ mobile = false,
     return (
         <Wrapper mobile={mobile}>
             <StyledContainer mobile={mobile}>
-                <TumbShareButton onClick={() => handleLike()}>
-                    {currentCliked ? (
-                        <ResponsiveImage src={TumbColorIcon} alt="tumb" mobile={mobile} />
-                    ) : (
-                        <ResponsiveImage src={TumbIcon} alt="tumb" mobile={mobile} />
-                    )}
-                </TumbShareButton>
+                {email && (
+                    <TumbShareButton onClick={() => handleLike()}>
+                        {currentCliked ? (
+                            <ResponsiveImage src={TumbColorIcon} alt="tumb" mobile={mobile} />
+                        ) : (
+                            <ResponsiveImage src={TumbIcon} alt="tumb" mobile={mobile} />
+                        )}
+                    </TumbShareButton>
+                )}
                 <TumbShareButton>
                     <ShareButton onClick={() => copyUrl()} />
                 </TumbShareButton>

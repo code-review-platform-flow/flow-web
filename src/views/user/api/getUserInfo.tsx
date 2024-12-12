@@ -1,13 +1,15 @@
 import apiClient from '@/shared/api/apiClient';
 import { UserInfo } from '@/shared/type/user';
 // 특정 유저의 상세 정보를 가져오는 함수
-export const getUserInfo = async (hostEmail: string, visitorEmail: string): Promise<UserInfo> => {
+export const getUserInfo = async (hostEmail: string, visitorEmail?: string): Promise<UserInfo> => {
     try {
+        const params: Record<string, string> = { hostEmail };
+        if (visitorEmail) {
+            params.visitorEmail = visitorEmail;
+        }
+
         const response = await apiClient.get(`user`, {
-            searchParams: {
-                hostEmail,
-                visitorEmail,
-            },
+            searchParams: params,
         });
 
         if (!response.ok) {

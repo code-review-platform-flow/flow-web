@@ -5,14 +5,25 @@ import WriteIcon from '../../../../public/icons/writeIcon.svg';
 import Image from 'next/image';
 import Link from 'next/link';
 
-const WriteContainer = () => {
+const WriteContainer = ({ email }: { email?: string }) => {
     return (
-        <StyledLink href={'/post-write'}>
-            <StyledContainer size="wide" round>
-                <Image src={WriteIcon} alt="쓰기 아이콘" />
-                어떤 이야기를 나누고 싶나요?
-            </StyledContainer>
-        </StyledLink>
+        <>
+            {email ? (
+                <StyledLink href={'/post-write'}>
+                    <StyledContainer size="wide" round>
+                        <Image src={WriteIcon} alt="쓰기 아이콘" />
+                        어떤 이야기를 나누고 싶나요?
+                    </StyledContainer>
+                </StyledLink>
+            ) : (
+                <StyledLink href={'/login'}>
+                    <StyledContainer size="wide" round>
+                        <Image src={WriteIcon} alt="쓰기 아이콘" />
+                        로그인하고 플로우에 참여하세요!
+                    </StyledContainer>
+                </StyledLink>
+            )}
+        </>
     );
 };
 

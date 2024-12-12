@@ -6,7 +6,7 @@ import { useRouter } from 'next/navigation';
 interface EditContainerProps {
     mobile?: boolean;
     postId: string;
-    email: string;
+    email?: string;
 }
 
 const EditContainer: React.FC<EditContainerProps> = ({ postId, mobile = false }) => {
