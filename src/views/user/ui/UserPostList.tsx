@@ -15,7 +15,7 @@ const UserPostList: React.FC<UserPostListProps> = ({ postList, own }) => {
 
     useEffect(() => {
         const fetchPostData = async () => {
-            console.log('포스트 정보 불러오기');
+            console.log('포스트 정보 불러오기 하는중');
             try {
                 const data = await Promise.all(postList.map((post) => getPostDetail(post.postId)));
                 setPostData(data);
