@@ -27,6 +27,7 @@ import { encodeBase64 } from '@/shared/hook/base64';
 import { UserSummary } from '@/shared/type/user';
 import { getFollowerList } from '../api/getFollowerList';
 import FollowListContainer from './FollowListContainer';
+import UserImageContainer from './UserImageContainer';
 
 interface UserSummaryContainerProps {
     name: string;
@@ -175,13 +176,7 @@ const UserSummaryContainer: React.FC<UserSummaryContainerProps> = ({
         <UserSummaryContainerWrapper round width="100%">
             <ColumnWrapper gap="0.75em">
                 <RowWrapper gap="1em">
-                    <Image
-                        style={{ borderRadius: '1em' }}
-                        width={80}
-                        height={80}
-                        src={profileUrl}
-                        alt="프로필 이미지"
-                    />
+                    <UserImageContainer profileUrl={profileUrl} email={email} own={own} />
                     <ColumnWrapper gap="0.35em">
                         <UserName>{name}</UserName>
                         <UserDepartmentEnterYear>
