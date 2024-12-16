@@ -47,8 +47,13 @@ const PostWritePage: React.FC = () => {
                 title,
                 content,
             };
+            let response;
+            if (postId) {
+                response = await postPost(Number(postId), post);
+            } else {
+                response = await postPost(undefined, post);
+            }
 
-            const response = await postPost(post);
             router.push(`/post-detail/${response.postId}`);
 
             resetCategory();
