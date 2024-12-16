@@ -8,6 +8,7 @@ import { deleteLike } from '../api/like/deleteLike';
 import { getLike } from '../api/like/getLike';
 import ShareButton from './ShareButton';
 import EditContainer from './EditContainer';
+import DeleteContainer from './DeleteContainer';
 
 interface ShareLikeContainerProps {
     mobile?: boolean;
@@ -62,7 +63,12 @@ const ShareLikeContainer: React.FC<ShareLikeContainerProps> = ({ mobile = false,
                 <TumbShareButton>
                     <ShareButton onClick={() => copyUrl()} />
                 </TumbShareButton>
-                {mobile && own && <EditContainer mobile postId={postId} email={email} />}
+                {mobile && own && (
+                    <>
+                        <EditContainer mobile postId={postId} email={email} />
+                        <DeleteContainer mobile postId={postId} email={email} />
+                    </>
+                )}
             </StyledContainer>
         </Wrapper>
     );

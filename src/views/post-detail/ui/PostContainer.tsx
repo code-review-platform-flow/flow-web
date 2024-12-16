@@ -15,6 +15,7 @@ import filterTime from '@/shared/hook/filterTime';
 import MarkDownContent from '@/widgets/post/MarkDownContent';
 import { SizedBox } from '@/widgets/wrapper/SizedBox';
 import EditContainer from './EditContainer';
+import DeleteContainer from './DeleteContainer';
 
 interface PostContainerProps {
     postId: string;
@@ -75,12 +76,22 @@ const PostContainer: React.FC<PostContainerProps> = ({ postId, email }) => {
                 </ColumnWrapper>
                 <MarkDownContent maxHeight="100%" fontSize="1em" content={postDetail.content} />
             </Container>
-            {postDetail.own && <EditContainer postId={postId} email={email} />}
+            {postDetail.own && (
+                <Wrapper>
+                    <EditContainer postId={postId} email={email} />
+                    <DeleteContainer postId={postId} email={email} />
+                </Wrapper>
+            )}
         </StyledRowWrapper>
     );
 };
 
 export default PostContainer;
+const Wrapper = styled.div`
+    display: flex;
+    justify-content: center;
+`;
+
 const StyledRowWrapper = styled(RowWrapper)`
     position: relative;
     padding: 1em;
