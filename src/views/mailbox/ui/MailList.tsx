@@ -23,23 +23,20 @@ const MailList: React.FC<MailListProps> = ({ mailData, selected, email }) => {
     const [selectedChat, setSelectedChat] = useState<CoffechatListItem | null>(null);
     const [isModalOpen, setIsModalOpen] = useState(false);
 
-    useEffect(() => {
-        const fetchUserSummaries = async () => {
-            const userIds = Array.from(
-                new Set(
-                    mailData.map((chat) => (selected === 'receiveBox' ? chat.initiatorUserId : chat.recipientUserId)),
-                ),
-            );
+    // 상대방의 데이터를 가져오는 함수
+    const fetchUserSummaries = async () => {
+        const userIds = Array.from(
+            new Set(mailData.map((chat) => (selected === 'receiveBox' ? chat.initiatorUserId : chat.recipientUserId))),
+        );
 
-            const summaries: Record<number, UserSummary> = {};
-            for (const userId of userIds) {
+        const summaries: Record<number, UserSummary> = {};
+        await Promise.all(
+            userIds.map(async (userId) => {
                 try {
                     const userEmail =
-                        mailData.find((chat) =>
-                            selected === 'receiveBox'
-                                ? chat.initiatorUserId === userId
-                                : chat.recipientUserId === userId,
-                        )?.recipientUserEmail || '';
+                        selected === 'receiveBox'
+                            ? mailData.find((chat) => chat.initiatorUserId === userId)?.initiatorUserEmail
+                            : mailData.find((chat) => chat.recipientUserId === userId)?.recipientUserEmail;
 
                     if (userEmail) {
                         summaries[userId] = await getUserSummary(userEmail);
@@ -47,14 +44,18 @@ const MailList: React.FC<MailListProps> = ({ mailData, selected, email }) => {
                 } catch (error) {
                     console.error(`Error fetching user summary for userId ${userId}:`, error);
                 }
-            }
+            }),
+        );
 
-            setUserSummaries(summaries);
-        };
+        setUserSummaries(summaries);
+    };
 
+    // 마운트될 때 및 mailData, selected 값이 바뀔 때 사용자 정보 로드
+    useEffect(() => {
         fetchUserSummaries();
     }, [mailData, selected]);
 
+    // 받은 요청 또는 보낸 요청 데이터 필터링
     const filteredData = mailData.filter((chat) =>
         selected === 'receiveBox' ? chat.recipientUserEmail === email : chat.initiatorUserEmail === email,
     );
@@ -80,11 +81,7 @@ const MailList: React.FC<MailListProps> = ({ mailData, selected, email }) => {
                 ) : (
                     filteredData.map((chat) => {
                         const userId = selected === 'receiveBox' ? chat.initiatorUserId : chat.recipientUserId;
-                        const userSummary = userSummaries[userId] || {
-                            userName: '',
-                            profileUrl: '',
-                            majorName: '',
-                        };
+                        const userSummary = userSummaries[userId];
 
                         return (
                             <MailListItem
@@ -104,24 +101,24 @@ const MailList: React.FC<MailListProps> = ({ mailData, selected, email }) => {
                     <CoffeeChatSendContainer
                         type={selected === 'receiveBox' ? 'received' : 'sent'}
                         senderName={
-                            selected === 'sendBox'
-                                ? userSummaries[selectedChat.initiatorUserId]?.userName || '알 수 없음'
-                                : mySummary!.userName
+                            selected === 'receiveBox'
+                                ? userSummaries[selectedChat.initiatorUserId]?.userName || '알 수 없음' // 상대방 이름
+                                : mySummary?.userName || '알 수 없음' // 나의 이름
                         }
                         receiverName={
                             selected === 'receiveBox'
-                                ? mySummary!.userName
-                                : userSummaries[selectedChat.recipientUserId]?.userName || '알 수 없음'
+                                ? mySummary?.userName || '알 수 없음' // 나의 이름
+                                : userSummaries[selectedChat.recipientUserId]?.userName || '알 수 없음' // 상대방 이름
                         }
                         senderImage={
-                            selected === 'sendBox'
+                            selected === 'receiveBox'
                                 ? userSummaries[selectedChat.initiatorUserId]?.profileUrl || ''
-                                : mySummary!.profileUrl
+                                : mySummary?.profileUrl || ''
                         }
                         receiverImage={
                             selected === 'receiveBox'
-                                ? userSummaries[selectedChat.recipientUserId]?.profileUrl || ''
-                                : mySummary!.profileUrl
+                                ? mySummary?.profileUrl || ''
+                                : userSummaries[selectedChat.recipientUserId]?.profileUrl || ''
                         }
                         senderEmail={selected === 'receiveBox' ? selectedChat.initiatorUserEmail : email}
                         receiverEmail={selected === 'receiveBox' ? email : selectedChat.recipientUserEmail}
