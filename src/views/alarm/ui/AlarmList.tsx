@@ -3,7 +3,7 @@ import React from 'react';
 import { ColumnWrapper } from '@/widgets/wrapper/ColumnWrapper';
 import styled from 'styled-components';
 import { AlarmListItem } from '../model/type';
-import MailListItem from './MailListItem';
+import AlarmListItemCotainer from './AlarmListItemCotainer';
 
 interface AlarmListProps {
     alarmData: AlarmListItem[];
@@ -19,7 +19,7 @@ const AlarmList: React.FC<AlarmListProps> = ({ alarmData, email }) => {
                     <NoDataMessage>받은 알람이 없습니다.</NoDataMessage>
                 ) : (
                     alarmData.map((alarm, i) => {
-                        return <MailListItem key={i} alarm={alarm} />;
+                        return <AlarmListItemCotainer email={email} key={i} alarm={alarm} />;
                     })
                 )}
             </ColumnWrapper>
