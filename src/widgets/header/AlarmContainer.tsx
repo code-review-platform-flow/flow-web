@@ -23,7 +23,6 @@ const AlarmContainer: React.FC<AlarmContainerProps> = ({ src, alt, email, onClic
 
 export default AlarmContainer;
 
-// Keyframes 애니메이션 정의
 const popAnimation = keyframes`
     0% {
         transform: scale(0.8);
@@ -51,14 +50,17 @@ const AnimatedAlarmCount = styled.div`
     background-color: red;
     color: white;
     border-radius: 50%;
-    padding: 0.25em 0.25em;
+    padding: 0.25em 0.45em;
     font-size: 0.8125rem;
     font-weight: 700;
     display: flex;
     align-items: center;
     justify-content: center;
 
-    /* 애니메이션 적용 */
+    @media (max-width: 768px) {
+        padding: 0.25em 0.45em;
+        font-size: 0.5125rem;
+    }
     animation: ${popAnimation} 0.3s ease-in-out;
 `;
 
