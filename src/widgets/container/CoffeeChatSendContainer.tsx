@@ -57,7 +57,7 @@ const CoffeeChatSendContainer: React.FC<CoffeeChatProps> = ({
                         {type === 'pay'
                             ? `${receiverName}님에게 보낼 메시지 내용을 작성해주세요`
                             : type === 'received'
-                            ? `${receiverName}님에게 답장을 남겨보세요.`
+                            ? `${senderName}님에게 답장을 남겨보세요.`
                             : `${receiverName}님에게 보낸 메시지 내용입니다.`}
                     </CoffeeChatSemiTitle>
                     <CoffeeChatContent
