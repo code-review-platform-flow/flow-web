@@ -59,6 +59,8 @@ const MailList: React.FC<MailListProps> = ({ mailData, selected, email }) => {
         selected === 'receiveBox' ? chat.recipientUserEmail === email : chat.initiatorUserEmail === email,
     );
 
+    console.log('필터링된 메일 데이터:', filteredData);
+
     const handleItemClick = (chat: CoffechatListItem) => {
         setSelectedChat(chat);
         setIsModalOpen(true);
