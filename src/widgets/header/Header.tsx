@@ -20,6 +20,7 @@ import Container from '../container/Container';
 import { getUserSummary } from '@/shared/api/user/getUserSummary';
 import { useRecoilState, useRecoilValue } from 'recoil';
 import { authDataState, userSummaryState } from '@/entities/auth/model';
+import AlarmContainer from './AlarmContainer';
 
 type User = {
     email?: string;
@@ -156,7 +157,12 @@ const Header = ({ user, onLogout, onCreateAccount }: HeaderProps) => {
                         <Row2>
                             <Row3>
                                 <Icon src={boxIcon} alt="박스 아이콘" onClick={handleNavigationMailBox} />
-                                <Icon src={bellIcon} alt="벨 아이콘" onClick={handleNavigationAlarm} />
+                                <AlarmContainer
+                                    email={email!}
+                                    src={bellIcon}
+                                    alt="벨 아이콘"
+                                    onClick={handleNavigationAlarm}
+                                />
                                 <HambergerIcon onClick={() => clickModal()} src={hamburgerIcon} alt="햄버거 아이콘" />
                             </Row3>
                             <ButtonWrapper>
