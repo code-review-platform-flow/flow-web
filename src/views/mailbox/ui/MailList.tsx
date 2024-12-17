@@ -114,7 +114,7 @@ const MailList: React.FC<MailListProps> = ({ mailData, selected, email }) => {
                                 : userSummaries[selectedChat.recipientUserId]?.userName || '알 수 없음'
                         }
                         senderImage={
-                            selected === 'receiveBox'
+                            selected === 'sendBox'
                                 ? userSummaries[selectedChat.initiatorUserId]?.profileUrl || ''
                                 : mySummary!.profileUrl
                         }
