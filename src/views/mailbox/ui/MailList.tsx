@@ -55,7 +55,9 @@ const MailList: React.FC<MailListProps> = ({ mailData, selected, email }) => {
         fetchUserSummaries();
     }, [mailData, selected]);
 
-    const filteredData = mailData;
+    const filteredData = mailData.filter((chat) =>
+        selected === 'receiveBox' ? chat.recipientUserEmail === email : chat.initiatorUserEmail === email,
+    );
 
     const handleItemClick = (chat: CoffechatListItem) => {
         setSelectedChat(chat);
@@ -77,7 +79,7 @@ const MailList: React.FC<MailListProps> = ({ mailData, selected, email }) => {
                     </NoDataMessage>
                 ) : (
                     filteredData.map((chat) => {
-                        const userId = selected === 'receiveBox' ? chat.recipientUserId : chat.initiatorUserId;
+                        const userId = selected === 'receiveBox' ? chat.initiatorUserId : chat.recipientUserId;
                         const userSummary = userSummaries[userId] || {
                             userName: '',
                             profileUrl: '',
