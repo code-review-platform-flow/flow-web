@@ -55,11 +55,7 @@ const MailList: React.FC<MailListProps> = ({ mailData, selected, email }) => {
         fetchUserSummaries();
     }, [mailData, selected]);
 
-    const filteredData = mailData.filter((chat) =>
-        selected === 'receiveBox' ? chat.recipientUserEmail === email : chat.initiatorUserEmail === email,
-    );
-
-    console.log('필터링된 메일 데이터:', filteredData);
+    const filteredData = mailData;
 
     const handleItemClick = (chat: CoffechatListItem) => {
         setSelectedChat(chat);
