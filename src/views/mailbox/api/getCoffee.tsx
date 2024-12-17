@@ -8,7 +8,7 @@ interface CoffeeResponse {
 export const getCoffee = async (email: string): Promise<CoffechatListItem[]> => {
     try {
         const encodedEmail = encodeURIComponent(email);
-        const response = await apiClient.get(`coffee/${encodedEmail}`);
+        const response = await apiClient.get(`coffee/${encodedEmail}?size=100`);
 
         if (!response.ok) {
             throw new Error('데이터를 가져오는 중 오류가 발생했습니다.');
