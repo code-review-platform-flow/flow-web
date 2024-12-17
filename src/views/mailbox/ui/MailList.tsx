@@ -104,14 +104,14 @@ const MailList: React.FC<MailListProps> = ({ mailData, selected, email }) => {
                     <CoffeeChatSendContainer
                         type={selected === 'receiveBox' ? 'received' : 'sent'}
                         senderName={
-                            selected === 'receiveBox'
-                                ? userSummaries[selectedChat.recipientUserId]?.userName || '알 수 없음'
+                            selected === 'sendBox'
+                                ? userSummaries[selectedChat.initiatorUserId]?.userName || '알 수 없음'
                                 : mySummary!.userName
                         }
                         receiverName={
                             selected === 'receiveBox'
                                 ? mySummary!.userName
-                                : userSummaries[selectedChat.initiatorUserId]?.userName || '알 수 없음'
+                                : userSummaries[selectedChat.recipientUserId]?.userName || '알 수 없음'
                         }
                         senderImage={
                             selected === 'sendBox'
@@ -119,7 +119,7 @@ const MailList: React.FC<MailListProps> = ({ mailData, selected, email }) => {
                                 : mySummary!.profileUrl
                         }
                         receiverImage={
-                            selected === 'sendBox'
+                            selected === 'receiveBox'
                                 ? userSummaries[selectedChat.recipientUserId]?.profileUrl || ''
                                 : mySummary!.profileUrl
                         }
