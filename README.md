@@ -108,9 +108,9 @@ Flow-Front/
 ---
 
 ## 🏆 팀 구성
-- **Leader/Frontend**: Jim Min Seong
-- **Backend/DevOps**: SteamedEggMaster 
-- **DevOps/Frontend/Backend**: ~~
+- **Leader/Frontend**: [Jim Min Seong](https://github.com/jiminseong)
+- **Backend/DevOps**: [SteamedEggMaster](https://github.com/SteamedEggMaster)
+- **DevOps/Frontend/Backend**: [abwarten](https://github.com/abwarten)
 
 ---
 
