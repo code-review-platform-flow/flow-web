@@ -1,9 +1,6 @@
-![image](https://github.com/user-attachments/assets/ed87d55d-0bea-42ce-9ae6-bf2a22c893ea)
 # Flow - Code Review Platform
 
-![Flow Logo](./public/logos/logo.svg)
-
-Flow는 대학생 및 졸업생을 위한 혁신적인 코드 리뷰 및 멘토링 플랫폼입니다. 이 프로젝트는 사용자의 개발 역량 강화와 성공적인 취업 준비를 지원하기 위해 설계되었습니다.
+![Flow Logo](./public/icons/appIcon.svg) Flow는 대학생 및 졸업생을 위한 혁신적인 코드 리뷰 및 멘토링 플랫폼입니다. 이 프로젝트는 사용자의 개발 역량 강화와 성공적인 취업 준비를 지원하기 위해 설계되었습니다.
 
 ## 🌟 주요 기능
 
