@@ -1,7 +1,7 @@
-
+![image](https://github.com/user-attachments/assets/ed87d55d-0bea-42ce-9ae6-bf2a22c893ea)
 # Flow - Code Review Platform
 
-![Flow Logo](./public/logo.png)
+![Flow Logo](./public/logos/logo.svg)
 
 Flow는 대학생 및 졸업생을 위한 혁신적인 코드 리뷰 및 멘토링 플랫폼입니다. 이 프로젝트는 사용자의 개발 역량 강화와 성공적인 취업 준비를 지원하기 위해 설계되었습니다.
 
@@ -18,15 +18,25 @@ Flow는 대학생 및 졸업생을 위한 혁신적인 코드 리뷰 및 멘토�
 ## 📸 스크린샷
 
 ### 1. 메인 페이지
-![Main Page](./screenshots/main_page.png)
+<div style="display: flex; justify-content: space-between;">
+  <img src="https://private-user-images.githubusercontent.com/132000885/398391946-13133192-5af3-4f00-8d43-dbf46d7c8a8c.png?jwt=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJnaXRodWIuY29tIiwiYXVkIjoicmF3LmdpdGh1YnVzZXJjb250ZW50LmNvbSIsImtleSI6ImtleTUiLCJleHAiOjE3MzUwMzY1NDksIm5iZiI6MTczNTAzNjI0OSwicGF0aCI6Ii8xMzIwMDA4ODUvMzk4MzkxOTQ2LTEzMTMzMTkyLTVhZjMtNGYwMC04ZDQzLWRiZjQ2ZDdjOGE4Yy5wbmc_WC1BbXotQWxnb3JpdGhtPUFXUzQtSE1BQy1TSEEyNTYmWC1BbXotQ3JlZGVudGlhbD1BS0lBVkNPRFlMU0E1M1BRSzRaQSUyRjIwMjQxMjI0JTJGdXMtZWFzdC0xJTJGczMlMkZhd3M0X3JlcXVlc3QmWC1BbXotRGF0ZT0yMDI0MTIyNFQxMDMwNDlaJlgtQW16LUV4cGlyZXM9MzAwJlgtQW16LVNpZ25hdHVyZT1iYmM1OTBiNDA4ODM5YmMyNDNmMTYwZWZmNWI2YTE1MjYzNzZlYWY2NzNiYWY3ZGRmMmFmZWYyZDlmYWUwYzA2JlgtQW16LVNpZ25lZEhlYWRlcnM9aG9zdCJ9.n0gEZg_zOotQTm802AzAhVtVb5twhjViA3bbSqLXbvo" alt="웹 화면" width="60%" />
+  <img src="https://private-user-images.githubusercontent.com/132000885/398392081-79dc4205-e429-4c42-a249-32382237888c.png?jwt=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJnaXRodWIuY29tIiwiYXVkIjoicmF3LmdpdGh1YnVzZXJjb250ZW50LmNvbSIsImtleSI6ImtleTUiLCJleHAiOjE3MzUwMzY1NTAsIm5iZiI6MTczNTAzNjI1MCwicGF0aCI6Ii8xMzIwMDA4ODUvMzk4MzkyMDgxLTc5ZGM0MjA1LWU0MjktNGM0Mi1hMjQ5LTMyMzgyMjM3ODg4Yy5wbmc_WC1BbXotQWxnb3JpdGhtPUFXUzQtSE1BQy1TSEEyNTYmWC1BbXotQ3JlZGVudGlhbD1BS0lBVkNPRFlMU0E1M1BRSzRaQSUyRjIwMjQxMjI0JTJGdXMtZWFzdC0xJTJGczMlMkZhd3M0X3JlcXVlc3QmWC1BbXotRGF0ZT0yMDI0MTIyNFQxMDMwNTBaJlgtQW16LUV4cGlyZXM9MzAwJlgtQW16LVNpZ25hdHVyZT02ZjU0ODk1OGU4NTQ0Yjc4NDhmNjBlYTUzYWVmYzA5YmJiNzFmNTkzOGNjM2VlMjcwMGM0MTAxYjNiYTUzNTkwJlgtQW16LVNpZ25lZEhlYWRlcnM9aG9zdCJ9.sX23tUvhhcRglGYuVk5WTUes8AWosyVSpmOLfTiXKro" alt="모바일 화면" width="40%" />
+</div>
+
+
 
 ### 2. 게시물 작성 및 조회
-![Post Feature](./screenshots/post_feature.png)
+![Post Feature](https://private-user-images.githubusercontent.com/132000885/398391480-c422c3fd-5310-4545-a56b-da4656f2aafe.png?jwt=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJnaXRodWIuY29tIiwiYXVkIjoicmF3LmdpdGh1YnVzZXJjb250ZW50LmNvbSIsImtleSI6ImtleTUiLCJleHAiOjE3MzUwMzY1NTAsIm5iZiI6MTczNTAzNjI1MCwicGF0aCI6Ii8xMzIwMDA4ODUvMzk4MzkxNDgwLWM0MjJjM2ZkLTUzMTAtNDU0NS1hNTZiLWRhNDY1NmYyYWFmZS5wbmc_WC1BbXotQWxnb3JpdGhtPUFXUzQtSE1BQy1TSEEyNTYmWC1BbXotQ3JlZGVudGlhbD1BS0lBVkNPRFlMU0E1M1BRSzRaQSUyRjIwMjQxMjI0JTJGdXMtZWFzdC0xJTJGczMlMkZhd3M0X3JlcXVlc3QmWC1BbXotRGF0ZT0yMDI0MTIyNFQxMDMwNTBaJlgtQW16LUV4cGlyZXM9MzAwJlgtQW16LVNpZ25hdHVyZT0xZDZiOGE2YmU1NmFjM2Y5NmFlYmQ2OGQ4MTM0YTUxNTI2NmUwZjRhMjc0MWQyODdmMTY2MjJjYTBmZDI1M2Y2JlgtQW16LVNpZ25lZEhlYWRlcnM9aG9zdCJ9.fcYd2dq_R7_b6ogOS3k7fYLGDzQWAx5ClhOpFIzyiDQ)
+
+<div style="display: flex; justify-content: space-between;">
+  <img src="https://private-user-images.githubusercontent.com/132000885/398391528-36d1f2fa-fad7-4bba-8e3a-3d3d4f26056c.png?jwt=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJnaXRodWIuY29tIiwiYXVkIjoicmF3LmdpdGh1YnVzZXJjb250ZW50LmNvbSIsImtleSI6ImtleTUiLCJleHAiOjE3MzUwMzY1NTAsIm5iZiI6MTczNTAzNjI1MCwicGF0aCI6Ii8xMzIwMDA4ODUvMzk4MzkxNTI4LTM2ZDFmMmZhLWZhZDctNGJiYS04ZTNhLTNkM2Q0ZjI2MDU2Yy5wbmc_WC1BbXotQWxnb3JpdGhtPUFXUzQtSE1BQy1TSEEyNTYmWC1BbXotQ3JlZGVudGlhbD1BS0lBVkNPRFlMU0E1M1BRSzRaQSUyRjIwMjQxMjI0JTJGdXMtZWFzdC0xJTJGczMlMkZhd3M0X3JlcXVlc3QmWC1BbXotRGF0ZT0yMDI0MTIyNFQxMDMwNTBaJlgtQW16LUV4cGlyZXM9MzAwJlgtQW16LVNpZ25hdHVyZT00MjgxZDVkMTMyMzA4ZTgzNWM0NGM2NTUzN2E5ZjVlYmM0OWQyNTMxZWYyNDcxMmFkZDdlMjZjNzBkN2E0N2ZiJlgtQW16LVNpZ25lZEhlYWRlcnM9aG9zdCJ9.6uXwbFhCa4_A7dtw6vhhbdwS3rvVCBHzTE-30lPo4Rs" alt="웹 화면" width="60%" />
+  <img src="https://private-user-images.githubusercontent.com/132000885/398392106-3bb4f78b-c611-4a2e-ab46-26f7ae6ce6a3.png?jwt=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJnaXRodWIuY29tIiwiYXVkIjoicmF3LmdpdGh1YnVzZXJjb250ZW50LmNvbSIsImtleSI6ImtleTUiLCJleHAiOjE3MzUwMzY1NTAsIm5iZiI6MTczNTAzNjI1MCwicGF0aCI6Ii8xMzIwMDA4ODUvMzk4MzkyMTA2LTNiYjRmNzhiLWM2MTEtNGEyZS1hYjQ2LTI2ZjdhZTZjZTZhMy5wbmc_WC1BbXotQWxnb3JpdGhtPUFXUzQtSE1BQy1TSEEyNTYmWC1BbXotQ3JlZGVudGlhbD1BS0lBVkNPRFlMU0E1M1BRSzRaQSUyRjIwMjQxMjI0JTJGdXMtZWFzdC0xJTJGczMlMkZhd3M0X3JlcXVlc3QmWC1BbXotRGF0ZT0yMDI0MTIyNFQxMDMwNTBaJlgtQW16LUV4cGlyZXM9MzAwJlgtQW16LVNpZ25hdHVyZT0zNDk2MWM5OWI2N2NhNGI0ODgwY2MxODc4ZTczMWEzOGUxODlmZDYxZGRmZmNkOTZmZTY5YmViYmNiNTdmYWRhJlgtQW16LVNpZ25lZEhlYWRlcnM9aG9zdCJ9.xxhqSev9BkQa9wieujQa7MSy_89tbYYKjJImKRh5AKE" alt="모바일 화면" width="40%" />
+</div>
+
 
 ### 3. 커피챗 요청
-![Coffee Chat](./screenshots/coffee_chat.png)
+![Coffee Chat](https://private-user-images.githubusercontent.com/132000885/398391588-84feccd0-5e15-4664-8dca-359b3c9cc63a.png?jwt=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJnaXRodWIuY29tIiwiYXVkIjoicmF3LmdpdGh1YnVzZXJjb250ZW50LmNvbSIsImtleSI6ImtleTUiLCJleHAiOjE3MzUwMzY1NDksIm5iZiI6MTczNTAzNjI0OSwicGF0aCI6Ii8xMzIwMDA4ODUvMzk4MzkxNTg4LTg0ZmVjY2QwLTVlMTUtNDY2NC04ZGNhLTM1OWIzYzljYzYzYS5wbmc_WC1BbXotQWxnb3JpdGhtPUFXUzQtSE1BQy1TSEEyNTYmWC1BbXotQ3JlZGVudGlhbD1BS0lBVkNPRFlMU0E1M1BRSzRaQSUyRjIwMjQxMjI0JTJGdXMtZWFzdC0xJTJGczMlMkZhd3M0X3JlcXVlc3QmWC1BbXotRGF0ZT0yMDI0MTIyNFQxMDMwNDlaJlgtQW16LUV4cGlyZXM9MzAwJlgtQW16LVNpZ25hdHVyZT1iYmZmOGZiZmU3NDUyZjA1YjUxNWUzZjRjMzIxYmVmNzc0OWU1ZmJkY2IxYjZiODZkZTMzNjJkY2E0ZjZjZDk0JlgtQW16LVNpZ25lZEhlYWRlcnM9aG9zdCJ9.f4X1WEDhYRuNUsxbJu2pF52NMdUtt63l1HMJ_H4-8rk)
 
-> 추가 스크린샷은 `/screenshots` 디렉토리에서 확인할 수 있습니다.
 
 ---
 
@@ -84,9 +94,9 @@ Flow-Front/
 ---
 
 ## 🏆 팀 구성
-- **팀장/프론트엔드 개발**: 지민성 ([Iamjms4237@gachon.ac.kr](mailto:Iamjms4237@gachon.ac.kr))
-- **백엔드 개발**: 박찬영 ([cksdud5014@gachon.ac.kr](mailto:cksdud5014@gachon.ac.kr))
-- **DevOps**: 박경열 ([a1061602@gachon.ac.kr](mailto:a1061602@gachon.ac.kr))
+- **Leader/Frontend**: Jim Min Seong
+- **Backend/DevOps**: SteamedEggMaster 
+- **DevOps/Frontend/Backend**: ~~
 
 ---
 
